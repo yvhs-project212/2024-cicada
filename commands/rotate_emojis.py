@@ -14,7 +14,7 @@ from subsystems.emoji_ss import EmojiSubsystem
 import constants
 
 
-class RotateEmojiLeft(commands2.Command):
+class RotateEmojisLeft(commands2.Command):
     def __init__(self, emoji_ss: EmojiSubsystem) -> None:
         super().__init__()
         self.emoji_ss = emoji_ss
@@ -32,7 +32,7 @@ class RotateEmojiLeft(commands2.Command):
         self.emoji_ss.stop()
 
 
-class RotateEmojiRight(commands2.Command):
+class RotateEmojisRight(commands2.Command):
     def __init__(self, emoji_ss: EmojiSubsystem) -> None:
         super().__init__()
         self.emoji_ss = emoji_ss

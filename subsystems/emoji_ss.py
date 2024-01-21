@@ -14,7 +14,8 @@ class EmojiSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         """Creates a new EmojiSubsystem"""
         super().__init__()
-        self.motor = rev.CANSparkMax(ELEC.emoji_motor_CAN_ID)
+        self.motor = rev.CANSparkMax(
+            ELEC.emoji_motor_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
 
     def rotate_left(self):
         self.motor.set(-0.3)
