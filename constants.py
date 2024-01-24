@@ -28,13 +28,14 @@ MECH = namedtuple("Data", mech_data.keys())(**mech_data)
 
 # Electrical constants, e.g. current limits, CAN bus IDs, RoboRIO port numbers
 elec_data = {
-    "emoji_motor_CAN_ID": 7,
+
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
 # Operation constants, e.g. preferred brake mode, which joystick to use
 op_data = {
-    "joystick_port": 0,
+    "driver_joystick_port": 0,
+    "operator_joystick_port": 1,
 }
 OP = namedtuple("Data", op_data.keys())(**op_data)
 

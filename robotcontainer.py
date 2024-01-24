@@ -11,9 +11,7 @@ import commands2
 import commands2.cmd
 import commands2.button
 
-from constants import OP, SW
-import subsystems.emoji_ss
-from commands.rotate_emojis import RotateEmojisLeft, RotateEmojisRight
+import constants
 
 
 class RobotContainer:
@@ -31,10 +29,10 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.emoji = subsystems.emoji_ss.EmojiSubsystem()
+
 
         # The driver's controller
-        self.stick = commands2.button.CommandXboxController(OP.joystick_port)
+
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -48,8 +46,6 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        # rotate emojis left when the left bumper is pressed
-        stick.leftBumper.onTrue(RotateEmojisLeft())
 
-        # rotate emojis right when the right bumper is pressed
-        stick.rightBumper.onTrue(RotateEmojisRight())
+    def getAutonomousCommand(self):
+        return None
