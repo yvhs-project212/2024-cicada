@@ -6,17 +6,23 @@
 
 import wpilib
 import wpimath.controller
-
 import commands2
 import commands2.cmd
 import commands2.button
 
+# Constants
 import constants
-
-import Subsystems.armSubsystem
-
 from constants import OP, SW
-from Commands.armCommand import RotateArmLeft, RotateArmRight, StopArm
+
+# Subsystem Imports
+import Subsystems.shooterSubsystem
+import Subsystems.robotLEDsSubsystem
+import Subsystems.intakeSubsystem
+
+# Command Imports
+from Commands.robotLEDsCommand import ledMode1, ledMode2, ledMode3
+from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
+from Commands.intakeCommand import intake, outake, stopIntake
 
 
 class RobotContainer:
@@ -34,11 +40,13 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.arm = Subsystems.armSubsystem.armSubsystem()
+        self.arm = Subsystems.shooterSubsystem.shooterSubsystem()
+        self.led = Subsystems.robotLEDsSubsystem.robotLEDsSubsystem()
+        self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
 
 
         # The driver's controller
-        self.stick = commands2.button.CommandXboxController(OP.driver_joystick_port)
+        self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
 
 
         # Configure the button bindings
@@ -53,11 +61,23 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.stick.leftBumper().onTrue(RotateArmLeft(self.arm))
-        self.stick.leftBumper().onFalse(StopArm(self.arm))
+        self.stick.leftBumper().whileTrue(inwardsShooter(self.arm))
+        self.stick.leftBumper().whileFalse(stopShooter(self.arm))
         
-        self.stick.rightBumper().onTrue(RotateArmRight(self.arm))
-        self.stick.leftBumper().onFalse(StopArm(self.arm))
+        self.stick.rightBumper().whileTrue(outwardsShooter(self.arm))
+        self.stick.leftBumper().whileFalse(stopShooter(self.arm))
+        
+        self.stick.button(2).whileTrue(outake(self.intake))
+        self.stick.button(2).whileFalse(stopIntake(self.intake))
+        
+        self.stick.button(3).whileTrue(intake(self.intake))
+        self.stick.button(3).whileFalse(stopIntake(self.intake))
+        
+        self.stick.button(1).whileTrue(ledMode1(self.led))
+        self.stick.button(1).whileFalse(ledMode3(self.led))
+        
+        self.stick.button(4).whileTrue(ledMode2(self.led))
+        self.stick.button(4).whileFalse(ledMode3(self.led))
         
 
     def getAutonomousCommand(self):
