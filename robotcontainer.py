@@ -11,8 +11,16 @@ import commands2
 import commands2.cmd
 import commands2.button
 
+# Constants
 import constants
+from constants import OP, SW
 
+# Subsystems
+import subsystems.intakeSubsystem
+
+
+# Commands
+from commands.intakeComs import IntakeCommand, ShootCommand,StopShoot,stopintake,reverseShooter,reverseintake
 
 class RobotContainer:
     """
@@ -29,9 +37,11 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
+        self.intakes = subsystems.intakeSubsystem.MotorCommands() 
 
 
         # The driver's controller
+        self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
 
 
         # Configure the button bindings
@@ -46,6 +56,20 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+
+        self.stick.button(1).whileTrue(IntakeCommand(self.intakes))
+        self.stick.button(1).whileFalse(stopintake(self.intakes))
+
+        self.stick.rightBumper().whileTrue(ShootCommand(self.intakes))
+        self.stick.rightBumper().whileFalse(StopShoot(self.intakes))
+        
+        self.stick.leftBumper().whileTrue(reverseShooter(self.intakes))
+        self.stick.leftBumper().whileFalse(StopShoot(self.intakes))
+
+        self.stick.button(4).whileTrue(reverseintake(self.intakes))
+        self.stick.button(4).whileFalse(stopintake(self.intakes))
+
+
 
     def getAutonomousCommand(self):
         return None
