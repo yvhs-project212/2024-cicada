@@ -1,15 +1,14 @@
-import WpiLib
+import wpilib
 import rev
 import commands2
 import commands2.cmd
 
-from subsystems.intakeSubsystem import MotorCommands
-
+from subsystems.SintakeSubsystem import SintakeSubsystem
 import constants
 
 class IntakeCommand(commands2.Command):
     
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
 
@@ -26,51 +25,12 @@ class IntakeCommand(commands2.Command):
         return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopintake
+        self.intakeSub.stopIntake
 
-class ShootCommand(commands2.command):
-    
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
-        super().__init__()
-        self.intakeSub = intakeSubsystem
-    
-    def initialize(self):
-        import logging
-        logger = logging.getLogger("fabian campooos hernandez")
-        logger.info("shootie")
 
-    def execute(self):
-        self.intakeSub.shoot
-
-    def isfinished(self):
-       return False
+class StopIntake(commands2.Command):
     
-    def end(self, interrupted: bool):
-        self.intakeSub.stopshooter
-
-class StopShoot(commands2.command):
-    
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
-        super().__init__()
-        self.intakeSub = intakeSubsystem
-    
-    def initialize(self):
-        import logging
-        logger = logging.getLogger("fabian campooos hernandez")
-        logger.info("stop shootie")
-
-    def execute(self):
-        self.intakeSub.stopshooter
-
-    def isfinished(self):
-       return False
-    
-    def end(self, interrupted: bool):
-        self.intakeSub.stopshooter
-
-class stopintake(commands2.Command):
-    
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
 
@@ -78,20 +38,59 @@ class stopintake(commands2.Command):
         import logging
         logger = logging.getLogger("fabian campooos hernandez")
         logger.info("stop Intakie")
-
         
     def execute(self):
-        self.intakeSub.stopintake
+        self.intakeSub.stopIntake
 
     def isfinished(self):
         return False
      
     def end(self, interrupted: bool):
-        self.intakeSub.stopintake
+        self.intakeSub.stopIntake
 
-class reverseShooter(commands2.command):
+class ReverseIntake(commands2.Command):
     
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
+        super().__init__()
+        self.intakeSub = intakeSubsystem
+    
+    def initialize(self):
+        import logging
+        logger = logging.getLogger("fabian campooos hernandez")
+        logger.info("reverse intake")
+
+    def execute(self):
+        self.intakeSub.reverseIntake
+
+    def isFinished(self):
+       return False
+    
+    def end(self, interrupted: bool):
+        self.intakeSub.stopIntake
+
+class ShootCommand(commands2.Command):
+    
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
+        super().__init__()
+        self.intakeSub = intakeSubsystem
+    
+    def initialize(self):
+        import logging
+        logger = logging.getLogger("fabian campooos hernandez")
+        logger.info("Shootie")
+
+    def execute(self):
+        self.intakeSub.shoot
+
+    def isFinished(self):
+       return False
+    
+    def end(self, interrupted: bool):
+        self.intakeSub.stopShooter
+
+class ReverseShooter(commands2.Command):
+    
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
     
@@ -103,28 +102,28 @@ class reverseShooter(commands2.command):
     def execute(self):
         self.intakeSub.reverseShooter
 
-    def isfinished(self):
+    def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopshooter
+        self.intakeSub.stopShooter
 
-class reverseintake(commands2.command):
+class StopShoot(commands2.Command):
     
-    def __init__(self, intakeSubsystem: MotorCommands) -> None:
+    def __init__(self, intakeSubsystem: SintakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
     
     def initialize(self):
         import logging
         logger = logging.getLogger("fabian campooos hernandez")
-        logger.info("reverse intake")
+        logger.info("stop shooter")
 
     def execute(self):
-        self.intakeSub.reverseintake
+        self.intakeSub.stopShooter
 
-    def isfinished(self):
+    def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopintake
+        self.intakeSub.stopShooter

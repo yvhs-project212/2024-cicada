@@ -16,11 +16,12 @@ import constants
 from constants import OP, SW
 
 # Subsystems
-import subsystems.intakeSubsystem
+import subsystems.SintakeSubsystem
 
 
 # Commands
-from commands.intakeComs import IntakeCommand, ShootCommand,StopShoot,stopintake,reverseShooter,reverseintake
+from commands.SintakeCommands import IntakeCommand,StopIntake,ReverseIntake,ShootCommand,StopShoot,ReverseShooter,ShootCommand,StopShoot
+
 
 class RobotContainer:
     """
@@ -37,7 +38,7 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.intakes = subsystems.intakeSubsystem.MotorCommands() 
+        self.intakes = subsystems.SintakeSubsystem.SintakeSubsystem() 
 
 
         # The driver's controller
@@ -58,18 +59,18 @@ class RobotContainer:
         """
 
         self.stick.button(1).whileTrue(IntakeCommand(self.intakes))
-        self.stick.button(1).whileFalse(stopintake(self.intakes))
+        self.stick.button(1).whileFalse(StopIntake(self.intakes))
 
         self.stick.rightBumper().whileTrue(ShootCommand(self.intakes))
         self.stick.rightBumper().whileFalse(StopShoot(self.intakes))
         
-        self.stick.leftBumper().whileTrue(reverseShooter(self.intakes))
+        self.stick.leftBumper().whileTrue(ReverseShooter(self.intakes))
         self.stick.leftBumper().whileFalse(StopShoot(self.intakes))
 
-        self.stick.button(4).whileTrue(reverseintake(self.intakes))
-        self.stick.button(4).whileFalse(stopintake(self.intakes))
+        self.stick.button(4).whileTrue(ReverseIntake(self.intakes))
+        self.stick.button(4).whileFalse(StopIntake(self.intakes))
 
 
-
+  
     def getAutonomousCommand(self):
         return None
