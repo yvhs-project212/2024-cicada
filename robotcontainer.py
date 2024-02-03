@@ -10,6 +10,7 @@ import wpimath.controller
 import commands2
 import commands2.cmd
 import commands2.button
+from commands.rotate_hang import Hang, Lower, StopMotor
 
 import constants
 
@@ -46,6 +47,11 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+        self.stick.leftTrigger().onTrue(Hang(self.hang))
+        self.stick.leftTrigger().onFalse(StopMotor(self.hang))
+    
+        self.stick.rightTrigger().onTrue(Lower(self.hang))
+        self.stick.rightTrigger().onFalse(StopMotor(self.hang))
 
     def getAutonomousCommand(self):
         return None
