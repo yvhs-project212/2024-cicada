@@ -13,6 +13,9 @@ import commands2.button
 
 import constants
 
+import subsystems.armSubsystem
+
+import commands.armCommand
 
 class RobotContainer:
     """
@@ -29,9 +32,11 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
+        self.arm = subsystems.armSubsystem.ArmSubsystem()
 
 
         # The driver's controller
+        self.controller1 = commands2.button.CommandXboxController(constants.OP.operator_joystick_port)
 
 
         # Configure the button bindings
@@ -46,6 +51,7 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick)
 
     def getAutonomousCommand(self):
         return None
