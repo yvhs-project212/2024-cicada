@@ -3,12 +3,14 @@ import commands2
 import commands2.cmd
 
 from Subsystems.intakeSubsystem import intakeSubsystem
+from Subsystems.robotLEDsSubsystem import robotLEDsSubsystem
 
 class intake(commands2.Command):
     
-    def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
+    def __init__(self, intakeSubsystem: intakeSubsystem, robotLEDsSubsystem: robotLEDsSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.LED = robotLEDsSubsystem
 
     def initialize(self):
         import logging
@@ -17,6 +19,7 @@ class intake(commands2.Command):
 
     def execute(self):
         self.intakeSub.intake()
+        self.LED.ledMode2()
 
     def isFinished(self):
         return False
@@ -46,9 +49,10 @@ class outake(commands2.Command):
         
 class stopIntake(commands2.Command):
     
-    def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
+    def __init__(self, intakeSubsystem: intakeSubsystem, robotLEDsSubsystem: robotLEDsSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.LED = robotLEDsSubsystem
 
     def initialize(self):
         import logging
@@ -57,6 +61,7 @@ class stopIntake(commands2.Command):
 
     def execute(self):
         self.intakeSub.stopintake()
+        self.LED.ledMode3()
 
     def isFinished(self):
         return False

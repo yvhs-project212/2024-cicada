@@ -14,6 +14,7 @@ class VisionSubsystem(commands2.Subsystem):
     def  __init__(self):
         
         # Creates PhotonVision functions dosen't use them yet
-        self.camera = photonPoseEstimator.PhotonCamera.isConnected
-        self.pipeline = photonCamera.PhotonCamera.setPipelineIndex(1)
+        self.camera = photonCamera
+        
+        # self.camera.
         

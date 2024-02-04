@@ -62,16 +62,16 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
         self.stick.leftBumper().whileTrue(inwardsShooter(self.arm))
-        self.stick.leftBumper().whileFalse(stopShooter(self.arm))
+        self.stick.leftBumper().whileFalse(stopShooter(self.arm, self.led))
         
-        self.stick.rightBumper().whileTrue(outwardsShooter(self.arm))
-        self.stick.leftBumper().whileFalse(stopShooter(self.arm))
+        self.stick.rightBumper().whileTrue(outwardsShooter(self.arm, self.led))
+        self.stick.rightBumper().whileFalse(stopShooter(self.arm, self.led))
         
         self.stick.button(2).whileTrue(outake(self.intake))
-        self.stick.button(2).whileFalse(stopIntake(self.intake))
+        self.stick.button(2).whileFalse(stopIntake(self.intake, self.led))
         
-        self.stick.button(3).whileTrue(intake(self.intake))
-        self.stick.button(3).whileFalse(stopIntake(self.intake))
+        self.stick.button(3).whileTrue(intake(self.intake, self.led))
+        self.stick.button(3).whileFalse(stopIntake(self.intake, self.led))
         
         self.stick.button(1).whileTrue(ledMode1(self.led))
         self.stick.button(1).whileFalse(ledMode3(self.led))

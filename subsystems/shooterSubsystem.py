@@ -18,10 +18,10 @@ class shooterSubsystem(commands2.Subsystem):
         self.controller = wpilib.XboxController(0)
     
     def outwardsShooter(self):
-        self.shooterMotorGroup.set(0.5)
+        self.shooterMotorGroup.set(-0.5)
         
     def inwardsShooter(self):
-        self.shooterMotorGroup.set(-0.5)
+        self.shooterMotorGroup.set(1)
         
     def stopShooter(self):
         self.shooterMotorGroup.set(0)
