@@ -51,7 +51,7 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick)
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick())
 
     def getAutonomousCommand(self):
         return None

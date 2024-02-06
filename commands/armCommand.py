@@ -4,7 +4,7 @@ import commands2
 from subsystems.armSubsystem import ArmSubsystem
 import constants
 
-class ArmisUp (commands2.comamands):
+class ArmisUp (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
@@ -15,16 +15,16 @@ class ArmisUp (commands2.comamands):
         self.timer.start()
 
     def execute(self):
-        self.armSubsystem.arm_up()
+        self.armSubsystem.arm_up(speed=1)
     
     def isFinished(self):
         return False
     
     def end(self, interrupted: bool):
-        self.armSubsystem.arm_stop
+        self.armSubsystem.arm_stop()
 
 
-class ArmisDown (commands2.comamands):
+class ArmisDown (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
@@ -35,15 +35,15 @@ class ArmisDown (commands2.comamands):
         self.timer.start()
 
     def execute(self):
-        self.armSubsystem.arm_down()
+        self.armSubsystem.arm_down(speed=1)
 
     def isFinished(self):
         return False
     
     def end(self, interrupted: bool):
-        self.armSubsystem.arm_stop
+        self.armSubsystem.arm_stop()
 
-class ArmWithJoystick (commands2.comamands):
+class ArmWithJoystick (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
@@ -60,5 +60,5 @@ class ArmWithJoystick (commands2.comamands):
         return False
     
     def end(self, interrupted: bool):
-        self.armSubsystem.arm_stop
+        self.armSubsystem.arm_stop()
 
