@@ -19,13 +19,13 @@ class IntakeCommand(commands2.Command):
 
         
     def execute(self):
-        self.intakeSub.intake
+        self.intakeSub.intake()
 
     def isfinished(self):
         return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopIntake
+        self.intakeSub.stopIntake()
 
 
 class StopIntake(commands2.Command):
@@ -40,13 +40,13 @@ class StopIntake(commands2.Command):
         logger.info("stop Intakie")
         
     def execute(self):
-        self.intakeSub.stopIntake
+        self.intakeSub.stopIntake()
 
     def isfinished(self):
         return False
      
     def end(self, interrupted: bool):
-        self.intakeSub.stopIntake
+        self.intakeSub.stopIntake()
 
 class ReverseIntake(commands2.Command):
     
@@ -60,13 +60,13 @@ class ReverseIntake(commands2.Command):
         logger.info("reverse intake")
 
     def execute(self):
-        self.intakeSub.reverseIntake
+        self.intakeSub.reverseIntake()
 
     def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopIntake
+        self.intakeSub.stopIntake()
 
 class ShootCommand(commands2.Command):
     
@@ -80,13 +80,13 @@ class ShootCommand(commands2.Command):
         logger.info("Shootie")
 
     def execute(self):
-        self.intakeSub.shoot
+        self.intakeSub.shoot()
 
     def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopShooter
+        self.intakeSub.stopShooter()
 
 class ReverseShooter(commands2.Command):
     
@@ -100,13 +100,13 @@ class ReverseShooter(commands2.Command):
         logger.info("reverse shooter")
 
     def execute(self):
-        self.intakeSub.reverseShooter
+        self.intakeSub.reverseShooter()
 
     def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopShooter
+        self.intakeSub.stopShooter()
 
 class StopShoot(commands2.Command):
     
@@ -120,10 +120,10 @@ class StopShoot(commands2.Command):
         logger.info("stop shooter")
 
     def execute(self):
-        self.intakeSub.stopShooter
+        self.intakeSub.stopShooter()
 
     def isFinished(self):
        return False
     
     def end(self, interrupted: bool):
-        self.intakeSub.stopShooter
+        self.intakeSub.stopShooter()

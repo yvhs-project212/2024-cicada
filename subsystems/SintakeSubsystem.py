@@ -9,8 +9,8 @@ class SintakeSubsystem(commands2.Subsystem) :
 
     def __init__(self) -> None:
         super().__init__()
-        #self.intake_motor1 = phoenix5.WPI_TalonFX((ELEC.motor1_CAN_ID))
-        self.intake_motor1 = rev.CANSparkMax(2,rev.CANSparkMax.MotorType.kBrushless)
+        self.intake_motor1 = phoenix5.WPI_TalonFX((ELEC.motor1_CAN_ID))
+        #self.intake_motor1 = rev.CANSparkMax(2,rev.CANSparkMax.MotorType.kBrushless)
         self.shooter_motor2 = rev.CANSparkMax(ELEC.motor2_CAN_ID,rev.CANSparkMax.MotorType.kBrushless)
         self.shooter_motor3 = rev.CANSparkMax(ELEC.motor3_CAN_ID,rev.CANSparkMax.MotorType.kBrushless)
         self.shooter_motor2.setInverted(True)
@@ -21,19 +21,20 @@ class SintakeSubsystem(commands2.Subsystem) :
         self.shootergroup.set(-0.5)
         
     def reverseShooter(self) :
+
         self.shootergroup.set(0.5)
 
     def stopShooter(self) :
+        
         self.shootergroup.set(0)
 
     def intake(self) :
         self.intake_motor1.set(-0.5)
     
     def reverseIntake(self) :
-        import logging
-        logger = logging.getLogger("fabian campooos hernandez")
-        logger.info("Reverse Intakie running")
+        
         self.intake_motor1.set(0.5)
 
     def stopIntake(self) :
+
         self.intake_motor1.set(0)
