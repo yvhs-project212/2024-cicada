@@ -18,6 +18,7 @@ from constants import OP, SW
 import Subsystems.shooterSubsystem
 import Subsystems.robotLEDsSubsystem
 import Subsystems.intakeSubsystem
+import Subsystems.photonVisionSubsystem
 
 # Command Imports
 from Commands.robotLEDsCommand import ledMode1, ledMode2, ledMode3
@@ -43,6 +44,7 @@ class RobotContainer:
         self.arm = Subsystems.shooterSubsystem.shooterSubsystem()
         self.led = Subsystems.robotLEDsSubsystem.robotLEDsSubsystem()
         self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
+        self.Vision = Subsystems.photonVisionSubsystem.visionSub()
 
 
         # The driver's controller

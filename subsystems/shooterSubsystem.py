@@ -16,9 +16,12 @@ class shooterSubsystem(commands2.Subsystem):
         # create a controller instance and group the 2 shooter motors
         self.shooterMotorGroup = wpilib.MotorControllerGroup(self.shooterMotor1, self.shooterMotor2)
         self.controller = wpilib.XboxController(0)
+        
+        self.liveWindow = wpilib.SmartDashboard
+        self.liveWindow.putNumber("ShooterMotorOPT", 0)
     
     def outwardsShooter(self):
-        self.shooterMotorGroup.set(-0.5)
+        self.shooterMotorGroup.set(-0.8)
         
     def inwardsShooter(self):
         self.shooterMotorGroup.set(1)
