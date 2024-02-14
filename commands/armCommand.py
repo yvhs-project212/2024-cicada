@@ -4,18 +4,16 @@ import commands2
 from subsystems.armSubsystem import ArmSubsystem
 import constants
 
-class ArmisUp (commands2.Command):
+class ArmMovingUp (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
         self.armSubsystem = armSubsystem
-        self.timer = wpilib.Timer()
-
-    def initialize(self):
-        self.timer.start()
+        self.addRequirements(armSubsystem)
+        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
 
     def execute(self):
-        self.armSubsystem.arm_up(speed=1)
+        self.armSubsystem.arm_up(self.speed)
     
     def isFinished(self):
         return False
@@ -23,19 +21,16 @@ class ArmisUp (commands2.Command):
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
 
-
-class ArmisDown (commands2.Command):
+class ArmMovingDown (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
         self.armSubsystem = armSubsystem
-        self.timer = wpilib.Timer()
-
-    def initialize(self):
-        self.timer.start()
+        self.addRequirements(armSubsystem)
+        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
 
     def execute(self):
-        self.armSubsystem.arm_down(speed=1)
+        self.armSubsystem.arm_down(self.speed)
 
     def isFinished(self):
         return False
@@ -48,13 +43,12 @@ class ArmWithJoystick (commands2.Command):
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
         self.armSubsystem = armSubsystem
-        self.timer = wpilib.Timer()
-
-    def initialize(self):
-        self.timer.start()
-
+        self.addRequirements(armSubsystem)
+        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
+ 
     def execute(self):
-        self.armSubsystem.armwithjoystick(constants.OP.operator_joystick_port)
+
+        self.armSubsystem.armwithjoystick(self, float(self.speed))
 
     def isFinished(self):
         return False
