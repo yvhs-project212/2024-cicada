@@ -52,3 +52,10 @@ azimuth_component_params_class = azimuth_component_class.Parameters
 
 drive_params = drive_component_params_class(**drive_param_values)
 azimuth_params = azimuth_component_params_class(**azimuth_param_values)
+
+module_locations = {
+    "LF": (PHYS.wheel_base / 2, PHYS.track_width / 2),
+    "RF": (PHYS.wheel_base / 2, -PHYS.track_width / 2),
+    "LB": (-PHYS.wheel_base / 2, PHYS.track_width / 2),
+    "RB": (-PHYS.wheel_base / 2, -PHYS.track_width / 2),
+}

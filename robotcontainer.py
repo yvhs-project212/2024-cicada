@@ -28,11 +28,12 @@ class RobotContainer:
         The container for the robot. Contains subsystems, user controls,
         and commands.
         """
-        # The robot's subsystems
+        #Subsystems
+        
 
-
-        # The driver's controller
-
+        #Controllers
+        self.DriverController = commands2.button.CommandXboxController(constants.OP.driver_joystick_port)
+        self.OperatorController = commands2.button.CommandXboxController(constants.OP.operator_joystick_port)
 
         # Configure the button bindings
         self.configureButtonBindings()
