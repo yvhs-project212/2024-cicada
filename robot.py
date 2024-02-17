@@ -40,7 +40,7 @@ class Robot(commands2.TimedCommandRobot):
         This method runs the autonomous command selected by your
         RobotContainer class.
         """
-        self.autonomousCommand = self.container.getAutonomousCommand()
+        self.autonomousCommand = self.container.get_autonomous_command()
 
         # schedule the autonomous command (example)
         if self.autonomousCommand is not None:
