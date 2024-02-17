@@ -13,14 +13,14 @@ from swervepy.impl import (
     DummyGyro,
     AbsoluteDutyCycleEncoder,
     CoaxialSwerveModule,
-    Falcon500CoaxialDriveComponent,
-    Falcon500CoaxialAzimuthComponent,
+    NEOCoaxialDriveComponent,
+    NEOCoaxialAzimuthComponent,
 )
 
 # Define which components you're using (e.g. which motors you're using)
 #
-drive_component_class = Falcon500CoaxialDriveComponent
-azimuth_component_class = Falcon500CoaxialAzimuthComponent
+drive_component_class = NEOCoaxialDriveComponent
+azimuth_component_class = NEOCoaxialAzimuthComponent
 gyro_component_class = DummyGyro
 absolute_encoder_class = AbsoluteDutyCycleEncoder
 

@@ -92,7 +92,6 @@ class Pigeon2Gyro(Gyro):
             yaw = 360 - yaw
         return Rotation2d.fromDegrees(yaw)
 
-
 class DummyGyro(Gyro):
     """Gyro that does nothing"""
 
