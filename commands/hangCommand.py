@@ -3,7 +3,7 @@ import commands2
 import commands2.cmd
 import wpimath.controller
 
-from subsystems.hang_ss import HangSubsystem
+from subsystems import hangSubsystem
 
 import constants
 
@@ -12,55 +12,59 @@ logger = logging.getLogger("aniyah")
 
 
 class Hang(commands2.Command):
-    def __init__(self, hang_ss: HangSubsystem) -> None:
+    def __init__(self, hang_ss: hangSubsystem) -> None:
         super().__init__()
-        self.hang_ss = hang_ss
+        self.hangSub = hang_ss
 
     def initialize(self):
         logger.info("running Hang command")
 
     def execute(self):
-        self.hang_ss.rotate_left()
+        self.hangSub.hang()
 
     def isFinished(self):
         # command does not finish it needs to be cancelled
         return False
 
-    def end(self, interrupted):
-        self.hang_ss.stop()
+    def end(self, interrupted: bool):
+        self.hangSub.stop()
         
 
 
 class Lower(commands2.Command):
-    def __init__(self, hang_ss: HangSubsystem) -> None:
+    def __init__(self, hang_ss: hangSubsystem) -> None:
         super().__init__()
-        self.hang_ss = hang_ss
+        self.hangSub = hang_ss
+
+    def initialize(self):
+        logger.info(" Running Lower Hang command")
 
     def execute(self):
-        self.hang_ss.rotate_right()
+        self.hangSub.lower()
 
     def isFinished(self):
         # The command needs to be cancelled in order to stop
         return False
 
-    def end(self, interrupted):
-        self.hang_ss.stop()
+    def end(self, interrupted: bool):
+        self.hangSub.stop()
 
 
-class StopMotor(commands2.Command):
-    def __init__(self, hang_ss: HangSubsystem) -> None:
+class StopHang(commands2.Command):
+    def __init__(self, hang_ss: hangSubsystem) -> None:
         super().__init__()
-        self.hang_ss = hang_ss
+        self.hangSub = hang_ss
 
     def initialize(self):
         logger.info("running StopMotor command")
-
+               
     def execute(self):
-        self.hang_ss.stop()
+        self.hangSub.stop()
+
 
     def isFinished(self):
         # The command needs to be cancelled in order to stop
-        return self.hang_ss.is_stopped()
+        return False
 
-    def end(self, interrupted):
-        self.hang_ss.stop()
+    def end(self, interrupted: bool):
+        self.hangSub.stop()
