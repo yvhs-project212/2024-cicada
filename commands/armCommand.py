@@ -44,11 +44,11 @@ class ArmWithJoystick (commands2.Command):
         super().__init__()
         self.armSubsystem = armSubsystem
         self.addRequirements(armSubsystem)
-        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
+        self.joystickInput = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
  
     def execute(self):
 
-        self.armSubsystem.armwithjoystick(self, float(self.speed))
+        self.armSubsystem.armwithjoystick(self.joystickInput())
 
     def isFinished(self):
         return False
