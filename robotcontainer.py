@@ -10,8 +10,15 @@ import wpimath.controller
 import commands2
 import commands2.cmd
 import commands2.button
+from commands.hangCommand import Hang, Lower, StopHang
 
 import constants
+from constants import OP, SW
+
+
+import subsystems.hangSubsystem
+
+from commands.hangCommand import Hang, Lower, StopHang
 
 
 class RobotContainer:
@@ -29,10 +36,10 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-
+        self.hang = subsystems.hangSubsystem.HangSubsystem()
 
         # The driver's controller
-
+        self.stick = commands2.button.CommandXboxController(constants.OP.operator_joystick_port)
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -46,6 +53,11 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+        self.stick.leftTrigger().whileTrue(Lower(self.hang))
+        self.stick.leftTrigger().whileFalse(StopHang(self.hang))
+    
+        self.stick.rightTrigger().whileTrue(Hang(self.hang))
+        self.stick.rightTrigger().whileFalse(StopHang(self.hang))
 
     def getAutonomousCommand(self):
         return None
