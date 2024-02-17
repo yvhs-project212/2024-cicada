@@ -28,15 +28,16 @@ class SwerveModule(commands2.Subsystem):
         #Initiate sensors
         self.turnMotorAbsoluteEncoder = wpilib.DutyCycleEncoder(turnMotorAbsoluteEncoderID)
         self.turningPIDController = wpimath.controller.ProfiledPIDController(
-        SW.swerve_drive_turning_PID_controller_kP,
-        SW.swerve_drive_turning_PID_controller_kI,
-        SW.swerve_drive_turning_PID_controller_kD                          
+            SW.swerve_drive_turning_PID_controller_kP,
+            SW.swerve_drive_turning_PID_controller_kI,
+            SW.swerve_drive_turning_PID_controller_kD,
+            wpimath.trajectory.TrapezoidProfile.Constraints()                        
         )
 
-        driveIncrementalEncoder = self.driveMotor.getEncoder()
-        turnIncrementalEncoder = self.turnMotor.getEncoder()
+        self.driveIncrementalEncoder = self.driveMotor.getEncoder()
+        self.turnIncrementalEncoder = self.turnMotor.getEncoder()
 
-        driveIncrementalEncoder.setPositionConversionFactor(MECH.swerve_drive_driving_encoder_rotation2meter)
-        driveIncrementalEncoder.setVelocityConversionFactor(MECH.swerve_drive_driving_encoder_rotation2meter_per_sec)
-        turnIncrementalEncoder.setPositionConversion
-
+        self.driveIncrementalEncoder.setPositionConversionFactor(MECH.swerve_drive_driving_encoder_rotation2meter)
+        self.driveIncrementalEncoder.setVelocityConversionFactor(MECH.swerve_drive_driving_encoder_rotation2meter_per_sec)
+        self.turnIncrementalEncoder.setPositionConversionFactor(MECH.swerve_drive_turning_encoder_rotation2radian)
+        self.turnIncrementalEncoder.setVelocityConversionFactor(MECH.swerve_drive_turning_encoder_rotation2radian_per_sec)
