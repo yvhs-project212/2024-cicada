@@ -33,19 +33,19 @@ class visionSub(commands2.Subsystem):
         # # Returns the april tag id that is beeing seen
         # # aprilTagFromLimelight = self.target.getFiducialId()
         # # Returns the X, Y, and Z Values from the April Tag in meters
-        aprilTagDistance = self.target.getBestCameraToTarget()
+        # aprilTagDistance = self.target.getBestCameraToTarget()
             
         # wpilib.SmartDashboard.putNumber("April Tag ID", self.apriltagID)
         
-        self.xyzValuesForAprilTags = Transform3d(aprilTagDistance, Rotation3d(0, 0, 0))
-        # self.apriltagID = 0
+        # self.xyzValuesForAprilTags = Transform3d(aprilTagDistance, Rotation3d(0, 0, 0))
+        # # self.apriltagID = 0
         
-        # if aprilTagFromLimelight in range (0, 16):
-        #     self.apriltagID = aprilTagFromLimelight
+        # # if aprilTagFromLimelight in range (0, 16):
+        # #     self.apriltagID = aprilTagFromLimelight
         
-        wpilib.SmartDashboard.putNumber("April Tag X Value in meters", self.xyzValuesForAprilTags.X())
-        wpilib.SmartDashboard.putNumber("April Tag Y Value in meters", self.xyzValuesForAprilTags.Y())
-        wpilib.SmartDashboard.putNumber("April Tag Z Value in meters", self.xyzValuesForAprilTags.Z())
+        # wpilib.SmartDashboard.putNumber("April Tag X Value in meters", self.xyzValuesForAprilTags.X())
+        # wpilib.SmartDashboard.putNumber("April Tag Y Value in meters", self.xyzValuesForAprilTags.Y())
+        # wpilib.SmartDashboard.putNumber("April Tag Z Value in meters", self.xyzValuesForAprilTags.Z())
         
         
     def teleopPeriodic(self):

@@ -3,7 +3,6 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
 #
-
 import wpilib
 import wpimath.controller
 import commands2
@@ -19,12 +18,14 @@ import Subsystems.shooterSubsystem
 import Subsystems.robotLEDsSubsystem
 import Subsystems.intakeSubsystem
 import Subsystems.photonVisionSubsystem
+import Subsystems.armSubsystem
 
 # Command Imports
 from Commands.robotLEDsCommand import ledMode1, ledMode2, ledMode3
 from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from Commands.intakeCommand import intake, outake, stopIntake
 from Commands.aprilTagCommand import getAprilTags
+import Commands.armCommand
 
 
 class RobotContainer:
@@ -46,6 +47,7 @@ class RobotContainer:
         self.led = Subsystems.robotLEDsSubsystem.robotLEDsSubsystem()
         self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
         self.Vision = Subsystems.photonVisionSubsystem.visionSub()
+        self.arm = Subsystems.armSubsystem.ArmSubsystem()
 
         # The driver's controller
         self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
@@ -74,6 +76,8 @@ class RobotContainer:
         
         self.stick.button(3).whileTrue(intake(self.intake, self.led))
         self.stick.button(3).whileFalse(stopIntake(self.intake, self.led))
+        
+        self.arm.setDefaultCommand(Commands.armCommand.ArmWithJoystick(self.arm))
         
         # self.stick.button(1).whileTrue(ledMode1(self.led))
         # self.stick.button(1).whileFalse(ledMode3(self.led))
