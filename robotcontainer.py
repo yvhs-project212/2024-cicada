@@ -15,16 +15,12 @@ from constants import OP, SW
 
 # Subsystem Imports
 import Subsystems.shooterSubsystem
-import Subsystems.robotLEDsSubsystem
 import Subsystems.intakeSubsystem
-import Subsystems.photonVisionSubsystem
 import Subsystems.armSubsystem
 
 # Command Imports
-from Commands.robotLEDsCommand import ledMode1, ledMode2, ledMode3
 from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from Commands.intakeCommand import intake, outake, stopIntake
-from Commands.aprilTagCommand import getAprilTags
 import Commands.armCommand
 
 
@@ -44,9 +40,7 @@ class RobotContainer:
         """
         # The robot's subsystems
         self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
-        self.led = Subsystems.robotLEDsSubsystem.robotLEDsSubsystem()
         self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
-        self.Vision = Subsystems.photonVisionSubsystem.visionSub()
         self.arm = Subsystems.armSubsystem.ArmSubsystem()
 
         # The driver's controller
@@ -66,24 +60,18 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
         self.stick.leftBumper().whileTrue(inwardsShooter(self.shooter))
-        self.stick.leftBumper().whileFalse(stopShooter(self.shooter, self.led))
+        self.stick.leftBumper().whileFalse(stopShooter(self.shooter))
         
-        self.stick.rightBumper().whileTrue(outwardsShooter(self.shooter, self.led))
-        self.stick.rightBumper().whileFalse(stopShooter(self.shooter, self.led))
+        self.stick.rightBumper().whileTrue(outwardsShooter(self.shooter))
+        self.stick.rightBumper().whileFalse(stopShooter(self.shooter))
         
         self.stick.button(2).whileTrue(outake(self.intake))
-        self.stick.button(2).whileFalse(stopIntake(self.intake, self.led))
+        self.stick.button(2).whileFalse(stopIntake(self.intake))
         
-        self.stick.button(3).whileTrue(intake(self.intake, self.led))
-        self.stick.button(3).whileFalse(stopIntake(self.intake, self.led))
+        self.stick.button(3).whileTrue(intake(self.intake))
+        self.stick.button(3).whileFalse(stopIntake(self.intake))
         
         self.arm.setDefaultCommand(Commands.armCommand.ArmWithJoystick(self.arm))
-        
-        # self.stick.button(1).whileTrue(ledMode1(self.led))
-        # self.stick.button(1).whileFalse(ledMode3(self.led))
-        
-        # self.stick.button(4).whileTrue(ledMode2(self.led))
-        # self.stick.button(4).whileFalse(ledMode3(self.led))
         
 
     def getAutonomousCommand(self):
