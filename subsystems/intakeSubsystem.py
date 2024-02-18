@@ -13,12 +13,13 @@ class intakeSubsystem(commands2.Subsystem):
         # self.intakeMotor = phoenix5.WPI_TalonFX(9)
         self.intakeMotor = rev.CANSparkMax(ELEC.intake_motor, rev.CANSparkMax.MotorType.kBrushless)
         self.intakeMotor.setInverted(True)
+        # self.intakeMotor.setIdleMode(coast)
         
     def intake(self):
-        self.intakeMotor.set(0.35)
+        self.intakeMotor.set(1)
         
     def outake(self):
-        self.intakeMotor.set(-0.6)
+        self.intakeMotor.set(-1)
         
     def stopintake(self):
         self.intakeMotor.set(0)

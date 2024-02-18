@@ -1,6 +1,10 @@
 import wpilib
 import commands2
 
+from wpimath.geometry import Pose3d, Transform3d, Translation3d, Rotation3d
+from wpimath import geometry
+import math 
+
 from photonlibpy import estimatedRobotPose
 from photonlibpy import multiTargetPNPResult
 from photonlibpy import photonCamera
@@ -17,56 +21,51 @@ class visionSub(commands2.Subsystem):
     # Dosen't initialize anything 
     def  __init__(self):
         
-        # Start camera server 
+        # Tells photonVision the name of the camera being used
         self.camera = photonCamera.PhotonCamera("limelight") 
         self.camResult = self.camera.getLatestResult()
-        # self.targets = photonPipelineResult.PhotonPipelineResult.getTargets()
         self.target = photonTrackedTarget.PhotonTrackedTarget
+        # self.targets = photonPipelineResult.PhotonPipelineResult.getTargets()
         
         
         
-        # initiate smartDashboard
-        self.smartDashboard = wpilib.SmartDashboard
         
-        # self.smartDashboard.putNumberArray("X, Y, and Z Values for AprilTag", self.target.getBestCameraToTarget)
-        # self.smartDashboard.putNumber("X, Y, and Z Values for AprilTag", self.target.getBestCameraToTarget)
+        # # Returns the april tag id that is beeing seen
+        # # aprilTagFromLimelight = self.target.getFiducialId()
+        # # Returns the X, Y, and Z Values from the April Tag in meters
+        aprilTagDistance = self.target.getBestCameraToTarget()
+            
+        # wpilib.SmartDashboard.putNumber("April Tag ID", self.apriltagID)
+        
+        self.xyzValuesForAprilTags = Transform3d(aprilTagDistance, Rotation3d(0, 0, 0))
+        # self.apriltagID = 0
+        
+        # if aprilTagFromLimelight in range (0, 16):
+        #     self.apriltagID = aprilTagFromLimelight
+        
+        wpilib.SmartDashboard.putNumber("April Tag X Value in meters", self.xyzValuesForAprilTags.X())
+        wpilib.SmartDashboard.putNumber("April Tag Y Value in meters", self.xyzValuesForAprilTags.Y())
+        wpilib.SmartDashboard.putNumber("April Tag Z Value in meters", self.xyzValuesForAprilTags.Z())
+        
+        
+    def teleopPeriodic(self):
+        
+        # Returns the april tag id that is beeing seen
+        aprilTagFromLimelight = self.target.getFiducialId()
+            
+        wpilib.SmartDashboard.putNumber("April Tag ID", self.apriltagID)
         
         
         
-    def pereodic(self):
+        # Returns the X, Y, and Z Values from the April Tag in meters
+        aprilTagDistance = self.target.getBestCameraToTarget()
         
-        self.aprilTag = photonTrackedTarget.PhotonTrackedTarget.getFiducialId
+        self.xyzValuesForAprilTags = Transform3d(aprilTagDistance, Rotation3d(0, 0, 0))
         self.apriltagID = 0
         
-        if self.aprilTag == 1:
-            self.apriltagID = 1
-        elif self.aprilTag == 2:
-            self.apriltagID = 2
-        elif self.aprilTag == 3:
-            self.apriltagID = 3
-        elif self.aprilTag == 4:
-            self.apriltagID = 4
-        elif self.aprilTag == 5:
-            self.apriltagID = 5 
-        elif self.aprilTag == 6:
-            self.apriltagID = 6
-        elif self.aprilTag == 7:
-            self.apriltagID = 7
-        elif self.aprilTag == 8:
-            self.apriltagID = 8
-        elif self.aprilTag == 9:
-            self.apriltagID = 9
-        elif self.aprilTag == 10:
-            self.apriltagID = 10
-        elif self.aprilTag == 11:
-            self.apriltagID = 11
-        elif self.aprilTag == 12:
-            self.apriltagID = 12
-        elif self.aprilTag == 13:
-            self.apriltagID = 13
-        
-        
-        self.smartDashboard.putNumber("April Tag ID", self.apriltagID)
-        
-    def nothing(self):
-        self.apriltagID = 0
+        if aprilTagFromLimelight in range (0, 16):
+            self.apriltagID = aprilTagFromLimelight
+            
+        wpilib.SmartDashboard.putNumber("April Tag X Value in meters", self.xyzValuesForAprilTags.X())
+        wpilib.SmartDashboard.putNumber("April Tag Y Value in meters", self.xyzValuesForAprilTags.Y())
+        wpilib.SmartDashboard.putNumber("April Tag Z Value in meters", self.xyzValuesForAprilTags.Z())
