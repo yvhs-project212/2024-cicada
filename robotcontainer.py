@@ -12,6 +12,7 @@ from swervepy.impl import CoaxialSwerveModule
 
 from constants import PHYS, MECH, ELEC, OP, SW
 import components
+import commands2
 
 
 class RobotContainer:
@@ -23,15 +24,33 @@ class RobotContainer:
     """
 
     def __init__(self):
-        gyro = components.gyro_component_class(**components.gyro_param_values)
+        navx_adapter = components.gyro_component_class(**components.gyro_param_values)
+        self.gyro = navx_adapter.navx
+        self.gyro.zeroYaw()
+
 
         # The Azimuth component included the absolute encoder because it needs
         # to be able to reset to absolute position.
         #
-        self.lf_enc = components.absolute_encoder_class(ELEC.LF_encoder_DIO)
-        self.lb_enc = components.absolute_encoder_class(ELEC.LB_encoder_DIO)
-        self.rb_enc = components.absolute_encoder_class(ELEC.RB_encoder_DIO)
-        self.rf_enc = components.absolute_encoder_class(ELEC.RF_encoder_DIO)
+        self.lf_enc = components.absolute_encoder_class(ELEC.LF_encoder_DIO, SW.lf_enc_zeropos)
+        self.lb_enc = components.absolute_encoder_class(ELEC.LB_encoder_DIO, SW.lb_enc_zeropos)
+        self.rb_enc = components.absolute_encoder_class(ELEC.RB_encoder_DIO, SW.rb_enc_zeropos)
+        self.rf_enc = components.absolute_encoder_class(ELEC.RF_encoder_DIO, SW.rf_enc_zeropos)
+
+        # Determine what the current reading of the 4 encoders should be, given
+	    # that SW.XX_enc_zeropos says where the wheels face front
+	    #
+        """
+	    lf_enc_pos = self.lf_enc.absolute_position_degrees - SW.lf_enc_zeropos
+	    rf_enc_pos = self.rf_enc.absolute_position_degrees - SW.rf_enc_zeropos
+	    lb_enc_pos = self.lb_enc.absolute_position_degrees - SW.lb_enc_zeropos
+	    rb_enc_pos = self.rb_enc.absolute_position_degrees - SW.rb_enc_zeropos
+        """
+        lf_enc_pos = self.lf_enc.absolute_position_degrees
+        rf_enc_pos = self.rf_enc.absolute_position_degrees
+        lb_enc_pos = self.lb_enc.absolute_position_degrees
+        rb_enc_pos = self.rb_enc.absolute_position_degrees
+
         modules = (
             # Left Front module
             CoaxialSwerveModule(
@@ -41,7 +60,7 @@ class RobotContainer:
                 ),
                 azimuth=components.azimuth_component_class(
                     id_=ELEC.LF_steer_CAN_ID,
-                    azimuth_offset=Rotation2d.fromDegrees(0),
+                    azimuth_offset=Rotation2d.fromDegrees(lf_enc_pos),
                     parameters=components.azimuth_params,
                     absolute_encoder=self.lf_enc,
                 ),
@@ -55,7 +74,7 @@ class RobotContainer:
                 ),
                 azimuth=components.azimuth_component_class(
                     id_=ELEC.RF_steer_CAN_ID,
-                    azimuth_offset=Rotation2d.fromDegrees(0),
+                    azimuth_offset=Rotation2d.fromDegrees(rf_enc_pos),
                     parameters=components.azimuth_params,
                     absolute_encoder=self.rf_enc,
                 ),
@@ -69,7 +88,7 @@ class RobotContainer:
                 ),
                 azimuth=components.azimuth_component_class(
                     id_=ELEC.LB_steer_CAN_ID,
-                    azimuth_offset=Rotation2d.fromDegrees(0),
+                    azimuth_offset=Rotation2d.fromDegrees(lb_enc_pos),
                     parameters=components.azimuth_params,
                     absolute_encoder=self.lb_enc,
                 ),
@@ -83,7 +102,7 @@ class RobotContainer:
                 ),
                 azimuth=components.azimuth_component_class(
                     id_=ELEC.RB_steer_CAN_ID,
-                    azimuth_offset=Rotation2d.fromDegrees(0),
+                    azimuth_offset=Rotation2d.fromDegrees(rb_enc_pos),
                     parameters=components.azimuth_params,
                     absolute_encoder=self.rb_enc,
                 ),
@@ -91,7 +110,7 @@ class RobotContainer:
             ),
         )
 
-        self.stick = wpilib.Joystick(0)
+        self.stick = commands2.button.CommandXboxController(0)
 
         self.speed_limit_ratio = 1.0
         if OP.speed_limit:
@@ -111,7 +130,7 @@ class RobotContainer:
         # Define a swerve drive subsystem by passing in a list of SwerveModules
         # and some options
         #
-        self.swerve = SwerveDrive(modules, gyro, OP.max_speed, OP.max_angular_velocity)
+        self.swerve = SwerveDrive(modules, navx_adapter, OP.max_speed, OP.max_angular_velocity)
 
         # Set the swerve subsystem's default command to teleoperate using
         # the controller joysticks

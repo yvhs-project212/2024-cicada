@@ -10,18 +10,18 @@ all that here instead of in the container.py module.
 from constants import PHYS, MECH, ELEC, OP, SW
 from swervepy.impl import (
     # Replace these classes with the ones that apply to your robot
-    DummyGyro,
     AbsoluteDutyCycleEncoder,
     CoaxialSwerveModule,
     NEOCoaxialDriveComponent,
     NEOCoaxialAzimuthComponent,
 )
+from swervepy.impl.sensor import NavXGyro
 
 # Define which components you're using (e.g. which motors you're using)
 #
 drive_component_class = NEOCoaxialDriveComponent
 azimuth_component_class = NEOCoaxialAzimuthComponent
-gyro_component_class = DummyGyro
+gyro_component_class = NavXGyro
 absolute_encoder_class = AbsoluteDutyCycleEncoder
 
 # For the drive/azimuth classes selected, set the parameters which DO NOT vary
@@ -43,7 +43,7 @@ drive_param_values = {
     "peak_current_limit": ELEC.drive_peak_current_limit,
 
     # remove the following line for NEOCoaxialDriveComponent
-    "peak_current_duration": ELEC.drive_peak_current_duration,
+    #"peak_current_duration": ELEC.drive_peak_current_duration,
 
     "neutral_mode": OP.propulsion_neutral,
     "kP": SW.kP,
@@ -59,14 +59,14 @@ azimuth_param_values = {
     # Falcon500CoaxialDriveComponent takes all these params, plus one more
     # (peak_current_duration).
     #
-    "gear_ratio": MECH.swerve_module_propulsion_gearing_ratio,
+    "gear_ratio": MECH.swerve_module_steering_gearing_ratio,
     "max_angular_velocity": OP.max_angular_velocity,
     "ramp_rate": 0,
     "continuous_current_limit": ELEC.azimuth_continuous_current_limit,
     "peak_current_limit": ELEC.azimuth_peak_current_limit,
 
     # remove the following line for NEOCoaxialDriveComponent
-    "peak_current_duration": ELEC.azimuth_peak_current_duration,
+    #"peak_current_duration": ELEC.azimuth_peak_current_duration,
 
     "neutral_mode": OP.steering_neutral,
     "kP": SW.kP,
@@ -86,6 +86,7 @@ gyro_param_values = {
     #     (default False)
     #
     # Add your gyro constructor params here.
+    "invert": True
 }
 
 drive_component_params_class = drive_component_class.Parameters

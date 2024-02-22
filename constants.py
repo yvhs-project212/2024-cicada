@@ -32,7 +32,7 @@ mech_data = {
     "swerve_module_steering_gearing_ratio": 150 / 7,  # SDS Mk4i
 
     "propulsion_motor_inverted": False,
-    "steering_motor_inverted": False,
+    "steering_motor_inverted": True,
 }
 MECH = namedtuple("Data", mech_data.keys())(**mech_data)
 
@@ -46,13 +46,13 @@ elec_data = {
 
     # Talon FX motor controllers can set peak_current_duration.
     # SparkMAX motor controllers can't.
-    "drive_peak_current_duration": 0.01,
-    "azimuth_peak_current_duration": 0.01,
+    #"drive_peak_current_duration": 0.01,
+    #"azimuth_peak_current_duration": 0.01,
 
     # time in seconds for propulsion motors to ramp up to full speed
     # reference: https://codedocs.revrobotics.com/java/com/revrobotics/cansparkmax
-    "open_loop_ramp_rate": 0.5,
-    "closed_loop_ramp_rate": 0.5,
+    "open_loop_ramp_rate": 1.5,
+    "closed_loop_ramp_rate": 1.5,
 
     "RF_steer_CAN_ID": 11,
     "RF_drive_CAN_ID": 12,
@@ -91,17 +91,17 @@ op_data = {
     "angular_velocity_limit": 2.5 * (u.rad / u.s),
 
     # For NEO / SparkMAX, use the following and comment out the Falcon500 values
-    # "propulsion_neutral": rev.CANSparkMax.IdleMode.kCoast,
-    # "steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
+    "propulsion_neutral": rev.CANSparkMax.IdleMode.kCoast,
+    "steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
     # For Falcon500 / TalonFX, use the following and comment out the NEO values
-    "propulsion_neutral": phoenix5.NeutralMode.Coast,
-    "steering_neutral": phoenix5.NeutralMode.Brake,
+    #"propulsion_neutral": phoenix5.NeutralMode.Coast,
+    #"steering_neutral": phoenix5.NeutralMode.Brake,
 
     # Values to pass to stick.getRawAxis()
     # Set these according to your operator preferences
-    "translation_joystick_axis": JOYSTICK_AXES["RIGHT_Y"],
-    "strafe_joystick_axis": JOYSTICK_AXES["RIGHT_X"],
-    "rotation_joystick_axis": JOYSTICK_AXES["LEFT_X"],
+    "translation_joystick_axis": JOYSTICK_AXES["LEFT_Y"],
+    "strafe_joystick_axis": JOYSTICK_AXES["LEFT_X"],
+    "rotation_joystick_axis": JOYSTICK_AXES["RIGHT_X"],
 }
 OP = namedtuple("Data", op_data.keys())(**op_data)
 
@@ -110,7 +110,7 @@ sw_data = {
     # field_relative: True if "forward" means "down the field"; False if
     # "forward" means "in the direction the robot is facing".  A True value
     # requires a (non-Dummy) gyro.
-    "field_relative": False,
+    "field_relative": True,
 
     # drive_open_loop: True if we're not using PID control *for velocity targeting*,
     # i.e. when a target velocity is calculated, do we use the corresponding
@@ -121,10 +121,19 @@ sw_data = {
     #
     "drive_open_loop": True,
 
+    # "Zero" (front-facing) positions, as read from the four encoders
+	# NOTE: when facing wheels "front", make sure that the bevel gears are all
+	# facing right.  Otherwise the wheel will run in reverse!
+	#
+	"lf_enc_zeropos":  0,
+	"rf_enc_zeropos":  0,
+	"lb_enc_zeropos":  0,
+	"rb_enc_zeropos":  0,
+
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
-    "kP": 0.3,  # representative value for Falcon500 motors
-    # "kP": 0.01,   # representative value for NEO motors
+    #"kP": 0.3,  # representative value for Falcon500 motors
+    "kP": 0.01,   # representative value for NEO motors
     "kI": 0,
     "kD": 0,
 
