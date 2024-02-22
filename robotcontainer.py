@@ -24,7 +24,6 @@ import Subsystems.photonVisionSubsystem
 from Commands.robotLEDsCommand import ledMode1, ledMode2, ledMode3
 from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from Commands.intakeCommand import intake, outake, stopIntake
-from Commands.aprilTagCommand import getAprilTags
 
 
 class RobotContainer:
@@ -42,7 +41,7 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.arm = Subsystems.shooterSubsystem.shooterSubsystem()
+        self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
         self.led = Subsystems.robotLEDsSubsystem.robotLEDsSubsystem()
         self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
         self.Vision = Subsystems.photonVisionSubsystem.visionSub()
@@ -67,11 +66,11 @@ class RobotContainer:
         # self.Vision.setDefaultCommand(self.Vision.periodic())
         
         
-        self.stick.leftBumper().whileTrue(inwardsShooter(self.arm))
-        self.stick.leftBumper().whileFalse(stopShooter(self.arm, self.led))
+        self.stick.leftBumper().whileTrue(inwardsShooter(self.shooter))
+        self.stick.leftBumper().whileFalse(stopShooter(self.shooter, self.led))
         
-        self.stick.rightBumper().whileTrue(outwardsShooter(self.arm, self.led))
-        self.stick.rightBumper().whileFalse(stopShooter(self.arm, self.led))
+        self.stick.rightBumper().whileTrue(outwardsShooter(self.shooter, self.led))
+        self.stick.rightBumper().whileFalse(stopShooter(self.shooter, self.led))
         
         self.stick.button(2).whileTrue(outake(self.intake))
         self.stick.button(2).whileFalse(stopIntake(self.intake, self.led))
