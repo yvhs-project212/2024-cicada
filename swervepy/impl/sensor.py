@@ -96,7 +96,7 @@ class NavXGyro(Gyro):
         wpilib.SmartDashboard.putData("NavX", self)
 
     def zero_heading(self):
-        self.navx.zeroYaw(0)
+        self.navx.zeroYaw()
 
     @property
     def heading(self) -> Rotation2d:

@@ -1,7 +1,7 @@
 import math
 import logging
 
-logger = logging.getLogger("your.robot")
+logger = logging.getLogger("project212_robot")
 
 import wpilib
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
