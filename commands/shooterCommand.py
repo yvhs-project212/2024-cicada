@@ -9,14 +9,12 @@ import commands2
 import commands2.cmd
 
 from Subsystems.shooterSubsystem import shooterSubsystem
-from Subsystems.robotLEDsSubsystem import robotLEDsSubsystem
 
 class outwardsShooter(commands2.Command):
     
-    def __init__(self, shooterSubsystem: shooterSubsystem, robotLEDsSubsystem: robotLEDsSubsystem) -> None:
+    def __init__(self, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
         self.shooterSub = shooterSubsystem
-        self.LED = robotLEDsSubsystem
 
     def initialize(self):
         import logging
@@ -25,7 +23,6 @@ class outwardsShooter(commands2.Command):
 
     def execute(self):
         self.shooterSub.outwardsShooter()
-        self.LED.ledMode1()
 
     def isFinished(self):
         return False
@@ -57,10 +54,9 @@ class inwardsShooter(commands2.Command):
 
 class stopShooter(commands2.Command):
 
-    def __init__(self, shooterSubsystem: shooterSubsystem, robotLEDsSubsystem: robotLEDsSubsystem) -> None:
+    def __init__(self, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
         self.shooterSub = shooterSubsystem
-        self.LED = robotLEDsSubsystem
 
     def initialize(self):
         import logging
@@ -69,7 +65,6 @@ class stopShooter(commands2.Command):
         
     def execute(self):
         self.shooterSub.stopShooter()
-        self.LED.ledMode3()
 
     def isFinished(self):
         return False
