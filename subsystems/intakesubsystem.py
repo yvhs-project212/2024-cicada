@@ -7,7 +7,7 @@ import phoenix5
 class intake_ss(commands2.Subsystem):
         def __init__(self) -> None:
             super().__init__()
-            self.motor = phoenix5.WPI_TalonSRX(8)
+            self.motor = phoenix5.WPI_TalonSRX(ELEC.intake_CAN_ID)
 
         def intake(self):
             self.motor.set(0.3)
