@@ -40,7 +40,7 @@ class RobotContainer:
         # Determine what the current reading of the 4 encoders should be, given
 	    # that SW.XX_enc_zeropos says where the wheels face front
 	    #
-        
+        """
         lf_enc_pos = self.lf_enc.absolute_position_degrees - SW.lf_enc_zeropos
         rf_enc_pos = self.rf_enc.absolute_position_degrees - SW.rf_enc_zeropos
         lb_enc_pos = self.lb_enc.absolute_position_degrees - SW.lb_enc_zeropos
@@ -50,7 +50,8 @@ class RobotContainer:
         rf_enc_pos = self.rf_enc.absolute_position_degrees
         lb_enc_pos = self.lb_enc.absolute_position_degrees
         rb_enc_pos = self.rb_enc.absolute_position_degrees
-        """
+        logger.info(f"Encoder positions: LF={lf_enc_pos}, RF={rf_enc_pos}, RB={rb_enc_pos}, LB={lb_enc_pos}")
+        
         modules = (
             # Left Front module
             CoaxialSwerveModule(

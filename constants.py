@@ -20,8 +20,8 @@ from swervepy import u
 
 # Physical constants
 phys_data = {
-    "track_width": (21.73 * u.inch).m_as(u.m),
-    "wheel_base": (21.73 * u.inch).m_as(u.m),
+    "track_width": (14.75 * u.inch).m_as(u.m),
+    "wheel_base": (14.75 * u.inch).m_as(u.m),
     "wheel_circumference": 4 * math.pi * u.inch,
 }
 PHYS = namedtuple("Data", phys_data.keys())(**phys_data)
@@ -62,10 +62,10 @@ elec_data = {
     "RB_encoder_DIO": 1,
     "LB_steer_CAN_ID": 15,
     "LB_drive_CAN_ID": 16,
-    "LB_encoder_DIO": 2,
+    "LB_encoder_DIO": 3,
     "LF_steer_CAN_ID": 17,
     "LF_drive_CAN_ID": 18,
-    "LF_encoder_DIO": 3,
+    "LF_encoder_DIO": 2,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
@@ -125,10 +125,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  -89,
-	"rf_enc_zeropos":  185,
-	"lb_enc_zeropos":  135,
-	"rb_enc_zeropos":  45,
+	"lf_enc_zeropos":  266,
+	"rf_enc_zeropos":  189,
+	"lb_enc_zeropos":  130,
+	"rb_enc_zeropos":  43,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)

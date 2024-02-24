@@ -392,7 +392,7 @@ class NEOCoaxialAzimuthComponent(CoaxialAzimuthComponent):
         self._controller.setReference(angle.degrees(), rev.CANSparkMax.ControlType.kPosition)
 
     def reset(self):
-        absolute_position = self._absolute_encoder.absolute_position - self._offset
+        absolute_position = self._absolute_encoder.absolute_position
         self._encoder.setPosition(absolute_position.degrees())
 
     @property
