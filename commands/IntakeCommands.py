@@ -19,10 +19,10 @@ class IntakeCommand(commands2.Command):
 
         
     def execute(self):
-        self.intakeSub.intake(self)
+        self.intakeSub.intake()
 
-    def isfinished(self):
-        return False
+    def isFinished(self):
+        return self.intakeSub.limit_switch_Get()
     
     def end(self, interrupted: bool):
         self.intakeSub.stopIntake()
@@ -42,7 +42,7 @@ class StopIntake(commands2.Command):
     def execute(self):
         self.intakeSub.stopIntake()
 
-    def isfinished(self):
+    def isFinished(self):
         return False
      
     def end(self, interrupted: bool):

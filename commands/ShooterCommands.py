@@ -20,7 +20,7 @@ class ShootCommand(commands2.Command):
     def execute(self):
         self.ShooterSub.shoot()
 
-    def isFinished(self):
+    def isFinished(self): 
        return False
     
     def end(self, interrupted: bool):
