@@ -58,6 +58,5 @@ class RobotContainer:
         self.stick.rightBumper().whileTrue(outtake(self.intake))
         self.stick.rightBumper().whileFalse(stop(self.intake))
 
-
     def getAutonomousCommand(self):
         return None
