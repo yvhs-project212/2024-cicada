@@ -41,16 +41,16 @@ class RobotContainer:
 	    # that SW.XX_enc_zeropos says where the wheels face front
 	    #
         """
-	    lf_enc_pos = self.lf_enc.absolute_position_degrees - SW.lf_enc_zeropos
-	    rf_enc_pos = self.rf_enc.absolute_position_degrees - SW.rf_enc_zeropos
-	    lb_enc_pos = self.lb_enc.absolute_position_degrees - SW.lb_enc_zeropos
-	    rb_enc_pos = self.rb_enc.absolute_position_degrees - SW.rb_enc_zeropos
+        lf_enc_pos = self.lf_enc.absolute_position_degrees - SW.lf_enc_zeropos
+        rf_enc_pos = self.rf_enc.absolute_position_degrees - SW.rf_enc_zeropos
+        lb_enc_pos = self.lb_enc.absolute_position_degrees - SW.lb_enc_zeropos
+        rb_enc_pos = self.rb_enc.absolute_position_degrees - SW.rb_enc_zeropos
         """
         lf_enc_pos = self.lf_enc.absolute_position_degrees
         rf_enc_pos = self.rf_enc.absolute_position_degrees
         lb_enc_pos = self.lb_enc.absolute_position_degrees
         rb_enc_pos = self.rb_enc.absolute_position_degrees
-
+        
         modules = (
             # Left Front module
             CoaxialSwerveModule(
