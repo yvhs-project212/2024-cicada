@@ -2,7 +2,7 @@ import wpilib
 import commands2
 import commands2.cmd
 
-from Subsystems.intakeSubsystem import intakeSubsystem
+from subsystems.intakeSubsystem import intakeSubsystem
 
 class intake(commands2.Command):
     

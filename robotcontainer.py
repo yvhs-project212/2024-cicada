@@ -9,27 +9,35 @@ import wpimath.controller
 import commands2
 import commands2.cmd
 import commands2.button
-from Commands.hangCommand import Hang, Lower, StopHang
+from commands.hangCommand import Hang, Lower, StopHang
 
 # Constants
 import constants
 from constants import OP, SW
 
 # Subsystem Imports
-import Subsystems.shooterSubsystem
-import Subsystems.intakeSubsystem
-import Subsystems.photonVisionSubsystem
+import subsystems.shooterSubsystem
+import subsystems.intakeSubsystem
+import subsystems.photonVisionSubsystem
 
 # Command Imports
-from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from Commands.intakeCommand import intake, outake, stopIntake
+from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
+from commands.intakeCommand import intake, outake, stopIntake
 from constants import OP, SW
 
 
-import Subsystems.hangSubsystem
+import subsystems.hangSubsystem
 
-from Commands.hangCommand import Hang, Lower, StopHang
+from commands.hangCommand import Hang, Lower, StopHang
 
+import subsystems.armSubsystem
+
+import commands.armCommand
+import constants
+
+import subsystems.armSubsystem
+
+import commands.armCommand
 
 class RobotContainer:
     """
@@ -46,10 +54,12 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
-        self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
-        self.Vision = Subsystems.photonVisionSubsystem.visionSub()        
-        self.hang = Subsystems.hangSubsystem.HangSubsystem()
+        self.shooter = subsystems.shooterSubsystem.shooterSubsystem()
+        self.intake = subsystems.intakeSubsystem.intakeSubsystem()
+        self.Vision = subsystems.photonVisionSubsystem.visionSub()        
+        self.hang = subsystems.hangSubsystem.HangSubsystem()        
+        self.arm = subsystems.armSubsystem.ArmSubsystem()
+
 
         # The driver's controller
         self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
@@ -93,6 +103,8 @@ class RobotContainer:
     
         self.stick.rightTrigger().whileTrue(Hang(self.hang))
         self.stick.rightTrigger().whileFalse(StopHang(self.hang))
+        
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
 
     def getAutonomousCommand(self):
         return None

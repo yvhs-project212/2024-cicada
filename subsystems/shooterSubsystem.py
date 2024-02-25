@@ -9,8 +9,8 @@ class shooterSubsystem(commands2.Subsystem):
     def  __init__(self):
         
         # initialize the 2 shooter motors and invert one motor
-        self.shooterMotor1 = rev.CANSparkMax(ELEC.arm_motor_1, rev.CANSparkMax.MotorType.kBrushless)
-        self.shooterMotor2 = rev.CANSparkMax(ELEC.arm_motor_2, rev.CANSparkMax.MotorType.kBrushless)
+        self.shooterMotor1 = rev.CANSparkMax(ELEC.shooter_1, rev.CANSparkMax.MotorType.kBrushless)
+        self.shooterMotor2 = rev.CANSparkMax(ELEC.shooter_2, rev.CANSparkMax.MotorType.kBrushless)
         self.shooterMotor1.setInverted(True)
         
         # create a controller instance and group the 2 shooter motors

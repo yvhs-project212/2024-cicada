@@ -28,11 +28,13 @@ MECH = namedtuple("Data", mech_data.keys())(**mech_data)
 
 # Electrical constants, e.g. current limits, CAN bus IDs, RoboRIO port numbers
 elec_data = {
-    "arm_motor_1": 6,
-    "arm_motor_2": 2,
-    "intake_motor": 4,    
-    "hang_motor_CAN_ID": 4,
-    "lower_motor_CAN_ID": 3,
+    "shooter_1": 12,
+    "shooter_2": 13,
+    "intake_motor": 14,    
+    "hang_motor_CAN_ID": 10,
+    "lower_motor_CAN_ID": 11,    
+    "arm_motor1_CAN_ID": 8,
+    "arm_motor2_CAN_ID": 9,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
