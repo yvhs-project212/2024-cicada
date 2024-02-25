@@ -28,4 +28,5 @@ class visionSub(commands2.Subsystem):
         self.pipeline = self.camResult.getTargets()
         
         self.fidicial_ids= [ i.getFiducialId() for i in self.pipeline ]
+        
         wpilib.SmartDashboard.putNumberArray("April Tag ID", self.fidicial_ids)
