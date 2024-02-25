@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 #
 # Copyright (c) FIRST and other WPILib contributors.
@@ -12,7 +11,7 @@ import typing
 
 import wpilib
 import commands2
-#import commands2.cmd
+import commands2.cmd
 
 import robotcontainer
 
@@ -33,7 +32,7 @@ class Robot(commands2.TimedCommandRobot):
         # Instantiate our RobotContainer.  This will perform all our button
         # bindings, and put our autonomous chooser on the dashboard.
         self.container = robotcontainer.RobotContainer()
-        #self.container.swerve.reset_modules()
+
         log.info('robot initialized')
 
     def autonomousInit(self) -> None:
@@ -41,7 +40,7 @@ class Robot(commands2.TimedCommandRobot):
         This method runs the autonomous command selected by your
         RobotContainer class.
         """
-        self.autonomousCommand = self.container.get_autonomous_command()
+        self.autonomousCommand = self.container.getAutonomousCommand()
 
         # schedule the autonomous command (example)
         if self.autonomousCommand is not None:
