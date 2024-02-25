@@ -69,7 +69,8 @@ elec_data = {
       
     "shooter_Motor1": 5,
     "shooter_Motor2": 6,
-    "intake_motor": 7,    
+    "intake_motor": 7,  
+    "intake_limit_switch": 30,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,    
     "hang_motor_CAN_ID": 10,
@@ -86,6 +87,10 @@ JOYSTICK_AXES = {
 
 # Operation constants
 op_data = {
+    #Driver/Operator's controllers
+    "driver_controller": 0,
+    "operator_controller": 1,
+
     # These maximum parameters reflect the maximum physically possible, not the
     # desired maximum limit.
     "max_speed": 4.5 * (u.m / u.s),
@@ -95,11 +100,11 @@ op_data = {
     # following parameters.  Setting to None is the same as setting to
     # max_speed/max_angular_velocity, and indicates no limit.
     #
-    "speed_limit": 1.0 * (u.m / u.s),
-    "angular_velocity_limit": 2.5 * (u.rad / u.s),
+    "speed_limit": 2.5 * (u.m / u.s),
+    "angular_velocity_limit": 5.0 * (u.rad / u.s),
 
     # For NEO / SparkMAX, use the following and comment out the Falcon500 values
-    "propulsion_neutral": rev.CANSparkMax.IdleMode.kCoast,
+    "propulsion_neutral": rev.CANSparkMax.IdleMode.kBrake,
     "steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
     # For Falcon500 / TalonFX, use the following and comment out the NEO values
     #"propulsion_neutral": phoenix5.NeutralMode.Coast,

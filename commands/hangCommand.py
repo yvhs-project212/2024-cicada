@@ -3,7 +3,7 @@ import commands2
 import commands2.cmd
 import wpimath.controller
 
-from Subsystems.hangSubsystem import HangSubsystem
+from subsystems.hangSubsystem import HangSubsystem
 
 import constants
 

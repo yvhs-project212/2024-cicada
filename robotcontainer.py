@@ -20,16 +20,16 @@ import constants
 from constants import OP, SW
 
 # Subsystem Imports
-import Subsystems.shooterSubsystem
-import Subsystems.intakeSubsystem
-import Subsystems.armSubsystem
-import Subsystems.hangSubsystem
+import subsystems.shooterSubsystem
+import subsystems.intakeSubsystem
+import subsystems.armSubsystem
+import subsystems.hangSubsystem
 
 # Command Imports
-from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from Commands.intakeCommand import intake, outake, stopIntake
-import Commands.armCommand
-from Commands.hangCommand import Hang, Lower, StopHang
+from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
+from commands.intakeCommand import intake, outake, stopIntake
+import commands.armCommand
+from commands.hangCommand import Hang, Lower, StopHang
 
 
 class RobotContainer:
@@ -76,14 +76,14 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
-        self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
-        self.arm = Subsystems.armSubsystem.ArmSubsystem()        
-        self.hang = Subsystems.hangSubsystem.HangSubsystem()
+        self.shooter = subsystems.shooterSubsystem.shooterSubsystem()
+        self.intake = subsystems.intakeSubsystem.intakeSubsystem()
+        self.arm = subsystems.armSubsystem.ArmSubsystem()        
+        self.hang = subsystems.hangSubsystem.HangSubsystem()
 
         # The driver's controller
-        self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
-        self.stick = commands2.button.CommandXboxController(constants.OP.operator_joystick_port)
+        self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)
+        self.OperatorController = commands2.button.CommandXboxController(OP.operator_controller)
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -207,17 +207,17 @@ class RobotContainer:
         return invert_sign * input_sign * scaled_input
 
     def get_translation_input(self, invert=True):
-        raw_stick_val = self.stick.getRawAxis(OP.translation_joystick_axis)
+        raw_stick_val = self.DriverController.getRawAxis(OP.translation_joystick_axis)
         return self.process_joystick_input(raw_stick_val, invert=invert,
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_strafe_input(self, invert=True):
-        raw_stick_val = self.stick.getRawAxis(OP.strafe_joystick_axis)
+        raw_stick_val = self.DriverController.getRawAxis(OP.strafe_joystick_axis)
         return self.process_joystick_input(raw_stick_val, invert=invert,
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_rotation_input(self, invert=True):
-        raw_stick_val = self.stick.getRawAxis(OP.rotation_joystick_axis)
+        raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
         return self.process_joystick_input(
             raw_stick_val, invert=invert, limit_ratio=self.angular_velocity_limit_ratio)
 
@@ -255,25 +255,25 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.stick.leftBumper().whileTrue(inwardsShooter(self.shooter))
-        self.stick.leftBumper().whileFalse(stopShooter(self.shooter))
+        self.OperatorController.leftBumper().whileTrue(inwardsShooter(self.shooter))
+        self.OperatorController.leftBumper().whileFalse(stopShooter(self.shooter))
         
-        self.stick.rightBumper().whileTrue(outwardsShooter(self.shooter))
-        self.stick.rightBumper().whileFalse(stopShooter(self.shooter))
+        self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
+        self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.stick.button(2).whileTrue(outake(self.intake))
-        self.stick.button(2).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(2).whileTrue(outake(self.intake))
+        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
         
-        self.stick.button(3).whileTrue(intake(self.intake))
-        self.stick.button(3).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(3).whileTrue(intake(self.intake))
+        self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
         
-        self.arm.setDefaultCommand(Commands.armCommand.ArmWithJoystick(self.arm))
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
-        self.stick.leftTrigger().whileTrue(Lower(self.hang))
-        self.stick.leftTrigger().whileFalse(StopHang(self.hang))
+        self.DriverController.leftTrigger().whileTrue(Lower(self.hang))
+        self.DriverController.leftTrigger().whileFalse(StopHang(self.hang))
     
-        self.stick.rightTrigger().whileTrue(Hang(self.hang))
-        self.stick.rightTrigger().whileFalse(StopHang(self.hang))
+        self.DriverController.rightTrigger().whileTrue(Hang(self.hang))
+        self.DriverController.rightTrigger().whileFalse(StopHang(self.hang))
 
     def getAutonomousCommand(self):
         return None

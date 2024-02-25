@@ -1,7 +1,7 @@
 import wpilib
 import rev
 import commands2
-from Subsystems.armSubsystem import ArmSubsystem
+from subsystems.armSubsystem import ArmSubsystem
 import constants
 
 class ArmMovingUp (commands2.Command):
