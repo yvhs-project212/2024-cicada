@@ -11,6 +11,7 @@ class intakeSubsystem(commands2.Subsystem):
         
         # initialize falcon 500 on intake and inverts it if necessary
         # self.intakeMotor = phoenix5.WPI_TalonFX(9)
+        
         self.intakeMotor = rev.CANSparkMax(ELEC.intake_motor, rev.CANSparkMax.MotorType.kBrushless)
         self.intakeMotor.setInverted(True)
         

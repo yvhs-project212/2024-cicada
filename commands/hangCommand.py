@@ -3,7 +3,7 @@ import commands2
 import commands2.cmd
 import wpimath.controller
 
-from subsystems import hangSubsystem
+from subsystems.hangSubsystem import HangSubsystem
 
 import constants
 
@@ -12,7 +12,7 @@ logger = logging.getLogger("aniyah")
 
 
 class Hang(commands2.Command):
-    def __init__(self, hang_ss: hangSubsystem) -> None:
+    def __init__(self, hang_ss: HangSubsystem) -> None:
         super().__init__()
         self.hangSub = hang_ss
 
@@ -32,7 +32,7 @@ class Hang(commands2.Command):
 
 
 class Lower(commands2.Command):
-    def __init__(self, hang_ss: hangSubsystem) -> None:
+    def __init__(self, hang_ss: HangSubsystem) -> None:
         super().__init__()
         self.hangSub = hang_ss
 
@@ -51,7 +51,7 @@ class Lower(commands2.Command):
 
 
 class StopHang(commands2.Command):
-    def __init__(self, hang_ss: hangSubsystem) -> None:
+    def __init__(self, hang_ss: HangSubsystem) -> None:
         super().__init__()
         self.hangSub = hang_ss
 

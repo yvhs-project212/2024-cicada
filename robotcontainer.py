@@ -18,7 +18,6 @@ from constants import OP, SW
 # Subsystem Imports
 import subsystems.shooterSubsystem
 import subsystems.intakeSubsystem
-import subsystems.photonVisionSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
@@ -55,8 +54,7 @@ class RobotContainer:
         """
         # The robot's subsystems
         self.shooter = subsystems.shooterSubsystem.shooterSubsystem()
-        self.intake = subsystems.intakeSubsystem.intakeSubsystem()
-        self.Vision = subsystems.photonVisionSubsystem.visionSub()        
+        self.intake = subsystems.intakeSubsystem.intakeSubsystem()      
         self.hang = subsystems.hangSubsystem.HangSubsystem()        
         self.arm = subsystems.armSubsystem.ArmSubsystem()
 
