@@ -8,8 +8,10 @@ class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
         
-        self.armmotor1 = phoenix5.WPI_TalonSRX(constants.ELEC.arm_motor1_CAN_ID)
-        self.armmotor2 = phoenix5.WPI_TalonSRX(constants.ELEC.arm_motor2_CAN_ID)
+        # self.armmotor1 = phoenix5.WPI_TalonSRX(constants.ELEC.arm_motor1_CAN_ID)
+        self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
+        # self.armmotor2 = phoenix5.WPI_TalonSRX(constants.ELEC.arm_motor2_CAN_ID)
+        self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         # self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         # self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2.setInverted(True)
