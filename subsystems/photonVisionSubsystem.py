@@ -1,5 +1,6 @@
 import wpilib
 import commands2
+import photonlibpy
 
 from photonlibpy import estimatedRobotPose
 from photonlibpy import multiTargetPNPResult
@@ -9,7 +10,7 @@ from photonlibpy import packet
 from photonlibpy import photonPoseEstimator
 from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
 
-import photonlibpy
+from wpimath.geometry import Pose3d, Transform3d, Translation3d
 
 from constants import OP
 
@@ -25,6 +26,14 @@ class visionSub(commands2.Subsystem):
         self.result = self.camera.getLatestResult()
         # Checks if limelight detects targets
         self.hasTargets = self.result.hasTargets()
+        # April Tag Layout
+        self.aprilTagLayout = photonPoseEstimator.AprilTagFieldLayout()
+        # # Position estimation strategy that is used by the PhotonPoseEstimator class
+        self.strat = photonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE
+        # A Transform3d value that tells the robot the distance from the center of the robot to the camera mount position
+        # self.robotToCam = Transform3d(0, 0, 0, 0)
+        # Pose Estimation
+        # self.pose = photonPoseEstimator.PhotonPoseEstimator(self.aprilTagLayout, self.strat, self.camera, self.robotToCam)
         
         
         self.trackedTarget = PhotonTrackedTarget
