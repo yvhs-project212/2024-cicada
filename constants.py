@@ -30,7 +30,9 @@ MECH = namedtuple("Data", mech_data.keys())(**mech_data)
 elec_data = {
     "arm_motor_1": 6,
     "arm_motor_2": 2,
-    "intake_motor": 4,
+    "intake_motor": 4,    
+    "hang_motor_CAN_ID": 4,
+    "lower_motor_CAN_ID": 3,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 

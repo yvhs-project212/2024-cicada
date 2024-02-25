@@ -9,6 +9,7 @@ import wpimath.controller
 import commands2
 import commands2.cmd
 import commands2.button
+from Commands.hangCommand import Hang, Lower, StopHang
 
 # Constants
 import constants
@@ -22,6 +23,12 @@ import Subsystems.photonVisionSubsystem
 # Command Imports
 from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from Commands.intakeCommand import intake, outake, stopIntake
+from constants import OP, SW
+
+
+import Subsystems.hangSubsystem
+
+from Commands.hangCommand import Hang, Lower, StopHang
 
 
 class RobotContainer:
@@ -41,11 +48,11 @@ class RobotContainer:
         # The robot's subsystems
         self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
         self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
-        self.Vision = Subsystems.photonVisionSubsystem.visionSub()
+        self.Vision = Subsystems.photonVisionSubsystem.visionSub()        
+        self.hang = Subsystems.hangSubsystem.HangSubsystem()
 
         # The driver's controller
         self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
-
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -81,6 +88,11 @@ class RobotContainer:
         # self.stick.button(4).whileTrue(ledMode2(self.led))
         # self.stick.button(4).whileFalse(ledMode3(self.led))
         
+        self.stick.leftTrigger().whileTrue(Lower(self.hang))
+        self.stick.leftTrigger().whileFalse(StopHang(self.hang))
+    
+        self.stick.rightTrigger().whileTrue(Hang(self.hang))
+        self.stick.rightTrigger().whileFalse(StopHang(self.hang))
 
     def getAutonomousCommand(self):
         return None
