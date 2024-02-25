@@ -51,8 +51,8 @@ elec_data = {
 
     # time in seconds for propulsion motors to ramp up to full speed
     # reference: https://codedocs.revrobotics.com/java/com/revrobotics/cansparkmax
-    "open_loop_ramp_rate": 1.5,
-    "closed_loop_ramp_rate": 1.5,
+    "open_loop_ramp_rate": 0,
+    "closed_loop_ramp_rate": 0,
 
     "RF_steer_CAN_ID": 11,
     "RF_drive_CAN_ID": 12,
@@ -87,11 +87,11 @@ op_data = {
     # following parameters.  Setting to None is the same as setting to
     # max_speed/max_angular_velocity, and indicates no limit.
     #
-    "speed_limit": 1.0 * (u.m / u.s),
-    "angular_velocity_limit": 2.5 * (u.rad / u.s),
+    "speed_limit": 2.5 * (u.m / u.s),
+    "angular_velocity_limit": 5.0 * (u.rad / u.s),
 
     # For NEO / SparkMAX, use the following and comment out the Falcon500 values
-    "propulsion_neutral": rev.CANSparkMax.IdleMode.kCoast,
+    "propulsion_neutral": rev.CANSparkMax.IdleMode.kBrake,
     "steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
     # For Falcon500 / TalonFX, use the following and comment out the NEO values
     #"propulsion_neutral": phoenix5.NeutralMode.Coast,
