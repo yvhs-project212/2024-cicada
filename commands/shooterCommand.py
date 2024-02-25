@@ -8,7 +8,7 @@ import wpilib
 import commands2
 import commands2.cmd
 
-from Subsystems.shooterSubsystem import shooterSubsystem
+from subsystems.shooterSubsystem import shooterSubsystem
 
 class outwardsShooter(commands2.Command):
     

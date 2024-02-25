@@ -15,13 +15,13 @@ import constants
 from constants import OP, SW
 
 # Subsystem Imports
-import Subsystems.shooterSubsystem
-import Subsystems.intakeSubsystem
-import Subsystems.photonVisionSubsystem
+import subsystems.shooterSubsystem
+import subsystems.intakeSubsystem
+import subsystems.photonVisionSubsystem
 
 # Command Imports
-from Commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from Commands.intakeCommand import intake, outake, stopIntake
+from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
+from commands.intakeCommand import intake, outake, stopIntake
 
 
 class RobotContainer:
@@ -39,9 +39,9 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.shooter = Subsystems.shooterSubsystem.shooterSubsystem()
-        self.intake = Subsystems.intakeSubsystem.intakeSubsystem()
-        self.Vision = Subsystems.photonVisionSubsystem.visionSub()
+        self.shooter = subsystems.shooterSubsystem.shooterSubsystem()
+        self.intake = subsystems.intakeSubsystem.intakeSubsystem()
+        self.Vision = subsystems.photonVisionSubsystem.visionSub()
 
         # The driver's controller
         self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
