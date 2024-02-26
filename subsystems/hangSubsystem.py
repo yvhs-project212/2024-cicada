@@ -11,12 +11,12 @@ class HangSubsystem(commands2.Subsystem):
     def __init__(self):
         super().__init__()
         self.hangMotor1 = rev.CANSparkMax(ELEC.hang_motor_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
-        self.hangMotor2 = rev.CANSparkMax(ELEC.lower_motor_CAN_ID, rev.CANSparkMax.MotorType.kBrushed)
+        self.hangMotor2 = rev.CANSparkMax(ELEC.lower_motor_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
 
         '''self.hangMotor1 = phoenix5.TalonSRX(ELEC.hang_motor_CAN_ID)
         self.hangMotor2 = phoenix5.VictorSPX(ELEC.lower_motor_CAN_ID)'''
 
-        self.hangMotorGroup = wpilib.MotorControllerGroup(self.hangMotor1)
+        self.hangMotorGroup = wpilib.MotorControllerGroup(self.hangMotor1, self.hangMotor2)
         
 
         
