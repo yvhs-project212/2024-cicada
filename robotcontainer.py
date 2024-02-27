@@ -49,7 +49,7 @@ class RobotContainer:
         self.Vision = subsystems.photonVisionSubsystem.visionSub()
 
         # The driver's controller
-        self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
+        self.OperatorController = commands2.button.CommandXboxController(OP.operator_joystick_port)
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -63,12 +63,17 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+        self.OperatorController.leftBumper().whileTrue(inwardsShooter(self.shooter))
+        self.OperatorController.leftBumper().whileFalse(stopShooter(self.shooter))
         
-        self.stick.button(2).whileTrue(outake(self.intake))
-        self.stick.button(2).whileFalse(stopIntake(self.intake))
+        self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
+        self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.stick.button(3).whileTrue(intake(self.intake))
-        self.stick.button(3).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(2).whileTrue(outake(self.intake))
+        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
+        
+        self.OperatorController.button(3).whileTrue(intake(self.intake))
+        self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
         
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
