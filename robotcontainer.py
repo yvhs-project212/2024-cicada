@@ -9,7 +9,6 @@ import wpimath.controller
 import commands2
 import commands2.cmd
 import commands2.button
-from commands.hangCommand import Hang, Lower, StopHang
 
 # Constants
 import constants
@@ -19,25 +18,14 @@ from constants import OP, SW
 import subsystems.shooterSubsystem
 import subsystems.intakeSubsystem
 import subsystems.photonVisionSubsystem
+import subsystems.armSubsystem
+import subsystems.hangSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from commands.intakeCommand import intake, outake, stopIntake
-from constants import OP, SW
-
-
-import subsystems.hangSubsystem
-
-from commands.hangCommand import Hang, Lower, StopHang
-
-import subsystems.armSubsystem
-
 import commands.armCommand
-import constants
-
-import subsystems.armSubsystem
-
-import commands.armCommand
+import commands.hangCommand
 
 class RobotContainer:
     """
@@ -75,13 +63,6 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-
-        
-        self.stick.leftTrigger().whileTrue(Lower(self.hang))
-        self.stick.leftTrigger().whileFalse(StopHang(self.hang))
-    
-        self.stick.rightTrigger().whileTrue(Hang(self.hang))
-        self.stick.rightTrigger().whileFalse(StopHang(self.hang))
         
         self.stick.button(2).whileTrue(outake(self.intake))
         self.stick.button(2).whileFalse(stopIntake(self.intake))
