@@ -24,6 +24,7 @@ import subsystems.shooterSubsystem
 import subsystems.intakeSubsystem
 import subsystems.armSubsystem
 import subsystems.hangSubsystem
+import subsystems.photonVisionSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
@@ -80,6 +81,7 @@ class RobotContainer:
         self.intake = subsystems.intakeSubsystem.intakeSubsystem()
         self.arm = subsystems.armSubsystem.ArmSubsystem()        
         self.hang = subsystems.hangSubsystem.HangSubsystem()
+        self.Vision = subsystems.photonVisionSubsystem.visionSub()
 
         # The driver's controller
         self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)

@@ -51,8 +51,8 @@ elec_data = {
 
     # time in seconds for propulsion motors to ramp up to full speed
     # reference: https://codedocs.revrobotics.com/java/com/revrobotics/cansparkmax
-    "open_loop_ramp_rate": 1.5,
-    "closed_loop_ramp_rate": 1.5,
+    "open_loop_ramp_rate": 0,
+    "closed_loop_ramp_rate": 0,
 
     "RF_steer_CAN_ID": 11,
     "RF_drive_CAN_ID": 12,
