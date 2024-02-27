@@ -89,13 +89,9 @@ class RobotContainer:
         self.stick.button(3).whileTrue(intake(self.intake))
         self.stick.button(3).whileFalse(stopIntake(self.intake))
         
-        self.stick.leftTrigger().whileTrue(Lower(self.hang))
-        self.stick.leftTrigger().whileFalse(StopHang(self.hang))
-    
-        self.stick.rightTrigger().whileTrue(Hang(self.hang))
-        self.stick.rightTrigger().whileFalse(StopHang(self.hang))
-        
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
+        
+        self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
 
     def getAutonomousCommand(self):
         return None
