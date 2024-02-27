@@ -15,13 +15,9 @@ import constants
 from constants import OP, SW
 
 # Subsystem Imports
-import subsystems.shooterSubsystem
-import subsystems.intakeSubsystem
 import subsystems.photonVisionSubsystem
 
 # Command Imports
-from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from commands.intakeCommand import intake, outake, stopIntake
 
 
 class RobotContainer:
@@ -39,12 +35,9 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.shooter = subsystems.shooterSubsystem.shooterSubsystem()
-        self.intake = subsystems.intakeSubsystem.intakeSubsystem()
         self.Vision = subsystems.photonVisionSubsystem.visionSub()
 
         # The driver's controller
-        self.stick = commands2.button.CommandXboxController(OP.operator_joystick_port)
 
 
         # Configure the button bindings
@@ -59,27 +52,7 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        
-        # self.Vision.setDefaultCommand(self.Vision.periodic())
-        
-        
-        self.stick.leftBumper().whileTrue(inwardsShooter(self.shooter))
-        self.stick.leftBumper().whileFalse(stopShooter(self.shooter))
-        
-        self.stick.rightBumper().whileTrue(outwardsShooter(self.shooter))
-        self.stick.rightBumper().whileFalse(stopShooter(self.shooter))
-        
-        self.stick.button(2).whileTrue(outake(self.intake))
-        self.stick.button(2).whileFalse(stopIntake(self.intake))
-        
-        self.stick.button(3).whileTrue(intake(self.intake))
-        self.stick.button(3).whileFalse(stopIntake(self.intake))
-        
-        # self.stick.button(1).whileTrue(ledMode1(self.led))
-        # self.stick.button(1).whileFalse(ledMode3(self.led))
-        
-        # self.stick.button(4).whileTrue(ledMode2(self.led))
-        # self.stick.button(4).whileFalse(ledMode3(self.led))
+
         
 
     def getAutonomousCommand(self):
