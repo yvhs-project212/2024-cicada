@@ -17,8 +17,8 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
         # Get both encoder values for the arm and later display them
-        self.encoder1 = self.armmotor1.getEncoder().getPosition()
-        self.encoder2 = self.armmotor2.getEncoder().getPosition()
+        self.encoder1 = self.armmotor1.getEncoder()
+        self.encoder2 = self.armmotor2.getEncoder()
         
         # Initialize PID controller for spark max
         self.pidArm1 = self.armmotor1.getPIDController()
@@ -93,8 +93,8 @@ class ArmSubsystem(commands2.Subsystem):
         self.pidArm2.setReference(rotations, rev.CANSparkMax.ControlType.kPosition)
         
         wpilib.SmartDashboard.putNumber("SetPoint", rotations)
-        wpilib.SmartDashboard.setDefaultNumber("Motor 1 Position", self.encoder1)
-        wpilib.SmartDashboard.setDefaultNumber("Motor 2 position", self.encoder2)
+        wpilib.SmartDashboard.setDefaultNumber("Motor 1 Position", self.encoder1.getPosition())
+        wpilib.SmartDashboard.setDefaultNumber("Motor 2 position", self.encoder2.getPosition())
         
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * 0.5)
