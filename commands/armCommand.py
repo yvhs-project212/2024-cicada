@@ -10,7 +10,7 @@ class ArmMovingUp (commands2.Command):
         super().__init__()
         self.armSubsystem = armSubsystem
         self.addRequirements(armSubsystem)
-        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
+        self.speed = wpilib.XboxController(constants.OP.operator_controller).getLeftY
 
     def execute(self):
         self.armSubsystem.arm_up(self.speed)
@@ -27,7 +27,7 @@ class ArmMovingDown (commands2.Command):
         super().__init__()
         self.armSubsystem = armSubsystem
         self.addRequirements(armSubsystem)
-        self.speed = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
+        self.speed = wpilib.XboxController(constants.OP.operator_controller).getLeftY
 
     def execute(self):
         self.armSubsystem.arm_down(self.speed)
@@ -44,7 +44,7 @@ class ArmWithJoystick (commands2.Command):
         super().__init__()
         self.armSubsystem = armSubsystem
         self.addRequirements(armSubsystem)
-        self.joystickInput = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
+        self.joystickInput = wpilib.XboxController(constants.OP.operator_controller).getLeftY
  
     def execute(self):
 
