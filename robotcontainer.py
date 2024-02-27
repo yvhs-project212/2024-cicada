@@ -30,7 +30,7 @@ import subsystems.photonVisionSubsystem
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from commands.intakeCommand import intake, outake, stopIntake
 import commands.armCommand
-from commands.hangCommand import Hang, Lower, StopHang
+import commands.hangCommand
 
 
 class RobotContainer:
@@ -271,11 +271,8 @@ class RobotContainer:
         
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
-        self.DriverController.leftTrigger().whileTrue(Lower(self.hang))
-        self.DriverController.leftTrigger().whileFalse(StopHang(self.hang))
-    
-        self.DriverController.rightTrigger().whileTrue(Hang(self.hang))
-        self.DriverController.rightTrigger().whileFalse(StopHang(self.hang))
+        self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
+        
 
     def getAutonomousCommand(self):
         return None

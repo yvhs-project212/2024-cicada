@@ -54,27 +54,27 @@ elec_data = {
     "open_loop_ramp_rate": 0,
     "closed_loop_ramp_rate": 0,
 
-    "RF_steer_CAN_ID": 11,
-    "RF_drive_CAN_ID": 12,
-    "RF_encoder_DIO": 0,
-    "RB_steer_CAN_ID": 13,
-    "RB_drive_CAN_ID": 14,
-    "RB_encoder_DIO": 1,
-    "LB_steer_CAN_ID": 15,
-    "LB_drive_CAN_ID": 16,
-    "LB_encoder_DIO": 3,
-    "LF_steer_CAN_ID": 17,
-    "LF_drive_CAN_ID": 18,
-    "LF_encoder_DIO": 2,  
+    "RF_steer_CAN_ID": 15,
+    "RF_drive_CAN_ID": 1,
+    "RF_encoder_DIO": 2,
+    "RB_steer_CAN_ID": 2,
+    "RB_drive_CAN_ID": 3,
+    "RB_encoder_DIO": 3,
+    "LB_steer_CAN_ID": 4,
+    "LB_drive_CAN_ID": 5,
+    "LB_encoder_DIO": 4,
+    "LF_steer_CAN_ID": 6,
+    "LF_drive_CAN_ID": 7,
+    "LF_encoder_DIO": 1,  
       
-    "shooter_Motor1": 5,
-    "shooter_Motor2": 6,
-    "intake_motor": 7,  
+    "shooter_Motor1": 13,
+    "shooter_Motor2": 14,
+    "intake_motor": 12,  
     "intake_limit_switch": 30,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,    
     "hang_motor_CAN_ID": 10,
-    "lower_motor_CAN_ID": 19,
+    "lower_motor_CAN_ID": 11,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
@@ -138,10 +138,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  272,
-	"rf_enc_zeropos":  187,
-	"lb_enc_zeropos":  135,
-	"rb_enc_zeropos":  44,
+	"lf_enc_zeropos":  0,
+	"rf_enc_zeropos":  78,
+	"lb_enc_zeropos":  94,
+	"rb_enc_zeropos":  306,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
@@ -154,5 +154,8 @@ sw_data = {
     "kS": 0,
     "kV": 0,
     "kA": 0,
+    
+    "HangMotorUp": 0.4,
+    "HangMotorDown": -0.4,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
