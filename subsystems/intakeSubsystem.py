@@ -17,10 +17,10 @@ class intakeSubsystem(commands2.Subsystem):
         # self.intakeMotor.setIdleMode(coast)
         
     def intake(self):
-        self.intakeMotor.set(0.9)
+        self.intakeMotor.set(0.7)
         
     def outake(self):
-        self.intakeMotor.set(-0.9)
+        self.intakeMotor.set(-0.7)
         
     def stopintake(self):
         self.intakeMotor.set(0)

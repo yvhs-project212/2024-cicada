@@ -12,7 +12,7 @@ from swervepy.impl import CoaxialSwerveModule
 from constants import PHYS, MECH, ELEC, OP, SW
 import components
 import commands2
-import commands2.cmd
+#import commands2.cmd
 import commands2.button
 
 # Constants

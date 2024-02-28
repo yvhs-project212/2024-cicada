@@ -67,9 +67,9 @@ elec_data = {
     "LF_drive_CAN_ID": 7,
     "LF_encoder_DIO": 1,  
       
-    "shooter_Motor1": 13,
-    "shooter_Motor2": 14,
-    "intake_motor": 12,  
+    "shooter_Motor1": 12,
+    "shooter_Motor2": 13,
+    "intake_motor": 14,  
     "intake_limit_switch": 30,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,    

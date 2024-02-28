@@ -24,7 +24,7 @@ class HangSubsystem(commands2.Subsystem):
         if (joystick == 0):
             self.hangMotorGroup.set(-0.4)
         elif(joystick == 45):
-            self.hangMotor2.set(0.4)
+            self.hangMotor2.set(-0.4)
         elif(joystick == 135):
             self.hangMotor2.set(0.4)
         elif(joystick == 180):
@@ -34,7 +34,8 @@ class HangSubsystem(commands2.Subsystem):
         elif(joystick == 315):
             self.hangMotor1.set(-0.4)
         else:
-            self.hangMotorGroup.set(0)
+            self.hangMotor1.set(0)
+            self.hangMotor2.set(0)
             
     # def leftMotorUp(self):
     #     self.hangMotor1.set(SW.HangMotorUp)
