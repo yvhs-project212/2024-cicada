@@ -16,7 +16,7 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
 
     def armwithjoystick(self, joystickInput):
-        speed = (joystickInput * 0.5)
+        speed = (joystickInput * constants.SW.ArmSpeed)
         self.motorgroup.set(speed)
         #self.armmotor1.set(speed)
 

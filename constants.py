@@ -155,7 +155,12 @@ sw_data = {
     "kV": 0,
     "kA": 0,
     
-    "HangMotorUp": 0.4,
-    "HangMotorDown": -0.4,
+    "HangUpSpeed": -0.4,
+    "HangDownSpeed": 0.4,
+    "ArmSpeed": 0.5,
+    "IntakeSpeed": 0.7,
+    "OutakeSpeed": -0.7,
+    "InwardsShooterSpeed": 1.0,
+    "OutwardsShooterSpeed": -1.0,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
