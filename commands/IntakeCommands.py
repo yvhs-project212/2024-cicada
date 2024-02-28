@@ -22,11 +22,10 @@ class IntakeCommand(commands2.Command):
         self.intakeSub.intake()
 
     def isFinished(self):
-        return self.intakeSub.limit_switch_Get()
+        return self.intakeSub.limit_switch_get_none == False()
     
     def end(self, interrupted: bool):
         self.intakeSub.stopIntake()
-
 
 class StopIntake(commands2.Command):
     
