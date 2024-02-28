@@ -26,6 +26,7 @@ from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from commands.intakeCommand import intake, outake, stopIntake
 import commands.armCommand
 import commands.hangCommand
+from commands.visionCommand import VisionCommand
 
 class RobotContainer:
     """
@@ -78,6 +79,13 @@ class RobotContainer:
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
+        
+        self.OperatorController.button(1).whileTrue(VisionCommand(self.Vision))
+        self.OperatorController.button(1).whileFalse(VisionCommand(self.Vision))
+        
+        # self.Vision.setDefaultCommand(commands.visionCommand.VisionCommand(self.Vision))
+        # self.Vision.periodic(self.Vision.teleopPeriodic())    
+        # self.Vision.periodic()
 
     def getAutonomousCommand(self):
         return None
