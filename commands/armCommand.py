@@ -13,7 +13,6 @@ class ArmWithJoystick (commands2.Command):
         self.joystickInput = wpilib.XboxController(constants.OP.operator_joystick_port).getLeftY
  
     def execute(self):
-        self.armSubsystem.teleopPeriodic()
         self.armSubsystem.armwithjoystick(self.joystickInput())
 
     def isFinished(self):
