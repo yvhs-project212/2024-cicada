@@ -29,7 +29,10 @@ class visionSub(commands2.Subsystem):
         # Checks if limelight detects targets
         self.hasTargets = self.result.hasTargets()
         
-        # April Tag Layout
+        # Recieves the latest targets seen by the limelight
+        self.targets = self.result.getTargets()
+        
+        # April Tag Layout   (Currently empty/ not being used)
         self.aprilTagLayout = photonPoseEstimator.AprilTagFieldLayout()
         
         # # Position estimation strategy that is used by the PhotonPoseEstimator class
@@ -42,19 +45,21 @@ class visionSub(commands2.Subsystem):
         # Pose Estimation
         # self.pose = photonPoseEstimator.PhotonPoseEstimator(self.aprilTagLayout, self.strat, self.camera, self.robotToCam)
         
+        if (len(self.targets) != 1):
+            return
         
-        self.trackedTarget = PhotonTrackedTarget
+        self.trackedTarget = self.targets[0]
         self.pipeline = PhotonPipelineResult
         
-        self.yaw = self.trackedTarget.getYaw(self.trackedTarget)
-        self.pitch = self.trackedTarget.getPitch(self.trackedTarget)
-        self.area = self.trackedTarget.getArea(self.trackedTarget)
-        self.skew = self.trackedTarget.getSkew(self.trackedTarget)
-        self.ambiguity = self.trackedTarget.getPoseAmbiguity(self.trackedTarget)
-        self.corners = self.trackedTarget.getDetectedCorners(self.trackedTarget)
-        # self.pose = self.trackedTarget.getBestCameraToTarget()
-        # self.alternatePose = self.trackedTarget.getAlternateCameraToTarget(self.trackedTarget)
-        self.aprilTagID  = self.trackedTarget.getFiducialId(self.trackedTarget)
+        self.yaw = self.trackedTarget.getYaw()
+        self.pitch = self.trackedTarget.getPitch()
+        self.area = self.trackedTarget.getArea()
+        self.skew = self.trackedTarget.getSkew()
+        self.ambiguity = self.trackedTarget.getPoseAmbiguity()
+        self.corners = self.trackedTarget.getDetectedCorners()
+        self.pose = self.trackedTarget.getBestCameraToTarget()
+        self.alternatePose = self.trackedTarget.getAlternateCameraToTarget()
+        self.aprilTagID  = self.trackedTarget.getFiducialId()
         
         
     def togglePipeLine(self):
@@ -76,10 +81,13 @@ class visionSub(commands2.Subsystem):
         # Capture post-process camera stream image
         self.camera.takeOutputSnapshot()
         
+    def nothingCommand(self):
+        return False
+        
         
     def teleopPeriodic(self):
         
-        # self.fidicial_ids= [ i.getFiducialId() for i in self.trackedTarget ]
+        # self.fidicial_ids= [ i.getFiducialId() for i in self.trackedTarget ]s
         # wpilib.SmartDashboard.putNumberArray("April Tag ID's", self.fidicial_ids)
         
         # Display AprilTag ID's and a list of target info

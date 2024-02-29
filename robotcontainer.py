@@ -24,9 +24,9 @@ import subsystems.hangSubsystem
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from commands.intakeCommand import intake, outake, stopIntake
+from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
 import commands.armCommand
 import commands.hangCommand
-from commands.visionCommand import VisionCommand
 
 class RobotContainer:
     """
@@ -76,16 +76,15 @@ class RobotContainer:
         self.OperatorController.button(3).whileTrue(intake(self.intake))
         self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
         
+        self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
+        self.OperatorController.button(7).whileFalse(doNothing(self.Vision))
+        
+        self.OperatorController.button(8).whileTrue(takeSnapShot(self.Vision))
+        self.OperatorController.button(8).whileFalse(doNothing(self.Vision))
+        
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
-        
-        self.OperatorController.button(1).whileTrue(VisionCommand(self.Vision))
-        self.OperatorController.button(1).whileFalse(VisionCommand(self.Vision))
-        
-        # self.Vision.setDefaultCommand(commands.visionCommand.VisionCommand(self.Vision))
-        # self.Vision.periodic(self.Vision.teleopPeriodic())    
-        # self.Vision.periodic()
 
     def getAutonomousCommand(self):
         return None

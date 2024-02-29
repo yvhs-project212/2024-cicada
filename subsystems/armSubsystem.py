@@ -93,8 +93,8 @@ class ArmSubsystem(commands2.Subsystem):
         self.pidArm2.setReference(rotations, rev.CANSparkMax.ControlType.kPosition)
         
         wpilib.SmartDashboard.putNumber("SetPoint", rotations)
-        wpilib.SmartDashboard.setDefaultNumber("Motor 1 Position", self.encoder1.getPosition())
-        wpilib.SmartDashboard.setDefaultNumber("Motor 2 position", self.encoder2.getPosition())
+        wpilib.SmartDashboard.putNumber("Motor 1 Position", self.encoder1.getPosition())
+        wpilib.SmartDashboard.putNumber("Motor 2 position", self.encoder2.getPosition())
         
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * 0.5)

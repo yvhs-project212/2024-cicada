@@ -16,13 +16,13 @@ class HangCommand(commands2.Command):
         super().__init__()
         self.hangSub = hang_ss
         self.addRequirements(hang_ss)
-        self.joystickInput = wpilib.XboxController(constants.OP.operator_joystick_port).getPOV
+        self.opController = wpilib.XboxController(constants.OP.operator_joystick_port).getPOV
 
     def initialize(self):
         logger.info("running Hang command")
 
     def execute(self):
-        self.hangSub.dPadControll(self.joystickInput())
+        self.hangSub.dPadControll(self.opController())
 
     def isFinished(self):
         # command does not finish it needs to be cancelled
