@@ -2,7 +2,7 @@ import wpilib
 import rev
 import commands2
 
-from constants import ELEC
+from constants import ELEC, SW
 
 class shooterSubsystem(commands2.Subsystem):
     
@@ -21,10 +21,10 @@ class shooterSubsystem(commands2.Subsystem):
         self.liveWindow.putNumber("ShooterMotorOPT", 0)
     
     def outwardsShooter(self):
-        self.shooterMotorGroup.set(-1.0)
+        self.shooterMotorGroup.set(SW.OutwardsShooterSpeed)
         
     def inwardsShooter(self):
-        self.shooterMotorGroup.set(1.0)
+        self.shooterMotorGroup.set(SW.InwardsShooterSpeed)
         
     def stopShooter(self):
         self.shooterMotorGroup.set(0)

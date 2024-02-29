@@ -3,7 +3,7 @@ import commands2
 import phoenix5
 import rev
 
-from constants import ELEC
+from constants import ELEC, SW
 
 class intakeSubsystem(commands2.Subsystem):
     
@@ -17,10 +17,10 @@ class intakeSubsystem(commands2.Subsystem):
         # self.intakeMotor.setIdleMode(coast)
         
     def intake(self):
-        self.intakeMotor.set(0.7)
+        self.intakeMotor.set(SW.IntakeSpeed)
         
     def outake(self):
-        self.intakeMotor.set(-0.7)
+        self.intakeMotor.set(SW.OutakeSpeed)
         
     def stopintake(self):
         self.intakeMotor.set(0)
