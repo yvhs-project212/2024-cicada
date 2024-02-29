@@ -6,7 +6,7 @@ import commands2.cmd
 from subsystems.IntakeSubsystem import IntakeSubsystem
 import constants
  
-class IntakeCommand(commands2.Command):
+class IntakeLimitCommand(commands2.Command):
     
     def __init__(self, intakeSubsystem: IntakeSubsystem) -> None:
         super().__init__()
@@ -22,12 +22,12 @@ class IntakeCommand(commands2.Command):
         self.intakeSub.intake()
 
     def isFinished(self):
-        return self.intakeSub.limit_switch_get_none == False()
+        return self.intakeSub.limit_switch_get_none()
     
     def end(self, interrupted: bool):
         self.intakeSub.stopIntake()
 
-class StopIntake(commands2.Command):
+class StopIntakeLimit(commands2.Command):
     
     def __init__(self, intakeSubsystem: IntakeSubsystem) -> None:
         super().__init__()
@@ -47,7 +47,7 @@ class StopIntake(commands2.Command):
     def end(self, interrupted: bool):
         self.intakeSub.stopIntake()
 
-class ReverseIntake(commands2.Command):
+class ReverseIntakeLimit(commands2.Command):
     
     def __init__(self, intakeSubsystem: IntakeSubsystem) -> None:
         super().__init__()

@@ -21,7 +21,8 @@ import subsystems.ShooterSubsystem
 
 
 # Commands
-from commands.IntakeCommands import IntakeCommand,StopIntake,ReverseIntake
+from commands.IntakeLimitCommands import IntakeLimitCommand,StopIntakeLimit,ReverseIntakeLimit
+from commands.IntakeIntakeCommands import IntakeCommand,StopIntake,ReverseIntake
 from commands.ShooterCommands import StopShoot,ReverseShooter,ShootCommand
 
 class RobotContainer:
@@ -58,17 +59,17 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
 
-        self.stick.a().whileTrue(IntakeCommand(self.intakes))
-        self.stick.a().whileFalse(StopIntake(self.intakes))
+        self.stick.a().whileTrue(IntakeLimitCommand(self.intakes))
+        self.stick.a().whileFalse(StopIntakeLimit(self.intakes))
 
-        self.stick.y().whileTrue(ReverseIntake(self.intakes))
-        self.stick.y().whileFalse(StopIntake(self.intakes))
+        self.stick.leftBumper().whileTrue(IntakeCommand(self.intakes))
+        self.stick.leftBumper().whileFalse(StopIntake(self.intakes))
 
         self.stick.rightBumper().whileTrue(ShootCommand(self.Shootes))
         self.stick.rightBumper().whileFalse(StopShoot(self.Shootes)) 
         
-        self.stick.leftBumper().whileTrue(ReverseShooter(self.Shootes))
-        self.stick.leftBumper().whileFalse(StopShoot(self.Shootes))
+        self.stick.b().whileTrue(ReverseShooter(self.Shootes))
+        self.stick.b().whileFalse(StopShoot(self.Shootes))
 
         
   
