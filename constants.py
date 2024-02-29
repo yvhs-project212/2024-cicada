@@ -20,8 +20,8 @@ from swervepy import u
 
 # Physical constants
 phys_data = {
-    "track_width": (14.75 * u.inch).m_as(u.m),
-    "wheel_base": (14.75 * u.inch).m_as(u.m),
+    "track_width": (23.0 * u.inch).m_as(u.m),
+    "wheel_base": (23.0 * u.inch).m_as(u.m),
     "wheel_circumference": 4 * math.pi * u.inch,
 }
 PHYS = namedtuple("Data", phys_data.keys())(**phys_data)
@@ -138,7 +138,7 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  0,
+	"lf_enc_zeropos":  1,
 	"rf_enc_zeropos":  78,
 	"lb_enc_zeropos":  94,
 	"rb_enc_zeropos":  306,
