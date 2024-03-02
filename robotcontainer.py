@@ -65,6 +65,9 @@ class RobotContainer:
         self.stick.leftBumper().whileTrue(IntakeCommand(self.intakes))
         self.stick.leftBumper().whileFalse(StopIntake(self.intakes))
 
+        self.stick.x().whileTrue(ReverseIntake(self.intakes))
+        self.stick.x().whileFalse(StopIntake(self.intakes))
+
         self.stick.rightBumper().whileTrue(ShootCommand(self.Shootes))
         self.stick.rightBumper().whileFalse(StopShoot(self.Shootes)) 
         
