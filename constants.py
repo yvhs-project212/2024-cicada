@@ -138,10 +138,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  1,
-	"rf_enc_zeropos":  78,
-	"lb_enc_zeropos":  94,
-	"rb_enc_zeropos":  306,
+	"lf_enc_zeropos":  13,
+	"rf_enc_zeropos":  1,
+	"lb_enc_zeropos":  93,
+	"rb_enc_zeropos":  218,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
