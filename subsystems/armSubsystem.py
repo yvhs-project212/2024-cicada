@@ -17,7 +17,7 @@ class ArmSubsystem(commands2.Subsystem):
 
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * constants.SW.ArmSpeed)
-        self.motorgroup.set(speed)
+        self.motorgroup.set(-speed)
         #self.armmotor1.set(speed)
 
     def arm_down(self, speed):
