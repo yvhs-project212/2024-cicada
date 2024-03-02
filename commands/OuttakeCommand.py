@@ -5,7 +5,7 @@ import commands2.cmd
 from subsystems.intakeSubsystem import intakeSubsystem
 from subsystems.shooterSubsystem import shooterSubsystem
 
-class outtakeCommandGroup(commands2.Command):
+class outtakeCommand(commands2.Command):
     
     def __init__(self, intakeSubsystem: intakeSubsystem, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
@@ -18,7 +18,7 @@ class outtakeCommandGroup(commands2.Command):
         logger.info("outtake")
 
     def execute(self):
-        self.shooterSub.outwardsShooter()
+        self.shooterSub.inwardsShooter()
         self.intakeSub.outake()
 
     def isFinished(self):
