@@ -25,18 +25,18 @@ class intakeSubsystem(commands2.Subsystem):
     def stopintake(self):
         self.intakeMotor.set(0)
         
-    def limit_switch_get(self) -> bool:
+    def limit_switch_get_none(self) -> bool:
         if self.limitSwitch.get():
             return False
         else:
             return True
         
     def intakeWithLimitSwitch(self):
-        if self.limit_switch_get() == False:
+        if self.limit_switch_get_none() == False:
             self.intakeMotor.set(SW.IntakeSpeed)
-        elif self.limit_switch_get() == True:
+        elif self.limit_switch_get_none() == True:
             self.stopintake()
         
     def periodic(self) -> None:
-        wpilib.SmartDashboard.putBoolean("LimitSwitchGet", self.limit_switch_get())
+        wpilib.SmartDashboard.putBoolean("LimitSwitchGetNone", self.limit_switch_get_none())
         wpilib.SmartDashboard.putBoolean("LimitSwitch", self.limitSwitch.get())
