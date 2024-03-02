@@ -11,7 +11,7 @@ class shooterSubsystem(commands2.Subsystem):
         # initialize the 2 shooter motors and invert one motor
         self.shooterMotor1 = rev.CANSparkMax(ELEC.shooter_1, rev.CANSparkMax.MotorType.kBrushless)
         self.shooterMotor2 = rev.CANSparkMax(ELEC.shooter_2, rev.CANSparkMax.MotorType.kBrushless)
-        self.shooterMotor1.setInverted(False)
+        self.shooterMotor1.setInverted(True)
         
         # create a controller instance and group the 2 shooter motors
         self.shooterMotorGroup = wpilib.MotorControllerGroup(self.shooterMotor1, self.shooterMotor2)
@@ -20,10 +20,10 @@ class shooterSubsystem(commands2.Subsystem):
         self.liveWindow.putNumber("ShooterMotorOPT", 0)
     
     def outwardsShooter(self):
-        self.shooterMotorGroup.set(-0.8)
+        self.shooterMotorGroup.set(-0.2)
         
     def inwardsShooter(self):
-        self.shooterMotorGroup.set(1)
+        self.shooterMotorGroup.set(.2)
         
     def stopShooter(self):
         self.shooterMotorGroup.set(0)
