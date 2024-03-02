@@ -21,8 +21,7 @@ import subsystems.ShooterSubsystem
 
 
 # Commands
-from commands.IntakeLimitCommands import IntakeLimitCommand,StopIntakeLimit,ReverseIntakeLimit
-from commands.IntakeIntakeCommands import IntakeCommand,StopIntake,ReverseIntake
+from commands.IntakeCommands import IntakeLimitCommand,IntakeCommand,StopIntakeLimit,ReverseIntake,StopIntake
 from commands.ShooterCommands import StopShoot,ReverseShooter,ShootCommand
 
 class RobotContainer:
