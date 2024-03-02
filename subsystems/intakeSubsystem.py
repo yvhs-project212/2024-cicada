@@ -24,3 +24,9 @@ class intakeSubsystem(commands2.Subsystem):
         
     def stopintake(self):
         self.intakeMotor.set(0)
+        
+    def limit_switch_get_none(self) -> bool:
+        if self.limitSwitch.get():
+            return False
+        else:
+            return True

@@ -63,3 +63,25 @@ class stopIntake(commands2.Command):
 
     def end(self, interrupted: bool):
         self.intakeSub.stopintake()
+        
+class IntakeLimitCommand(commands2.Command):
+    
+    def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
+        super().__init__()
+        self.intakeSub = intakeSubsystem
+
+    def intialize(self):
+        import logging
+        logger = logging.getLogger("fabian campooos hernandez")
+        logger.info("Intakie")
+
+        
+    def execute(self):
+        self.intakeSub.intake()
+
+    def isFinished(self):
+        if not self.intakeSub.limit_switch_get_none():
+            return True
+    
+    def end(self, interrupted: bool):
+        self.intakeSub.stopintake()

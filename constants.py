@@ -70,7 +70,7 @@ elec_data = {
     "shooter_Motor1": 12,
     "shooter_Motor2": 13,
     "intake_motor": 14,  
-    "intake_limit_switch": 30,  
+    "intake_limit_switch": 5,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,    
     "hang_motor_CAN_ID": 10,

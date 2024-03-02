@@ -28,7 +28,8 @@ import subsystems.photonVisionSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from commands.intakeCommand import intake, outake, stopIntake
+from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitCommand
+from commands.OuttakeCommand import outtakeCommandGroup, stopBothIntakeAndShooter
 import commands.armCommand
 import commands.hangCommand
 
@@ -257,17 +258,17 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.OperatorController.leftBumper().whileTrue(inwardsShooter(self.shooter))
-        self.OperatorController.leftBumper().whileFalse(stopShooter(self.shooter))
+        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
+        #self.OperatorController.button(1).whileFalse(stopIntake(self.intake))
+        
+        self.OperatorController.leftBumper().whileTrue(intake(self.intake))
+        self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
         
         self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
         self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.OperatorController.button(2).whileTrue(outake(self.intake))
-        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
-        
-        self.OperatorController.button(3).whileTrue(intake(self.intake))
-        self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(2).whileTrue(outtakeCommandGroup(self.intake, self.shooter))
+        self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
         
         self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
