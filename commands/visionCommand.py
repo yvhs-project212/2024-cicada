@@ -37,7 +37,7 @@ class togglePipeline(commands2.Command):
         logger.info("Changing Pipeline")
 
     def execute(self):
-        self.vision_sub.togglePipeLine(1)
+        self.vision_sub.togglePipeLine()
 
     def isFinished(self):
         # command does not finish it needs to be cancelled
