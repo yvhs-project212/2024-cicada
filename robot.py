@@ -15,6 +15,7 @@ import commands2
 #import commands2.cmd
 
 import robotcontainer
+#import subsystems.drivetrainSubsystem
 
 
 class Robot(commands2.TimedCommandRobot):
@@ -33,7 +34,8 @@ class Robot(commands2.TimedCommandRobot):
         # Instantiate our RobotContainer.  This will perform all our button
         # bindings, and put our autonomous chooser on the dashboard.
         self.container = robotcontainer.RobotContainer()
-        self.container.swerve.reset_modules()
+        #self.drivetrain = subsystems.drivetrainSubsystem.drivetrainSubsystem()
+        #self.drivetrain.resetSwerveDrive()
         log.info('robot initialized')
 
     def autonomousInit(self) -> None:
