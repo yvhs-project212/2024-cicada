@@ -2,6 +2,8 @@ import wpilib
 import commands2
 import photonlibpy
 import logging
+import robotpy_apriltag
+
 logger = logging.getLogger("jhony")
 
 from photonlibpy import estimatedRobotPose
@@ -142,3 +144,5 @@ class visionSub(commands2.Subsystem):
         # Display values on smart dashboard
         wpilib.SmartDashboard.putBoolean("Is April tag 8 detected", self.isDetecting(8))
         wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(8))
+        
+        wpilib.SmartDashboard.putData(wpilib.Field2d())
