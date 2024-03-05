@@ -33,6 +33,8 @@ from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 import commands.armCommand
 import commands.hangCommand
 
+import commands.autonomousCommands.driveForwardCommand
+
 
 class RobotContainer:
     """
@@ -276,4 +278,4 @@ class RobotContainer:
         
 
     def getAutonomousCommand(self):
-        return None
+        return commands.autonomousCommands.driveForwardCommand(self.swerve)
