@@ -16,6 +16,7 @@ from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
 from wpilib import shuffleboard
 
 from wpimath.geometry import Pose3d, Transform3d, Translation3d
+from cscore import CameraServer
 
 from constants import OP
 
@@ -24,6 +25,9 @@ class visionSub(commands2.Subsystem):
     
     # Dosen't initialize anything 
     def  __init__(self):
+       
+        self.usbCam = CameraServer.startAutomaticCapture()
+        self.usbCam.setResolution(640, 480)
         
         # Start camera server 
         self.camera = PhotonCamera("Limelight")
