@@ -15,14 +15,14 @@ import commands2.button
 logger = logging.getLogger("leqili")
 
 class drivetrainSubsystem(commands2.Subsystem):
-    def __init__(self):
+    def __init__(self, DriverController: commands2.button.CommandXboxController):
         super().__init__()
         
-        self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)
-        
-        navx_adapter = SwerveComponents.gyro_component_class(**SwerveComponents.gyro_param_values)
-        self.gyro = navx_adapter.navx
+        self.navx_adapter = SwerveComponents.gyro_component_class(**SwerveComponents.gyro_param_values)
+        self.gyro = self.navx_adapter.navx
         self.gyro.zeroYaw()
+        
+        self.driverJoystick = DriverController
 
 
         # The Azimuth component included the absolute encoder because it needs
@@ -39,7 +39,7 @@ class drivetrainSubsystem(commands2.Subsystem):
         rb_enc_pos = self.rb_enc.absolute_position_degrees
         logger.info(f"Encoder positions: LF={lf_enc_pos}, RF={rf_enc_pos}, RB={rb_enc_pos}, LB={lb_enc_pos}")
         
-        modules = (
+        self.modules = (
             # Left Front module
             CoaxialSwerveModule(
                 drive=SwerveComponents.drive_component_class(
@@ -98,6 +98,7 @@ class drivetrainSubsystem(commands2.Subsystem):
             ),
         )
 
+
         self.speed_limit_ratio = 1.0
         if OP.speed_limit:
             if OP.speed_limit > OP.max_speed:
@@ -113,7 +114,7 @@ class drivetrainSubsystem(commands2.Subsystem):
                 self.angular_velocity_limit_ratio = (
                     OP.angular_velocity_limit / OP.max_angular_velocity)
                 
-        self.swerve.reset_modules()
+        self.swerve = SwerveDrive(self.modules, self.navx_adapter, OP.max_speed, OP.max_angular_velocity)
 
         # Define a swerve drive subsystem by passing in a list of SwerveModules
         # and some options
@@ -143,56 +144,26 @@ class drivetrainSubsystem(commands2.Subsystem):
         return invert_sign * input_sign * scaled_input
 
     def get_translation_input(self, invert=True):
-        raw_stick_val = self.DriverController.getRawAxis(OP.translation_joystick_axis)
+        raw_stick_val = self.driverJoystick.getRawAxis(OP.translation_joystick_axis)
         return self.process_joystick_input(raw_stick_val, invert=invert,
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_strafe_input(self, invert=True):
-        raw_stick_val = self.DriverController.getRawAxis(OP.strafe_joystick_axis)
+        raw_stick_val = self.driverJoystick.getRawAxis(OP.strafe_joystick_axis)
         return self.process_joystick_input(raw_stick_val, invert=invert,
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_rotation_input(self, invert=True):
-        raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
+        raw_stick_val = self.driverJoystick.getRawAxis(OP.rotation_joystick_axis)
         return self.process_joystick_input(
             raw_stick_val, invert=invert, limit_ratio=self.angular_velocity_limit_ratio)
-
-    def get_autonomous_command(self):
-        follower_params = TrajectoryFollowerParameters(
-            max_drive_velocity=4.5 * (u.m / u.s),
-            theta_kP=1,
-            xy_kP=1,
-        )
-
-        bezier_points = PathPlannerPath.bezierFromPoses(
-            [
-                Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
-                Pose2d(3.0, 1.0, Rotation2d.fromDegrees(0)),
-                Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)),
-            ]
-        )
-        path = PathPlannerPath(
-            bezier_points,
-            PathConstraints(3.0, 3.0, 2 * math.pi, 4 * math.pi),
-            GoalEndState(0.0, Rotation2d.fromDegrees(-90)),  # Zero velocity and facing 90 degrees clockwise
-        )
-
-        first_path = True  # reset robot pose to initial pose in trajectory
-        open_loop = True  # don't use built-in motor feedback for velocity
-        return self.swerve.follow_trajectory_command(path, follower_params, first_path, open_loop)
-    
-    swerve = SwerveDrive(modules, navx_adapter, OP.max_speed, OP.max_angular_velocity)
-    
-    def swerveDrive(self):
-
-        self.swerve.teleop_command(
+        
+    def driveWithJoystick(self) -> commands2.Command:          
+        return self.swerve.teleop_command(
             translation=self.get_translation_input,
             strafe=self.get_strafe_input,
             rotation=self.get_rotation_input,
             field_relative=SW.field_relative,
             drive_open_loop=SW.drive_open_loop,
         )
-        
-    def resetSwerveDrive(self):
-        self.swerve.reset_modules()
         

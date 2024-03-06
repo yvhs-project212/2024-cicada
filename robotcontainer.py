@@ -69,11 +69,14 @@ class RobotContainer:
         self.arm = subsystems.armSubsystem.ArmSubsystem()        
         self.hang = subsystems.hangSubsystem.HangSubsystem()
         self.Vision = subsystems.photonVisionSubsystem.visionSub()
-        self.drivetrain = subsystems.drivetrainSubsystem.drivetrainSubsystem()
+
 
         # The driver's controller
         self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)
         self.OperatorController = commands2.button.CommandXboxController(OP.operator_controller)
+        
+        self.drivetrain = subsystems.drivetrainSubsystem.drivetrainSubsystem(self.DriverController)
+        self.swerve = subsystems.drivetrainSubsystem.drivetrainSubsystem.swerve
 
         # Configure the button bindings
         
@@ -111,7 +114,8 @@ class RobotContainer:
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
-        self.drivetrain.setDefaultCommand(commands.drivetrainCommand.drivetrainCommand(self.drivetrain))
+        #self.drivetrain.setDefaultCommand(commands.drivetr dainCommand.drivetrainCommand(self.drivetrain))
+        self.drivetrain.setDefaultCommand(subsystems.drivetrainSubsystem.drivetrainSubsystem.swerve)
         
 
     def getAutonomousCommand(self):

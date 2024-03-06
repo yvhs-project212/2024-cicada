@@ -5,6 +5,7 @@ logger = logging.getLogger("leqili")
 
 from swervepy.subsystem import SwerveDrive
 from constants import SW
+import wpilib
 
 class drivetrainCommand(commands2.Command):
     def __init__(self, drivetrainSubsystem: drivetrainSubsystem) -> None:
@@ -17,7 +18,7 @@ class drivetrainCommand(commands2.Command):
 
         
     def execute(self):
-        self.drivetrainSub.swerveDrive()
+        self.drivetrainSub.driveWithJoystick()
         
     def isFinished(self) -> bool:
         return False
