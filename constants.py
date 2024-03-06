@@ -138,10 +138,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  6,
-	"rf_enc_zeropos":  2,
-	"lb_enc_zeropos":  93,
-	"rb_enc_zeropos":  240,
+	"lf_enc_zeropos":  12,
+	"rf_enc_zeropos":  4,
+	"lb_enc_zeropos":  94,
+	"rb_enc_zeropos":  256,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
@@ -158,9 +158,9 @@ sw_data = {
     "HangUpSpeed": -0.6,
     "HangDownSpeed": 0.6,
     "ArmSpeed": 0.8,
-    "IntakeSpeed": 1,
+    "IntakeSpeed": 0.7,
     "OutakeSpeed": -0.7,
     "InwardsShooterSpeed": -0.6,
-    "OutwardsShooterSpeed": 1,
+    "OutwardsShooterSpeed": 0.8,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
