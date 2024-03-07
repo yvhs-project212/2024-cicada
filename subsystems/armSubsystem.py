@@ -3,7 +3,7 @@ import rev
 import constants 
 import commands2
 import phoenix5
-import playingwithfusion
+# import playingwithfusion
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
@@ -16,8 +16,8 @@ class ArmSubsystem(commands2.Subsystem):
         self.armmotor2.setInverted(True)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
-        self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
-        self.tofSensor.RangingMode(1) # Set the range to medium
+        # self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
+        # self.tofSensor.RangingMode(1) # Set the range to medium
         
         # Get both encoder values for the arm and later display them
         self.encoder1 = self.armmotor1.getEncoder()
@@ -98,7 +98,7 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("SetPoint", rotations)
         wpilib.SmartDashboard.putNumber("Motor 1 Position", self.encoder1.getPosition())
         wpilib.SmartDashboard.putNumber("Motor 2 position", self.encoder2.getPosition())
-        wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
+        # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * constants.SW.ArmSpeed)
