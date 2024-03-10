@@ -136,14 +136,14 @@ class visionSub(commands2.Subsystem):
         
     def periodic(self) -> None:
         
-        # Get most recent results and target data
+      # Get most recent results and target data
         self.result = self.camera.getLatestResult()
         self.hasTargets = self.result.hasTargets()
         self.targets = self.result.getTargets()
         
         # Debug values by logging
-        logger.info(f"{self.getTargetYaw(8)} Yaw Value")
-        logger.info(f"{self.getTagOdometry(8)} tag odometry")
+      #   logger.info(f"{self.getTargetYaw(8)} Yaw Value")
+      #   logger.info(f"{self.getTagOdometry(8)} tag odometry")
         
         # Display values on smart dashboard
         wpilib.SmartDashboard.putBoolean("Is April tag 8 detected", self.isDetecting(8))

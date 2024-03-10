@@ -12,7 +12,7 @@ import typing
 
 import wpilib
 import commands2
-import commands2.cmd
+#import commands2.cmd
 
 from wpilib.cameraserver import CameraServer
 
@@ -35,7 +35,7 @@ class Robot(commands2.TimedCommandRobot):
         # Instantiate our RobotContainer.  This will perform all our button
         # bindings, and put our autonomous chooser on the dashboard.
         self.container = robotcontainer.RobotContainer()
-         
+        self.container.swerve.reset_modules()         
         """
         Uses the CameraServer class to automatically capture video from a USB webcam and send it to the
         FRC dashboard without doing any vision processing. This is the easiest way to get camera images
@@ -50,7 +50,7 @@ class Robot(commands2.TimedCommandRobot):
         This method runs the autonomous command selected by your
         RobotContainer class.
         """
-        self.autonomousCommand = self.container.getAutonomousCommand()
+        self.autonomousCommand = self.container.get_autonomous_command()
 
         # schedule the autonomous command (example)
         if self.autonomousCommand is not None:
