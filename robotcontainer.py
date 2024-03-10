@@ -23,7 +23,7 @@ import subsystems.hangSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
-from commands.intakeCommand import intake, outake, stopIntake
+from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitCommand
 from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
 import commands.armCommand
 import commands.hangCommand
@@ -64,27 +64,27 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.OperatorController.leftBumper().whileTrue(inwardsShooter(self.shooter))
-        self.OperatorController.leftBumper().whileFalse(stopShooter(self.shooter))
+        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
+        #self.OperatorController.button(1).whileFalse(stopIntake(self.intake))
+        
+        self.OperatorController.leftBumper().whileTrue(intake(self.intake))
+        self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
         
         self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
         self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.OperatorController.button(2).whileTrue(outake(self.intake))
-        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(2).whileTrue(outtakeCommand(self.intake, self.shooter))
+        self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
         
-        self.OperatorController.button(3).whileTrue(intake(self.intake))
-        self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
+        
+        self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
         self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
         self.OperatorController.button(7).whileFalse(doNothing(self.Vision))
         
         self.OperatorController.button(8).whileTrue(takeSnapShot(self.Vision))
-        self.OperatorController.button(8).whileFalse(doNothing(self.Vision))
-        
-        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
-        
-        self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
+        self.OperatorController.button(8).whileFalse(doNothing(self.Vision)) 
 
     def getAutonomousCommand(self):
         return None

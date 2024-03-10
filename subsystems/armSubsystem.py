@@ -102,8 +102,8 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
     def armwithjoystick(self, joystickInput):
-        speed = (joystickInput * 0.5)
-        self.motorgroup.set(speed)
+        speed = (joystickInput * constants.SW.ArmSpeed)
+        self.motorgroup.set(-speed)
         #self.armmotor1.set(speed)
 
     def arm_down(self, speed):

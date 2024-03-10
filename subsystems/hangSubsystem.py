@@ -22,20 +22,20 @@ class HangSubsystem(commands2.Subsystem):
         
     def dPadControll(self, joystick):
         if (joystick == 0):
-            self.hangMotorGroup.set(-0.4)
+            self.hangMotorGroup.set(SW.HangUpSpeed)
         elif(joystick == 45):
-            self.hangMotor2.set(0.4)
+            self.hangMotor2.set(SW.HangUpSpeed)
         elif(joystick == 135):
-            self.hangMotor2.set(-0.4)
+            self.hangMotor2.set(SW.HangDownSpeed)
         elif(joystick == 180):
-            self.hangMotorGroup.set(0.4)
+            self.hangMotorGroup.set(SW.HangDownSpeed)
         elif (joystick == 225):
-            self.hangMotor1.set(0.4)
+            self.hangMotor1.set(SW.HangDownSpeed)
         elif(joystick == 315):
-            self.hangMotor1.set(-0.4)
+            self.hangMotor1.set(SW.HangUpSpeed)
         else:
-            self.hangMotor2.set(0)
             self.hangMotor1.set(0)
+            self.hangMotor2.set(0)
             
     # def leftMotorUp(self):
     #     self.hangMotor1.set(SW.HangMotorUp)

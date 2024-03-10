@@ -47,5 +47,12 @@ OP = namedtuple("Data", op_data.keys())(**op_data)
 
 # Software constants, e.g. PID values, absolute encoder zero points
 sw_data = {
+    "HangUpSpeed": -0.6,
+    "HangDownSpeed": 0.6,
+    "ArmSpeed": 0.8,
+    "IntakeSpeed": 0.7,
+    "OutakeSpeed": -0.7,
+    "InwardsShooterSpeed": -0.6,
+    "OutwardsShooterSpeed": 0.8,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
