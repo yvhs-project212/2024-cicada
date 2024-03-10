@@ -37,7 +37,9 @@ from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
 import commands.armCommand
 import commands.hangCommand
 
+#Auto Command Imports
 import commands.autonomousCommands.driveForwardCommand
+import commands.autonomousCommands.autoShootingCommand
 
 
 class RobotContainer:
@@ -96,8 +98,7 @@ class RobotContainer:
 
         # Configure the button bindings
         self.configureButtonBindings()
-        
-        
+    
         
         modules = (
             # Left Front module
@@ -190,6 +191,12 @@ class RobotContainer:
                 drive_open_loop=SW.drive_open_loop,
             )
         )
+        
+        self.autoChooser = wpilib.SendableChooser()
+        self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve))
+        self.autoChooser.addOption("ScoreOneNote", commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
+        
+        wpilib.SmartDashboard.putData(self.autoChooser)
 
     def log_data(self):
         for pos in ("LF", "RF", "LB", "RB"):
@@ -231,30 +238,8 @@ class RobotContainer:
             raw_stick_val, invert=invert, limit_ratio=self.angular_velocity_limit_ratio)
 
     def get_autonomous_command(self):
-        follower_params = TrajectoryFollowerParameters(
-            max_drive_velocity=4.5 * (u.m / u.s),
-            theta_kP=1,
-            xy_kP=1,
-        )
-
-        bezier_points = PathPlannerPath.bezierFromPoses(
-            [
-                Pose2d(1.0, 1.0, Rotation2d.fromDegrees(0)),
-                Pose2d(3.0, 1.0, Rotation2d.fromDegrees(0)),
-                Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)),
-            ]
-        )
-        path = PathPlannerPath(
-            bezier_points,
-            PathConstraints(3.0, 3.0, 2 * math.pi, 4 * math.pi),
-            GoalEndState(0.0, Rotation2d.fromDegrees(-90)),  # Zero velocity and facing 90 degrees clockwise
-        )
-
-        first_path = True  # reset robot pose to initial pose in trajectory
-        open_loop = True  # don't use built-in motor feedback for velocity
-        return self.swerve.follow_trajectory_command(path, follower_params, first_path, open_loop)
-
-
+        return self.autoChooser.getSelected()
+        #return commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve)
 
     def configureButtonBindings(self):
         """
@@ -281,5 +266,5 @@ class RobotContainer:
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
 
-    def getAutonomousCommand(self):
-        return commands.autonomousCommands.driveForwardCommand(self.swerve)
+    #def getAutonomousCommand(self):
+        #return commands.autonomousCommands.driveForwardCommand(self.swerve)

@@ -51,6 +51,7 @@ class Robot(commands2.TimedCommandRobot):
         RobotContainer class.
         """
         self.autonomousCommand = self.container.get_autonomous_command()
+        #self.autonomousCommand = self.container.getAutonomousCommand()
 
         # schedule the autonomous command (example)
         if self.autonomousCommand is not None:

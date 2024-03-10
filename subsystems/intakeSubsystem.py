@@ -28,9 +28,9 @@ class intakeSubsystem(commands2.Subsystem):
         
     def limit_switch_get_none(self) -> bool:
         if self.limitSwitch.get():
-            return False
-        else:
             return True
+        else:
+            return False
         
     def intakeWithLimitSwitch(self):
         if self.limit_switch_get_none() == False:
