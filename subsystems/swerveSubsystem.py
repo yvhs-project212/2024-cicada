@@ -10,12 +10,13 @@ from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
 import commands2.button
-import subsystems
 logger = logging.getLogger("project212_robot")
 
 
 class swerveSubsystem(commands2.Subsystem):
     def __init__(self):
+        self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)
+        
         self.navx_adapter = swerveComponents.gyro_component_class(**swerveComponents.gyro_param_values)
         self.gyro = self.navx_adapter.navx
         self.gyro.zeroYaw()
