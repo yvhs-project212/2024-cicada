@@ -60,7 +60,6 @@ class RobotContainer:
         self.hang = subsystems.hangSubsystem.HangSubsystem()
         self.Vision = subsystems.photonVisionSubsystem.visionSub()
         self.drivetrain = subsystems.swerveSubsystem.swerveSubsystem()
-        
         self.swerve = self.drivetrain.getSwerve()
 
         # The driver's controller
@@ -103,4 +102,4 @@ class RobotContainer:
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
-        self.drivetrain.setDefaultCommand(self.drivetrain.getSwerveTeleopCommand(self.swerve))
+        self.swerve.setDefaultCommand(self.drivetrain.getSwerveTeleopCommand(self.swerve))
