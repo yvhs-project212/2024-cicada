@@ -72,6 +72,8 @@ class RobotContainer:
         self.autoChooser.addOption("ScoreOneNote", commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
         wpilib.SmartDashboard.putData(self.autoChooser)
+        
+        self.configureButtonBindings()
 
 
     def get_autonomous_command(self):
