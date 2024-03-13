@@ -16,11 +16,11 @@ class shootingCommand(commands2.Command):
         
     def execute(self):
         self.shooterSub.outwardsShooter()
-        if self.timer.get() > 2.0:
+        if self.timer.get() > 0.5:
             self.intakeSub.intake()
             
     def isFinished(self) -> bool:
-        if self.timer.get() > 4.0:
+        if self.timer.get() > 1.5:
             return True
         else:
             return False
