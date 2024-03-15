@@ -20,6 +20,8 @@ class visionSub(commands2.Subsystem):
     # Dosen't initialize anything 
     def  __init__(self):
         
+        self.beamBreak = wpilib.DigitalInput(8)
+        
         # Start camera server 
         self.camera = PhotonCamera("limelight")
         
@@ -76,16 +78,16 @@ class visionSub(commands2.Subsystem):
         # Capture post-process camera stream image
         self.camera.takeOutputSnapshot()
         
-        
-    def teleopPeriodic(self):
+    def periodic(self) -> None:
         
         # self.fidicial_ids= [ i.getFiducialId() for i in self.trackedTarget ]
         # wpilib.SmartDashboard.putNumberArray("April Tag ID's", self.fidicial_ids)
         
-        # Display AprilTag ID's and a list of target info
-        wpilib.SmartDashboard.putNumber("Apri Tag Id", self.aprilTagID)
-        wpilib.SmartDashboard.putNumberArray("Target Info", self.targets)
+        # # Display AprilTag ID's and a list of target info
+        # wpilib.SmartDashboard.putNumber("Apri Tag Id", self.aprilTagID)
+        # wpilib.SmartDashboard.putNumberArray("Target Info", self.targets)
+        wpilib.SmartDashboard.putBoolean("Beam Break", self.beamBreak.get())
         
         # Get most recent results and target data
-        self.result = self.camera.getLatestResult()
-        self.targets = self.result.getTargets()
+        # self.result = self.camera.getLatestResult()
+        # self.targets = self.result.getTargets()
