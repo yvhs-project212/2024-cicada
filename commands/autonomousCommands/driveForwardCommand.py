@@ -7,7 +7,7 @@ import commands2
 import math
 
 import swervepy
-def getAutoCommand(swerve: SwerveDrive):
+def getAutoCommand(swerve: SwerveDrive, forwardDistance: float):
     follower_params = TrajectoryFollowerParameters(
         max_drive_velocity=0.5 * (u.m / u.s),
         theta_kP=1,
@@ -15,8 +15,8 @@ def getAutoCommand(swerve: SwerveDrive):
     )
 
     bezier_points = PathPlannerPath.bezierFromPoses([
-        Pose2d(1.0, 0, Rotation2d.fromDegrees(0)),
-        Pose2d(2.0, 0, Rotation2d.fromDegrees(0)),
+        Pose2d(0.0, 0, Rotation2d.fromDegrees(0)),
+        Pose2d(forwardDistance, 0, Rotation2d.fromDegrees(0)),
         #Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)),
     ])
     path = PathPlannerPath(

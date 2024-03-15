@@ -7,13 +7,14 @@ import phoenix5
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
-        super().__init__()
+        #super().__init__()
         
         self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         # self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         # self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2.setInverted(True)
+        self.armLimitSwitch = wpilib.DigitalInput(constants.ELEC.arm_limit_switch)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
         # self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
@@ -105,9 +106,18 @@ class ArmSubsystem(commands2.Subsystem):
             calculatedInput = 0
         else:
             calculatedInput = joystickInput
-        speed = (calculatedInput * constants.SW.ArmSpeed)
+            
+        if self.armLimitSwitch.get():
+            speed = (calculatedInput * constants.SW.ArmSpeed)
+        else: 
+            if calculatedInput > 0:
+                speed = 0
+            else:
+                speed = (calculatedInput * constants.SW.ArmSpeed)
+            
+        
+        #speed = (calculatedInput * constants.SW.ArmSpeed)
         self.motorgroup.set(speed)
-        #self.armmotor1.set(speed)
 
     def arm_down(self, speed):
         self.motorgroup.set(speed)
@@ -117,3 +127,6 @@ class ArmSubsystem(commands2.Subsystem):
 
     def arm_stop(self):
         self.motorgroup.set(0)        
+        
+    def periodic(self) -> None:
+        wpilib.SmartDashboard.putBoolean("ArmLimitSwitch", self.armLimitSwitch.get())

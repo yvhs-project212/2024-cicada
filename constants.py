@@ -72,7 +72,8 @@ elec_data = {
     "intake_motor": 14,  
     "intake_limit_switch": 5,  
     "arm_motor1_CAN_ID": 8,
-    "arm_motor2_CAN_ID": 9,    
+    "arm_motor2_CAN_ID": 9,  
+    "arm_limit_switch": 0,  
     "hang_motor_CAN_ID": 10,
     "lower_motor_CAN_ID": 11,
 }
@@ -138,10 +139,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  9.5,
-	"rf_enc_zeropos":  1.8,
-	"lb_enc_zeropos":  93.2,
-	"rb_enc_zeropos":  270.8,
+	"lf_enc_zeropos":  9.7,
+	"rf_enc_zeropos":  1.5,
+	"lb_enc_zeropos":  93.7,
+	"rb_enc_zeropos":  -35.0,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
@@ -155,8 +156,8 @@ sw_data = {
     "kV": 0,
     "kA": 0,
     
-    "HangUpSpeed": -0.8,
-    "HangDownSpeed": 0.8,
+    "HangUpSpeed": -1.0,
+    "HangDownSpeed": 1.0,
     "ArmSpeed": 0.8,
     "IntakeSpeed": 0.7,
     "LimitIntakeSpeed": 0.5,

@@ -41,6 +41,7 @@ import commands.hangCommand
 #Auto Command Imports
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
+import commands.autonomousCommands.autoDropArmCommand
 
 
 class RobotContainer:
@@ -66,10 +67,13 @@ class RobotContainer:
         self.DriverController = commands2.button.CommandXboxController(OP.driver_controller)
         self.OperatorController = commands2.button.CommandXboxController(OP.operator_controller)  
         
+        #Autos
+        self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
         self.autoChooser = wpilib.SendableChooser()
-        self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve))
-        self.autoChooser.addOption("ScoreOneNote", commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
+        self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
+        self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
+        self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
         
         wpilib.SmartDashboard.putData(self.autoChooser)
         

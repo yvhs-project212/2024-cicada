@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.204579942434064,
-      "y": 5.550562440965166
+      "x": 7.192194544105148,
+      "y": 6.067740831133837
     },
     "rotation": 0
   },
@@ -12,9 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Example Path"
+            "name": "driveForwardCommand"
           }
         }
       ]
