@@ -16,11 +16,11 @@ class autoDropArmCommand(commands2.Command):
         self.timer.start()
         
     def execute(self):
-        if self.timer.get() < 2.0:
-            speed = 0.5
-        else:
-            speed = 0.3
-        self.armSub.arm_down(speed)
+        # if self.timer.get() < 2.0:
+        #     speed = 0.5
+        # else:
+        #     speed = 0.3
+        self.armSub.arm_down(0.6)
         
         
     def isFinished(self) -> bool:
