@@ -42,6 +42,8 @@ import commands.hangCommand
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
+import commands.autonomousCommands.RedTaxiAfterScoreFromLeft
+import commands.autonomousCommands.BlueTaxiAfterScoreFromRight
 
 
 class RobotContainer:
@@ -73,6 +75,7 @@ class RobotContainer:
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
+        self.autoChooser.addOption("Red Taxi", commands.autonomousCommands.RedTaxiAfterScoreFromLeft.getAutoCommand(self.swerve))
         self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
         
         wpilib.SmartDashboard.putData(self.autoChooser)

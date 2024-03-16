@@ -9,7 +9,7 @@ import math
 import swervepy
 def getAutoCommand(swerve: SwerveDrive):
     follower_params = TrajectoryFollowerParameters(
-        max_drive_velocity=2.5 * (u.m / u.s),
+        max_drive_velocity=0.5 * (u.m / u.s),
         theta_kP=1,
         xy_kP=1,
     )
