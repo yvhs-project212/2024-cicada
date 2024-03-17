@@ -42,8 +42,6 @@ import commands.hangCommand
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
-import commands.autonomousCommands.RedTaxiAfterScoreFromLeft
-import commands.autonomousCommands.BlueTaxiAfterScoreFromRight
 
 
 class RobotContainer:
@@ -75,7 +73,6 @@ class RobotContainer:
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
-        self.autoChooser.addOption("Red Taxi", commands.autonomousCommands.RedTaxiAfterScoreFromLeft.getAutoCommand(self.swerve))
         self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
         
         wpilib.SmartDashboard.putData(self.autoChooser)
@@ -95,6 +92,8 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
+        self.DriverController.button(1).whileTrue()
+        
         self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
         #self.OperatorController.button(1).whileFalse(stopIntake(self.intake))
         
