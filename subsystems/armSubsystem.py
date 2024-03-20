@@ -14,8 +14,6 @@ class ArmSubsystem(commands2.Subsystem):
         
         self.armmotor1 = rev.CANSparkMax(ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2 = rev.CANSparkMax(ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
-        # self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
-        # self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2.setInverted(True)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
@@ -29,14 +27,14 @@ class ArmSubsystem(commands2.Subsystem):
         # Set the position of encoders to 0 and how often to check for position change
         self.encoder1.setPosition(0)
         self.encoder2.setPosition(0)
-        self.encoder1.setMeasurementPeriod(64)
-        self.encoder2.setMeasurementPeriod(64)
+        self.encoder1.setMeasurementPeriod(8)
+        self.encoder2.setMeasurementPeriod(8)
         
         # Initialize PID controller for spark max
         self.pidArm1 = self.armmotor1.getPIDController()
         self.pidArm2 = self.armmotor2.getPIDController()
         
-        # Set what type of sensor to use for PID
+        # Set what type of sensor to use for PID if not using neo hallsensor
         # self.pidArm1.setFeedbackDevice()
         # self.pidArm2.setFeedbackDevice()
         
@@ -78,19 +76,12 @@ class ArmSubsystem(commands2.Subsystem):
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * constants.SW.ArmSpeed)
         self.motorgroup.set(-speed)
-        #self.armmotor1.set(speed)
         
-    def armWithPID(self):
+    def armToGround(self):
         # Set desired arm position
-        self.rotations = 20
+        self.rotations = 0
         self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
-
-    def arm_down(self, speed):
-        self.motorgroup.set(speed)
-
-    def arm_up(self, speed):
-        self.motorgroup.set(-speed)
-
+        
     def arm_stop(self):
-        self.motorgroup.set(0)        
+        self.motorgroup.set(0)     

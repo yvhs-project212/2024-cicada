@@ -20,4 +20,18 @@ class ArmWithJoystick (commands2.Command):
     
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
+        
+class armToGround(commands2.command):
 
+    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+        super().__init__()
+        self.armSubsystem = armSubsystem
+ 
+    def execute(self):
+        self.armSubsystem.armToGround()
+
+    def isFinished(self):
+        return False
+    
+    def end(self, interrupted: bool):
+        self.armSubsystem.arm_stop()
