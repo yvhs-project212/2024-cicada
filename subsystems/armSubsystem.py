@@ -8,17 +8,18 @@ from constants import SW, ELEC
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
-        super().__init__()
+        #super().__init__()
         
         self.beamBreak = wpilib.DigitalInput(8)
         
         self.armmotor1 = rev.CANSparkMax(ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2 = rev.CANSparkMax(ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2.setInverted(True)
+        self.armLimitSwitch = wpilib.DigitalInput(constants.ELEC.arm_limit_switch)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
-        self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
-        self.tofSensor.RangingMode(1) # Set the range to medium
+        # self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
+        # self.tofSensor.RangingMode(1) # Set the range to medium
         
         # Get both encoder values for the arm and later display them
         self.encoder1 = self.armmotor1.getEncoder()
@@ -30,9 +31,9 @@ class ArmSubsystem(commands2.Subsystem):
         self.encoder1.setMeasurementPeriod(8)
         self.encoder2.setMeasurementPeriod(8)
         
-        # Initialize PID controller for spark max
-        self.pidArm1 = self.armmotor1.getPIDController()
-        self.pidArm2 = self.armmotor2.getPIDController()
+    #     # Initialize PID controller for spark max
+    #     self.pidArm1 = self.armmotor1.getPIDController()
+    #     self.pidArm2 = self.armmotor2.getPIDController()
         
         # Set what type of sensor to use for PID if not using neo hallsensor
         # self.pidArm1.setFeedbackDevice()
@@ -65,7 +66,7 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("Set Rotations", self.rotations)
         
         
-    def periodic(self) -> None:
+    # def periodic(self) -> None:
         
         wpilib.SmartDashboard.putNumber("SetPoint", self.rotations)
         wpilib.SmartDashboard.putNumber("Motor 1 Position", self.encoder1.getPosition())

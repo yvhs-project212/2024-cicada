@@ -77,10 +77,13 @@ class IntakeLimitCommand(commands2.Command):
 
         
     def execute(self):
-        self.intakeSub.intakeWithLimitSwitch()
+        self.intakeSub.intake()
 
     def isFinished(self):
-        return False
+        if self.intakeSub.limit_switch_get_none() == False:
+            return True
+        else:
+            return False
     
     def end(self, interrupted: bool):
         self.intakeSub.stopintake()

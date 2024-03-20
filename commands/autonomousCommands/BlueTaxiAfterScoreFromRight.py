@@ -7,21 +7,21 @@ import commands2
 import math
 
 import swervepy
-def getAutoCommand(swerve: SwerveDrive, forwardDistance: float):
+def getAutoCommand(swerve: SwerveDrive):
     follower_params = TrajectoryFollowerParameters(
-        max_drive_velocity=4.5 * (u.m / u.s),
+        max_drive_velocity=0.5 * (u.m / u.s),
         theta_kP=1,
         xy_kP=1,
     )
 
     bezier_points = PathPlannerPath.bezierFromPoses([
-        Pose2d(0.0, 0, Rotation2d.fromDegrees(0)),
-        Pose2d(forwardDistance, 0, Rotation2d.fromDegrees(0)),
-        #Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)),
+        Pose2d(0.0, 0, Rotation2d.fromDegrees(-60)),
+        Pose2d(0, -2.5, Rotation2d.fromDegrees(0)),
+        Pose2d(6.0, -2.5, Rotation2d.fromDegrees(0)),
     ])
     path = PathPlannerPath(
         bezier_points,
-        PathConstraints(1.0, 1.0, 2 * math.pi, 4 * math.pi),
+        PathConstraints(3.0, 3.0, 2 * math.pi, 4 * math.pi),
         GoalEndState(0.0, Rotation2d.fromDegrees(-90)),     # Zero velocity and facing 90 degrees clockwise
     )
     first_path = True  # reset robot pose to initial pose in trajectory
