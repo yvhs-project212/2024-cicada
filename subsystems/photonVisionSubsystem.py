@@ -4,7 +4,7 @@ import photonlibpy
 import logging
 import robotpy_apriltag
 
-logger = logging.getLogger("jhony")
+logger = logging.getLogger("Vision")
 
 from photonlibpy import estimatedRobotPose
 from photonlibpy import multiTargetPNPResult
@@ -25,8 +25,8 @@ class visionSub(commands2.Subsystem):
     
    def  __init__(self):
        
-      self.usbCam = CameraServer.startAutomaticCapture()
-      self.usbCam.setResolution(640, 480)
+      # self.usbCam = CameraServer.startAutomaticCapture()
+      # self.usbCam.setResolution(640, 480)
       
       # Start camera server 
       self.camera = PhotonCamera("Limelight")

@@ -35,6 +35,7 @@ from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitComman
 from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
+from commands.armCommand import armToGround, armToAmp
 import commands.armCommand
 import commands.hangCommand
 
@@ -106,8 +107,9 @@ class RobotContainer:
         self.OperatorController.button(2).whileTrue(outake(self.intake))
         self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
         
-        self.OperatorController.button(3).whileTrue(intake(self.intake))
-        self.OperatorController.button(3).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(4).whileTrue(armToGround(self.arm))
+        
+        self.OperatorController.button(3).whileTrue(armToGround(self.arm))
         
         self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
         self.OperatorController.button(7).whileFalse(doNothing(self.Vision))

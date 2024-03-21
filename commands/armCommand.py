@@ -34,6 +34,36 @@ class armToGround(commands2.command):
     
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
+        
+class armToAmp(commands2.command):
+
+    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+        super().__init__()
+        self.armSubsystem = armSubsystem
+ 
+    def execute(self):
+        self.armSubsystem.armToAmp()
+
+    def isFinished(self):
+        return False
+    
+    def end(self, interrupted: bool):
+        self.armSubsystem.arm_stop()
+        
+class stopArm(commands2.command):
+
+    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+        super().__init__()
+        self.armSubsystem = armSubsystem
+ 
+    def execute(self):
+        self.armSubsystem.arm_stop()
+
+    def isFinished(self):
+        return False
+    
+    def end(self, interrupted: bool):
+        self.armSubsystem.arm_stop()
 
 class armWithInput (commands2.Command):
 

@@ -165,16 +165,13 @@ sw_data = {
     "InwardsShooterSpeed": -0.6,
     "OutwardsShooterSpeed": 0.8,
     
-    
-    
-    
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.0,
+    "Arm_kP": 0.5,
     "Arm_kI": 0.0,
     "Arm_kD": 0.0,
     "Arm_kIz": 0.0,
     "Arm_kFF": 0.0,
-    "Arm_kMaxOutput": 0.0,
-    "Arm_kMinOutput": 0.0,
+    "Arm_kMaxOutput": 1,
+    "Arm_kMinOutput": -1,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)

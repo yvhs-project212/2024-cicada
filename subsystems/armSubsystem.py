@@ -31,9 +31,9 @@ class ArmSubsystem(commands2.Subsystem):
         self.encoder1.setMeasurementPeriod(8)
         self.encoder2.setMeasurementPeriod(8)
         
-    #     # Initialize PID controller for spark max
-    #     self.pidArm1 = self.armmotor1.getPIDController()
-    #     self.pidArm2 = self.armmotor2.getPIDController()
+        # Initialize PID controller for spark max
+        self.pidArm1 = self.armmotor1.getPIDController()
+        self.pidArm2 = self.armmotor2.getPIDController()
         
         # Set what type of sensor to use for PID if not using neo hallsensor
         # self.pidArm1.setFeedbackDevice()
@@ -63,26 +63,35 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("Feed Forward", SW.Arm_kFF)
         wpilib.SmartDashboard.putNumber("Max Output", SW.Arm_kMaxOutput)
         wpilib.SmartDashboard.putNumber("Min Output", SW.Arm_kMinOutput)
-        wpilib.SmartDashboard.putNumber("Set Rotations", self.rotations)
+        wpilib.SmartDashboard.putNumber("Arm Set-Point", self.rotations)
         
         
-    # def periodic(self) -> None:
+    def periodic(self) -> None:
         
-        wpilib.SmartDashboard.putNumber("SetPoint", self.rotations)
+        wpilib.SmartDashboard.putNumber("Arm Set-Point", self.rotations)
         wpilib.SmartDashboard.putNumber("Motor 1 Position", self.encoder1.getPosition())
         wpilib.SmartDashboard.putNumber("Motor 2 position", self.encoder2.getPosition())
-        wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         wpilib.SmartDashboard.putBoolean("BeamBreak", self.beamBreak.get())
+        # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
     def armwithjoystick(self, joystickInput):
         speed = (joystickInput * constants.SW.ArmSpeed)
         self.motorgroup.set(-speed)
         
+        if self.armLimitSwitch:
+            self.encoder1.setPosition(0)
+            self.encoder2.setPosition(0)
+            
     def armToGround(self):
         # Set desired arm position
         self.rotations = 0
         self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         
+    def armToAmp(self):
+        self.rotations = 60 # VALUE NOT TESTED
+        self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        
     def arm_stop(self):
-        self.motorgroup.set(0)     
+        self.motorgroup.set(0)

@@ -2,13 +2,13 @@ import wpilib
 import commands2
 import logging
 
-logger = logging.getLogger("jhony")
+logger = logging.getLogger("Led's")
 
 class ledSub(commands2.Subsystem):
     
     def  __init__(self):
         
-        # Creates a PWM channel for robot LED's
+        # Creates a PWM channel for robot communication to arduino
         self.ledValue = wpilib.PWM(1)
         
     def ledMode1(self):
