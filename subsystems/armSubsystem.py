@@ -81,6 +81,12 @@ class ArmSubsystem(commands2.Subsystem):
         if self.armLimitSwitch:
             self.encoder1.setPosition(0)
             self.encoder2.setPosition(0)
+
+    def arm_down(self, speed):
+        self.motorgroup.set(speed)
+
+    def arm_up(self, speed):
+        self.motorgroup.set(-speed)
             
     def armToGround(self):
         # Set desired arm position
