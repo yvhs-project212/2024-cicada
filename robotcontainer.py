@@ -68,7 +68,8 @@ class RobotContainer:
         self.OperatorController = commands2.button.CommandXboxController(OP.operator_controller)  
         
         #Autos
-        self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
+        self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
@@ -82,7 +83,6 @@ class RobotContainer:
 
     def get_autonomous_command(self):
         return self.autoChooser.getSelected()
-        #return commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve)
 
     def configureButtonBindings(self):
         """
@@ -93,7 +93,6 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
         self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
-        #self.OperatorController.button(1).whileFalse(stopIntake(self.intake))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))

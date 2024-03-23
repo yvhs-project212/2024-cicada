@@ -118,16 +118,6 @@ class swerveSubsystem(commands2.Subsystem):
             else:
                 self.angular_velocity_limit_ratio = (
                     OP.angular_velocity_limit / OP.max_angular_velocity)
-
-        # Define a swerve drive subsystem by passing in a list of SwerveModules
-        # and some options
-        #
-            
-        #self.swerve = SwerveDrive(modules, navx_adapter, OP.max_speed, OP.max_angular_velocity)
-
-        # Set the swerve subsystem's default command to teleoperate using
-        # the controller joysticks
-        #
         
     def log_data(self):
         for pos in ("LF", "RF", "LB", "RB"):
