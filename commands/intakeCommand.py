@@ -9,6 +9,7 @@ class intake(commands2.Command):
     def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.addRequirements(intakeSubsystem)
 
     def initialize(self):
         import logging
@@ -29,6 +30,7 @@ class outake(commands2.Command):
     def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.addRequirements(intakeSubsystem)
 
     def initialize(self):
         import logging
@@ -49,6 +51,7 @@ class stopIntake(commands2.Command):
     def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.addRequirements(intakeSubsystem)
 
     def initialize(self):
         import logging
@@ -69,6 +72,7 @@ class IntakeLimitCommand(commands2.Command):
     def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.addRequirements(intakeSubsystem)
 
     def intialize(self):
         import logging

@@ -15,6 +15,7 @@ class outwardsShooter(commands2.Command):
     def __init__(self, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
         self.shooterSub = shooterSubsystem
+        self.addRequirements(shooterSubsystem)
 
     def initialize(self):
         import logging
@@ -36,6 +37,7 @@ class inwardsShooter(commands2.Command):
     def __init__(self, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
         self.shooterSub = shooterSubsystem
+        self.addRequirements(shooterSubsystem)
 
     def initialize(self):
         import logging
@@ -53,10 +55,10 @@ class inwardsShooter(commands2.Command):
 
 
 class stopShooter(commands2.Command):
-
     def __init__(self, shooterSubsystem: shooterSubsystem) -> None:
         super().__init__()
         self.shooterSub = shooterSubsystem
+        self.addRequirements(shooterSubsystem)
 
     def initialize(self):
         import logging

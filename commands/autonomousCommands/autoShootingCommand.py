@@ -2,6 +2,7 @@ from subsystems.intakeSubsystem import intakeSubsystem
 from subsystems.shooterSubsystem import shooterSubsystem
 import wpilib
 import commands2
+from constants import SW
 
 class shootingCommand(commands2.Command):
     
@@ -16,11 +17,11 @@ class shootingCommand(commands2.Command):
         
     def execute(self):
         self.shooterSub.outwardsShooter()
-        if self.timer.get() > 0.5:
+        if self.timer.get() > SW.AutoIntakeActivateAfterShooterTimeInSec:
             self.intakeSub.intake()
             
     def isFinished(self) -> bool:
-        if self.timer.get() > 1.5:
+        if self.timer.get() > SW.AutoShooterActivateTimeInSec:
             return True
         else:
             return False

@@ -165,6 +165,9 @@ sw_data = {
     "InwardsShooterSpeed": -0.6,
     "OutwardsShooterSpeed": 0.8,
     
-    
+    #Autonomous constants
+    "AutoArmDownSpeed": 0.6,
+    "AutoShooterActivateTimeInSec": 1.5,
+    "AutoIntakeActivateAfterShooterTimeInSec": 0.5
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
