@@ -3,17 +3,12 @@ import rev
 import constants 
 import commands2
 import phoenix5
-import playingwithfusion
-from constants import SW, ELEC
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
-        #super().__init__()
         
-        self.beamBreak = wpilib.DigitalInput(8)
-        
-        self.armmotor1 = rev.CANSparkMax(ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
-        self.armmotor2 = rev.CANSparkMax(ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
+        self.armmotor1 = rev.CANSparkMax(constants.ELEC.arm_motor1_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
+        self.armmotor2 = rev.CANSparkMax(constants.ELEC.arm_motor2_CAN_ID, rev.CANSparkMax.MotorType.kBrushless)
         self.armmotor2.setInverted(True)
         self.armLimitSwitch = wpilib.DigitalInput(constants.ELEC.arm_limit_switch)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
@@ -109,7 +104,6 @@ class ArmSubsystem(commands2.Subsystem):
             else:
                 speed = (calculatedInput * constants.SW.ArmSpeed)
             
-        #speed = (calculatedInput * constants.SW.ArmSpeed)
         self.motorgroup.set(speed)
 
     def arm_down(self, speed):

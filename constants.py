@@ -165,6 +165,11 @@ sw_data = {
     "InwardsShooterSpeed": -0.6,
     "OutwardsShooterSpeed": 0.8,
     
+    #Autonomous constants
+    "AutoArmDownSpeed": 0.6,
+    "AutoShooterActivateTimeInSec": 1.5,
+    "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
+    
     # PID Constants for the arm subsytem
     "Arm_kP": 0.8,
     "Arm_kI": 0.0,
