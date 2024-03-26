@@ -17,13 +17,16 @@ class ledSub(commands2.Subsystem):
         # Starts sending a pwm value to the arduino
         self.ledValue.setSpeed(0.0001)
         
+        # Sets LEDs green
     def ledMode1(self):
         self.ledValue.setSpeed(0.1)
         
+        # Sets LED's red
     def ledMode2(self):
         self.ledValue.setSpeed(0.3)
         
-    def ledMode3(self): #Default Led Mode
+        # Default Led Mode (Rainbow)
+    def ledMode3(self):
         self.ledValue.setSpeed(0.5)
         
     def ledWithBeamBreak(self):
