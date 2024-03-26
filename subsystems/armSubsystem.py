@@ -48,10 +48,10 @@ class ArmSubsystem(commands2.Subsystem):
         self.pidArm2.setI(SW.Arm_kI)
         self.pidArm1.setD(SW.Arm_kD)
         self.pidArm2.setD(SW.Arm_kD)
-        self.pidArm1.setIZone(SW.Arm_kIz)
-        self.pidArm2.setIZone(SW.Arm_kIz)
-        self.pidArm1.setFF(SW.Arm_kFF)
-        self.pidArm2.setFF(SW.Arm_kFF)
+        # self.pidArm1.setIZone(SW.Arm_kIz)
+        # self.pidArm2.setIZone(SW.Arm_kIz)
+        # self.pidArm1.setFF(SW.Arm_kFF)
+        # self.pidArm2.setFF(SW.Arm_kFF)
         self.pidArm1.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
         self.pidArm2.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
         
@@ -74,13 +74,43 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putBoolean("BeamBreak", self.beamBreak.get())
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
-    def armwithjoystick(self, joystickInput):
-        speed = (joystickInput * constants.SW.ArmSpeed)
-        self.motorgroup.set(-speed)
+        # if (wpilib.XboxController.getXButtonPressed):
+        #     self.rotations = 60
+        #     self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        #     self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+            
+        # elif (wpilib.XboxController.getYButtonPressed):
+        #     self.rotations = 0
+        #     self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        #     self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        # else:
+        #     self.motorgroup.set(0)
+        #     # self.pidArm1.set
+        #     # self.pidArm1.setReference(self.encoder1.getPosition, rev.CANSparkMax.ControlType.kPosition)
+        #     # self.pidArm2.setReference(self.encoder2.getPosition, rev.CANSparkMax.ControlType.kPosition)
+        # self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+        # self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
+            
         
-        if self.armLimitSwitch:
-            self.encoder1.setPosition(0)
-            self.encoder2.setPosition(0)
+        
+    def armwithjoystick(self, joystickInput):
+        if joystickInput <= 0.15 and joystickInput >= -0.15:
+            calculatedInput = 0
+        else:
+            calculatedInput = joystickInput
+            
+        if self.armLimitSwitch.get():
+            speed = (calculatedInput * constants.SW.ArmSpeed)
+            # self.encoder1.setPosition(0)
+            # self.encoder2.setPosition(0)
+        else: 
+            if calculatedInput > 0:
+                speed = 0
+            else:
+                speed = (calculatedInput * constants.SW.ArmSpeed)
+            
+        #speed = (calculatedInput * constants.SW.ArmSpeed)
+        self.motorgroup.set(speed)
 
     def arm_down(self, speed):
         self.motorgroup.set(speed)
@@ -88,14 +118,13 @@ class ArmSubsystem(commands2.Subsystem):
     def arm_up(self, speed):
         self.motorgroup.set(-speed)
             
-    def armToGround(self):
-        # Set desired arm position
+    def armToGround(self):  # Set desired arm position
         self.rotations = 0
         self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         
     def armToAmp(self):
-        self.rotations = 60 # VALUE NOT TESTED
+        self.rotations = -60  # VALUE NOT TESTED
         self.pidArm1.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         self.pidArm2.setReference(self.rotations, rev.CANSparkMax.ControlType.kPosition)
         

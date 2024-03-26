@@ -12,8 +12,8 @@ class ledMode1(commands2.Command):
 
     def initialize(self):
         import logging
-        logger = logging.getLogger("jhony")
-        logger.info("LEDMode1Running")
+        logger = logging.getLogger("LED'S")
+        logger.info("Mode 1")
 
     def execute(self):
         self.robotLED.ledMode1()
@@ -32,8 +32,8 @@ class ledMode2(commands2.Command):
 
     def initialize(self):
         import logging
-        logger = logging.getLogger("jhony")
-        logger.info("LEDMode2Running")
+        logger = logging.getLogger("LED'S")
+        logger.info("Mode 2")
 
     def execute(self):
         self.robotLED.ledMode2()
@@ -52,8 +52,8 @@ class ledMode3(commands2.Command):
 
     def initialize(self):
         import logging
-        logger = logging.getLogger("jhony")
-        logger.info("DefaultLEDModeRunning")
+        logger = logging.getLogger("LED'S")
+        logger.info("Mode 3")
 
     def execute(self):
         self.robotLED.ledMode3()

@@ -20,7 +20,7 @@ class ArmWithJoystick (commands2.Command):
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
         
-class armToGround(commands2.command):
+class armToGround (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
@@ -35,7 +35,7 @@ class armToGround(commands2.command):
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
         
-class armToAmp(commands2.command):
+class armToAmp (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()
@@ -50,7 +50,7 @@ class armToAmp(commands2.command):
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
         
-class stopArm(commands2.command):
+class armStop (commands2.Command):
 
     def __init__(self, armSubsystem: ArmSubsystem) -> None:
         super().__init__()

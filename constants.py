@@ -166,7 +166,7 @@ sw_data = {
     "OutwardsShooterSpeed": 0.8,
     
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.5,
+    "Arm_kP": 0.8,
     "Arm_kI": 0.0,
     "Arm_kD": 0.0,
     "Arm_kIz": 0.0,

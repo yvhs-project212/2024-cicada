@@ -13,7 +13,6 @@ from photonlibpy.photonPipelineResult import PhotonPipelineResult
 from photonlibpy import packet
 from photonlibpy import photonPoseEstimator
 from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
-from wpilib import shuffleboard
 
 from wpimath.geometry import Pose3d, Transform3d, Translation3d
 from cscore import CameraServer
@@ -45,6 +44,10 @@ class visionSub(commands2.Subsystem):
       
       # # Position estimation strategy that is used by the PhotonPoseEstimator class
       self.PoseStrat = photonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE
+      
+      # This boolean is used to determine what pipeline to use by default it is true
+      self.pipeLine = True
+      self.pipeLineValue = 0
         
         
    def isDetecting(self, id: int) -> bool: # Check if desired april tag is beeing seen
@@ -58,23 +61,20 @@ class visionSub(commands2.Subsystem):
          if i.getFiducialId() == id:
             return [i.getYaw(), i.getPitch(), i.getSkew()]
         
-   def togglePipeLine(self):
-        # Change PipleLine to desired one
-        if (self.camera.getPipelineIndex() == 0):
-           self.camera.setPipelineIndex(1)
-        else:
-           self.camera.setPipelineIndex(0)
+   def togglePipeLine(self, value):
+      # Change PipleLine to desired one
+      self.camera.setPipelineIndex(value)
             
    def captureImage(self):
-        # Capture pre-process camera stream image
-        self.camera.takeInputSnapshot()
+      # Capture pre-process camera stream image
+      self.camera.takeInputSnapshot()
 
-        # Capture post-process camera stream image
-        self.camera.takeOutputSnapshot()
+      # Capture post-process camera stream image
+      self.camera.takeOutputSnapshot()
         
    def nothingCommand(self):
         return False
-    
+   
     
    # Next 10 methods will return info about the target beeing seen
          
@@ -136,16 +136,19 @@ class visionSub(commands2.Subsystem):
    def periodic(self) -> None:
         
       # Get most recent results and target data
-      #   self.result = self.camera.getLatestResult()
-      #   self.hasTargets = self.result.hasTargets()
-      #   self.targets = self.result.getTargets()
-        
-        # Debug values by logging
-      #   logger.info(f"{self.getTargetYaw(8)} Yaw Value")
-      #   logger.info(f"{self.getTagOdometry(8)} tag odometry")
-        
-        # Display values on smart dashboard
-        wpilib.SmartDashboard.putBoolean("Is April tag 8 detected", self.isDetecting(8))
-        wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(8))
-        
-        wpilib.SmartDashboard.putData(wpilib.Field2d())
+      self.result = self.camera.getLatestResult()
+      self.hasTargets = self.result.hasTargets()
+      self.targets = self.result.getTargets()
+      # self.target_ids = []
+      # for target in self.targets:
+      
+         
+      # Debug values by logging
+      # logger.info(f"{self.getTargetYaw(8)} Yaw Value")
+      # logger.info(f"{self.getTagOdometry(8)} tag odometry")
+      
+      # Display values on smart dashboard
+      wpilib.SmartDashboard.putBoolean("Is April tag 8 detected", self.isDetecting(8))
+      wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(8))
+      
+      wpilib.SmartDashboard.putData(wpilib.Field2d())
