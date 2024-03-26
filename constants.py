@@ -76,6 +76,8 @@ elec_data = {
     "arm_limit_switch": 0,  
     "hang_motor_CAN_ID": 10,
     "lower_motor_CAN_ID": 11,
+    
+    "PWM_For_Leds": 1,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 

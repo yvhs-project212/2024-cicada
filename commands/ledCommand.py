@@ -63,3 +63,23 @@ class ledMode3(commands2.Command):
 
     def end(self, interrupted: bool):
         self.robotLED.ledMode3()
+        
+class ledForIntake(commands2.Command):
+    
+    def __init__(self, robotLEDsSubsystem: ledSub) -> None:
+        super().__init__()
+        self.robotLED = robotLEDsSubsystem
+
+    def initialize(self):
+        import logging
+        logger = logging.getLogger("LED'S")
+        logger.info("Led For Intake")
+
+    def execute(self):
+        self.robotLED.ledWithBeamBreak
+
+    def isFinished(self):
+        return False
+
+    def end(self, interrupted: bool):
+        self.robotLED.ledMode3()

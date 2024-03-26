@@ -36,29 +36,29 @@ class ArmSubsystem(commands2.Subsystem):
         
         self.rotations = 0
         
-        # Set PID Constants for both motors
-        self.pidArm1.setP(SW.Arm_kP)
-        self.pidArm2.setP(SW.Arm_kP)
-        self.pidArm1.setI(SW.Arm_kI)
-        self.pidArm2.setI(SW.Arm_kI)
-        self.pidArm1.setD(SW.Arm_kD)
-        self.pidArm2.setD(SW.Arm_kD)
-        # self.pidArm1.setIZone(SW.Arm_kIz)
-        # self.pidArm2.setIZone(SW.Arm_kIz)
-        # self.pidArm1.setFF(SW.Arm_kFF)
-        # self.pidArm2.setFF(SW.Arm_kFF)
-        self.pidArm1.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
-        self.pidArm2.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
+        # # Set PID Constants for both motors
+        # self.pidArm1.setP(SW.Arm_kP)
+        # self.pidArm2.setP(SW.Arm_kP)
+        # self.pidArm1.setI(SW.Arm_kI)
+        # self.pidArm2.setI(SW.Arm_kI)
+        # self.pidArm1.setD(SW.Arm_kD)
+        # self.pidArm2.setD(SW.Arm_kD)
+        # # self.pidArm1.setIZone(SW.Arm_kIz)
+        # # self.pidArm2.setIZone(SW.Arm_kIz)
+        # # self.pidArm1.setFF(SW.Arm_kFF)
+        # # self.pidArm2.setFF(SW.Arm_kFF)
+        # self.pidArm1.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
+        # self.pidArm2.setOutputRange(SW.Arm_kMaxOutput, SW.Arm_kMinOutput)
         
-        # Display PID coefficients on SmartDashboard
-        wpilib.SmartDashboard.putNumber("P Gain", SW.Arm_kP)
-        wpilib.SmartDashboard.putNumber("I Gain", SW.Arm_kI)
-        wpilib.SmartDashboard.putNumber("D Gain", SW.Arm_kD)
-        wpilib.SmartDashboard.putNumber("I Zone", SW.Arm_kIz)
-        wpilib.SmartDashboard.putNumber("Feed Forward", SW.Arm_kFF)
-        wpilib.SmartDashboard.putNumber("Max Output", SW.Arm_kMaxOutput)
-        wpilib.SmartDashboard.putNumber("Min Output", SW.Arm_kMinOutput)
-        wpilib.SmartDashboard.putNumber("Arm Set-Point", self.rotations)
+        # # Display PID coefficients on SmartDashboard
+        # wpilib.SmartDashboard.putNumber("P Gain", SW.Arm_kP)
+        # wpilib.SmartDashboard.putNumber("I Gain", SW.Arm_kI)
+        # wpilib.SmartDashboard.putNumber("D Gain", SW.Arm_kD)
+        # wpilib.SmartDashboard.putNumber("I Zone", SW.Arm_kIz)
+        # wpilib.SmartDashboard.putNumber("Feed Forward", SW.Arm_kFF)
+        # wpilib.SmartDashboard.putNumber("Max Output", SW.Arm_kMaxOutput)
+        # wpilib.SmartDashboard.putNumber("Min Output", SW.Arm_kMinOutput)
+        # wpilib.SmartDashboard.putNumber("Arm Set-Point", self.rotations)
         
         
     def periodic(self) -> None:
@@ -66,7 +66,7 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("Arm Set-Point", self.rotations)
         wpilib.SmartDashboard.putNumber("Motor 1 Position", self.encoder1.getPosition())
         wpilib.SmartDashboard.putNumber("Motor 2 position", self.encoder2.getPosition())
-        wpilib.SmartDashboard.putBoolean("BeamBreak", self.beamBreak.get())
+        # wpilib.SmartDashboard.putBoolean("BeamBreak", self.beamBreak.get())
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
         # if (wpilib.XboxController.getXButtonPressed):
