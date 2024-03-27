@@ -159,11 +159,12 @@ sw_data = {
     "HangUpSpeed": -1.0,
     "HangDownSpeed": 1.0,
     "ArmSpeed": 0.8,
-    "IntakeSpeed": 0.7,
+    "IntakeSpeed": 0.9,
     "LimitIntakeSpeed": 0.5,
     "OutakeSpeed": -0.7,
     "InwardsShooterSpeed": -0.6,
-    "OutwardsShooterSpeed": 0.8,
+    "OutwardsShooterLeftSpeed": 0.5,
+    "OutwardsShooterRightSpeed": 0.3,
     
     #Autonomous constants
     "AutoArmDownSpeed": 0.6,
