@@ -5,6 +5,8 @@ logger = logging.getLogger("project212_robot")
 import wpilib
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
 from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
+from pathplannerlib.auto import NamedCommands, AutoBuilder, PathPlannerAuto
+
 
 from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
 from swervepy.impl import CoaxialSwerveModule
@@ -12,7 +14,7 @@ from swervepy.impl import CoaxialSwerveModule
 from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
-#import commands2.cmd
+
 import commands2.button
 
 # Constants
@@ -37,6 +39,7 @@ from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
 import commands.armCommand
 import commands.hangCommand
+
 
 #Auto Command Imports
 import commands.autonomousCommands.driveForwardCommand
@@ -76,13 +79,18 @@ class RobotContainer:
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
         self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
         
+        NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
+        #self.newAuto = PathPlannerAuto("New Auto")
+        #self.autoChooser.addOption("pathplanner", self.newAuto)
+        
         wpilib.SmartDashboard.putData(self.autoChooser)
         
         self.configureButtonBindings()
 
 
     def get_autonomous_command(self):
-        return self.autoChooser.getSelected()
+        #return self.autoChooser.getSelected()
+        return PathPlannerAuto("New Auto")
 
     def configureButtonBindings(self):
         """

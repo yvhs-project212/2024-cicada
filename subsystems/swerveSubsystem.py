@@ -6,6 +6,10 @@ from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
 from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
 from swervepy.impl import CoaxialSwerveModule
 
+from pathplannerlib.auto import AutoBuilder
+from pathplannerlib.config import HolonomicPathFollowerConfig, ReplanningConfig, PIDConstants
+from wpilib import DriverStation
+
 from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
@@ -119,6 +123,23 @@ class swerveSubsystem(commands2.Subsystem):
                 self.angular_velocity_limit_ratio = (
                     OP.angular_velocity_limit / OP.max_angular_velocity)
         
+        AutoBuilder.configureHolonomic(
+            self.getSwerve().pose(), # Robot pose supplier
+            self.getSwerve().reset_odometry(), # Method to reset odometry (will be called if your auto has a starting pose)
+            self.getSwerve().robot_relative_speeds(), # ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            self.getSwerve().drive_relative_speeds(), # Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            HolonomicPathFollowerConfig( # HolonomicPathFollowerConfig, this should likely live in your Constants class
+                PIDConstants(5.0, 0.0, 0.0), # Translation PID constants
+                PIDConstants(5.0, 0.0, 0.0), # Rotation PID constants
+                4.5, # Max module speed, in m/s
+                0.4, # Drive base radius in meters. Distance from robot center to furthest module.
+                ReplanningConfig() # Default path replanning config. See the API for the options here
+            ),
+            self.shouldFlipPath, # Supplier to control path flipping based on alliance color
+            self # Reference to this subsystem to set requirements
+        )
+        
+        
     def log_data(self):
         for pos in ("LF", "RF", "LB", "RB"):
             encoder = getattr(self, f"{pos.lower()}_enc")
@@ -169,4 +190,7 @@ class swerveSubsystem(commands2.Subsystem):
                 field_relative=SW.field_relative,
                 drive_open_loop=SW.drive_open_loop,
             )
+        
+    def shouldFlipPath():
+        return DriverStation.getAlliance() == DriverStation.Alliance.kRed
 
