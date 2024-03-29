@@ -7,6 +7,10 @@ from wpimath.geometry import Translation2d, Rotation2d, Pose2d
 from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
 from pathplannerlib.auto import NamedCommands, AutoBuilder, PathPlannerAuto
 
+from pathplannerlib.auto import AutoBuilder
+from pathplannerlib.config import HolonomicPathFollowerConfig, ReplanningConfig, PIDConstants
+from wpilib import DriverStation
+
 
 from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
 from swervepy.impl import CoaxialSwerveModule
@@ -87,10 +91,9 @@ class RobotContainer:
         
         self.configureButtonBindings()
 
-
     def get_autonomous_command(self):
-        #return self.autoChooser.getSelected()
-        return PathPlannerAuto("New Auto")
+        return self.autoChooser.getSelected()
+        #return PathPlannerAuto("New Auto")
 
     def configureButtonBindings(self):
         """

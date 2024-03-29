@@ -124,10 +124,10 @@ class swerveSubsystem(commands2.Subsystem):
                     OP.angular_velocity_limit / OP.max_angular_velocity)
         
         AutoBuilder.configureHolonomic(
-            self.getSwerve().pose(), # Robot pose supplier
-            self.getSwerve().reset_odometry(), # Method to reset odometry (will be called if your auto has a starting pose)
-            self.getSwerve().robot_relative_speeds(), # ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            self.getSwerve().drive_relative_speeds(), # Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            lambda: self.getSwerve().pose, # Robot pose supplier
+            lambda: self.getSwerve().reset_odometry, # Method to reset odometry (will be called if your auto has a starting pose)
+            lambda: self.getSwerve().robot_relative_speeds, # ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            lambda: self.getSwerve().drive_relative_speeds, # Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             HolonomicPathFollowerConfig( # HolonomicPathFollowerConfig, this should likely live in your Constants class
                 PIDConstants(5.0, 0.0, 0.0), # Translation PID constants
                 PIDConstants(5.0, 0.0, 0.0), # Rotation PID constants
@@ -136,7 +136,7 @@ class swerveSubsystem(commands2.Subsystem):
                 ReplanningConfig() # Default path replanning config. See the API for the options here
             ),
             self.shouldFlipPath, # Supplier to control path flipping based on alliance color
-            self # Reference to this subsystem to set requirements
+            lambda: self.getSwerve().getSubsystem # Reference to this subsystem to set requirements
         )
         
         
