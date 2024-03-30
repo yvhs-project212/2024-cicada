@@ -3,6 +3,7 @@ import commands2
 import commands2.cmd
 
 from subsystems.intakeSubsystem import intakeSubsystem
+from subsystems.ledsSubsystem import ledSub
 
 class intake(commands2.Command):
     
@@ -69,10 +70,12 @@ class stopIntake(commands2.Command):
         
 class IntakeLimitCommand(commands2.Command):
     
-    def __init__(self, intakeSubsystem: intakeSubsystem) -> None:
+    def __init__(self, intakeSubsystem: intakeSubsystem, ledSubsystem: ledSub) -> None:
         super().__init__()
         self.intakeSub = intakeSubsystem
+        self.ledSub = ledSubsystem
         self.addRequirements(intakeSubsystem)
+        self.addRequirements(ledSubsystem)
 
     def intialize(self):
         import logging
@@ -82,6 +85,7 @@ class IntakeLimitCommand(commands2.Command):
         
     def execute(self):
         self.intakeSub.intake()
+        self.ledSub.ledMode1()
 
     def isFinished(self):
         if self.intakeSub.limit_switch_get_none() == False:
@@ -91,3 +95,4 @@ class IntakeLimitCommand(commands2.Command):
     
     def end(self, interrupted: bool):
         self.intakeSub.stopintake()
+        self.ledSub.ledMode2()

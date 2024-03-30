@@ -20,6 +20,8 @@ class shooterSubsystem(commands2.Subsystem):
         self.liveWindow.putNumber("ShooterMotorOPT", 0)
     
     def outwardsShooter(self):
+        # self.shooterMotor1.set(-0.6)
+        # self.shooterMotor2.set(-0.4)
         self.shooterMotorGroup.set(SW.OutwardsShooterSpeed)
         
     def inwardsShooter(self):

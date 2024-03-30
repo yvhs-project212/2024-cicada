@@ -37,7 +37,7 @@ from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline #doNothing
 from commands.armCommand import armToGround, armToAmp, armStop
-from commands.ledCommand import ledMode1, ledMode2, ledMode3, ledForIntake
+from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
 
@@ -99,7 +99,8 @@ class RobotContainer:
         # self.DriverController.button(1).whileTrue()
         
         # self.OperatorController.button(1).whileTrue(IntakeLimitCommand, ledForIntake(self.intake, self.leds))
-        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
+        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
+        self.OperatorController.button(1).whileFalse(ledMode3(self.leds))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
@@ -112,8 +113,7 @@ class RobotContainer:
         
         # self.OperatorController.button(4).toggleOnTrue(armToAmp(self.arm))
         # self.OperatorController.button(4).toggleOnFalse(armStop(self.arm))
-        # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
-        self.OperatorController.button(4).whileTrue(ledForIntake(self.leds))
+        self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
         
         # self.OperatorController.button(3).toggleOnTrue(armToGround(self.arm))
         # self.OperatorController.button(3).toggleOnFalse(armStop(self.arm))
