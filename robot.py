@@ -37,9 +37,6 @@ class Robot(commands2.TimedCommandRobot):
         # bindings, and put our autonomous chooser on the dashboard.
         self.container = robotcontainer.RobotContainer()
         self.container.swerve.reset_modules()   
-        
-        # Captures image and sends to Smart Dashboard
-        CameraServer.startAutomaticCapture()
 
         log.info('robot initialized')
 

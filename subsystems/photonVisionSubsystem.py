@@ -23,9 +23,6 @@ from constants import OP
 class visionSub(commands2.Subsystem):
     
    def  __init__(self):
-       
-      # self.usbCam = CameraServer.startAutomaticCapture()
-      # self.usbCam.setResolution(640, 480)
       
       # Start camera server 
       self.camera = PhotonCamera("Limelight")

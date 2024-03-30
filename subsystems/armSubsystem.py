@@ -40,13 +40,10 @@ class ArmSubsystem(commands2.Subsystem):
         # self.armPID.enableContinuousInput(-1, 1)
         # self.armPID.setIZone(1)
         
-        
     def periodic(self) -> None:
         wpilib.SmartDashboard.putBoolean("BeamBreak", self.armLimitSwitch.get())
         wpilib.SmartDashboard.putNumberArray("ArmPositions", [self.encoder1.getPosition(), self.encoder2.getPosition(), self.avgArmPos])
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
-            
-        
         
     def armwithjoystick(self, joystickInput):
         if joystickInput <= 0.15 and joystickInput >= -0.15:
