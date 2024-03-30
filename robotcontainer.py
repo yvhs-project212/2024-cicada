@@ -36,7 +36,7 @@ from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitComman
 from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline #doNothing
-from commands.armCommand import armToGround, armToAmp, armStop
+from commands.armCommand import armStop
 from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
