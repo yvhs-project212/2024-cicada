@@ -25,7 +25,6 @@ class swerveSubsystem(commands2.Subsystem):
         self.gyro = self.navx_adapter.navx
         self.gyro.zeroYaw()
 
-
         # The Azimuth component included the absolute encoder because it needs
         # to be able to reset to absolute position.
         #
@@ -122,7 +121,7 @@ class swerveSubsystem(commands2.Subsystem):
             else:
                 self.angular_velocity_limit_ratio = (
                     OP.angular_velocity_limit / OP.max_angular_velocity)
-        
+        """
         AutoBuilder.configureHolonomic(
             lambda: self.getSwerve().pose, # Robot pose supplier
             lambda: self.getSwerve().reset_odometry, # Method to reset odometry (will be called if your auto has a starting pose)
@@ -138,6 +137,7 @@ class swerveSubsystem(commands2.Subsystem):
             self.shouldFlipPath, # Supplier to control path flipping based on alliance color
             lambda: self.getSwerve().getSubsystem # Reference to this subsystem to set requirements
         )
+        """
         
         
     def log_data(self):
@@ -190,6 +190,15 @@ class swerveSubsystem(commands2.Subsystem):
                 field_relative=SW.field_relative,
                 drive_open_loop=SW.drive_open_loop,
             )
+        
+    def zeroGyroYaw(self):
+        self.gyro.zeroYaw()
+        
+    def gyroOffsetLeft60(self):
+        self.gyro.setAngleAdjustment(-60)
+    
+    def gyroOffsetRight60(self):
+        self.gyro.setAngleAdjustment(60)
         
     def shouldFlipPath():
         return DriverStation.getAlliance() == DriverStation.Alliance.kRed

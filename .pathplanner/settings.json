@@ -2,7 +2,9 @@
   "robotWidth": 0.584,
   "robotLength": 0.58,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "4NotesAuto"
+  ],
   "autoFolders": [
     "New Folder"
   ],

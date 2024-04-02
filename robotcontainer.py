@@ -52,12 +52,6 @@ import commands.autonomousCommands.autoDropArmCommand
 
 
 class RobotContainer:
-    """
-    This example robot container should serve as a demonstration for how to
-    implement swervepy on your robot.  You should not need to edit much of the
-    code in this module to get a test working.  Instead, edit the values and
-    class choices in constants.py.
-    """
 
     def __init__(self):
 
@@ -81,7 +75,6 @@ class RobotContainer:
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
-        self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
         
         NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
         #self.newAuto = PathPlannerAuto("New Auto")
