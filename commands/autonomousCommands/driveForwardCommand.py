@@ -19,11 +19,14 @@ def getAutoCommand(swerve: SwerveDrive, forwardDistance: float):
         Pose2d(forwardDistance, 0, Rotation2d.fromDegrees(0)),
         #Pose2d(5.0, 3.0, Rotation2d.fromDegrees(90)),
     ])
+    """
     path = PathPlannerPath(
         bezier_points,
         PathConstraints(3.0, 3.0, 2 * math.pi, 4 * math.pi),
         GoalEndState(0.0, Rotation2d.fromDegrees(-90)),     # Zero velocity and facing 90 degrees clockwise
     )
+    """
+    path = PathPlannerPath.fromPathFile('driveForwardPath')
     first_path = True  # reset robot pose to initial pose in trajectory
     open_loop = True
     return swerve.follow_trajectory_command(path, follower_params, first_path, open_loop)
