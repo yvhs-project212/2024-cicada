@@ -135,7 +135,7 @@ class swerveSubsystem(commands2.Subsystem):
                 ReplanningConfig() # Default path replanning config. See the API for the options here
             ),
             self.shouldFlipPath, # Supplier to control path flipping based on alliance color
-            lambda: self.getSwerve().getSubsystem # Reference to this subsystem to set requirements
+            self.getSwerve() # Reference to this subsystem to set requirements
         )
         """
         
@@ -193,12 +193,6 @@ class swerveSubsystem(commands2.Subsystem):
         
     def zeroGyroYaw(self):
         self.gyro.zeroYaw()
-        
-    def gyroOffsetLeft60(self):
-        self.gyro.setAngleAdjustment(-60)
-    
-    def gyroOffsetRight60(self):
-        self.gyro.setAngleAdjustment(60)
         
     def shouldFlipPath():
         return DriverStation.getAlliance() == DriverStation.Alliance.kRed

@@ -21,6 +21,8 @@ import commands2
 
 import commands2.button
 
+from commands.autonomousCommands import fourNotesAutoStepOneCommand, fourNotesAutoStepTwoCommand, gyroZeroYawCommand
+
 # Constants
 import constants
 from constants import OP, SW
@@ -72,9 +74,16 @@ class RobotContainer:
         self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
                                                                 commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
+        self.fourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                              #self.dropArmAndScore,
+                                                              self.dropArmAndScore,
+                                                              fourNotesAutoStepOneCommand.getAutoCommand(self.swerve),
+                                                              fourNotesAutoStepTwoCommand.getAutoCommand(self.swerve))
+        
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
+        self.autoChooser.addOption("FourNotesAuto", self.fourNotesAuto)
         
         NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
         #self.newAuto = PathPlannerAuto("New Auto")
