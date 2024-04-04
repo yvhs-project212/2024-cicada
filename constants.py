@@ -65,8 +65,7 @@ elec_data = {
     "LB_encoder_DIO": 4,
     "LF_steer_CAN_ID": 6,
     "LF_drive_CAN_ID": 7,
-    "LF_encoder_DIO": 1,  
-      
+    "LF_encoder_DIO": 1,   
     "shooter_Motor1": 12,
     "shooter_Motor2": 13,
     "intake_motor": 14,  
@@ -171,6 +170,7 @@ sw_data = {
     "StageTwoAutoArmDownSpeed": 0.3,
     "AutoArmDownStageTiming": 1.5,
     "AutoShooterActivateTimeInSec": 1.5,
-    "AutoIntakeActivateAfterShooterTimeInSec": 0.5
+    "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
+    "AutoNotePositionAdjustStartTiming": 1
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)

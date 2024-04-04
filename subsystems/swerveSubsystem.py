@@ -14,6 +14,9 @@ from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
 import commands2.button
+from wpimath.controller import PIDController
+from photonVisionSubsystem import visionSub
+
 logger = logging.getLogger("project212_robot")
 
 
@@ -175,7 +178,11 @@ class swerveSubsystem(commands2.Subsystem):
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_rotation_input(self, invert=True):
-        raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
+        pidTurnController = PIDController(0.01, 0, 0)
+        if self.DriverController.rightStick().getAsBoolean() == True:
+            raw_stick_val = pidTurnController.calculate(visionSub.getTargetDistance(4), 0)
+        else:
+            raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
         return self.process_joystick_input(
             raw_stick_val, invert=invert, limit_ratio=self.angular_velocity_limit_ratio)
                 

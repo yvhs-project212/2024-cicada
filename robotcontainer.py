@@ -21,7 +21,6 @@ import commands2
 
 import commands2.button
 
-from commands.autonomousCommands import fourNotesAutoStepOneCommand, fourNotesAutoStepTwoCommand, gyroZeroYawCommand
 
 # Constants
 import constants
@@ -51,6 +50,8 @@ import commands.hangCommand
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
+from commands.autonomousCommands import blueFourNotesAutoStepOneCommand, blueFourNotesAutoStepTwoCommand, gyroZeroYawCommand, autoNotePositionAdjust
+
 
 
 class RobotContainer:
@@ -74,16 +75,18 @@ class RobotContainer:
         self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
                                                                 commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
-        self.fourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
-                                                              #self.dropArmAndScore,
+        self.blueFourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
                                                               self.dropArmAndScore,
-                                                              fourNotesAutoStepOneCommand.getAutoCommand(self.swerve),
-                                                              fourNotesAutoStepTwoCommand.getAutoCommand(self.swerve))
+                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve), intake(self.intake)),
+                                                              #blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve),
+                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
+                                                              #blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve)
+                                                              )
         
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
-        self.autoChooser.addOption("FourNotesAuto", self.fourNotesAuto)
+        self.autoChooser.addOption("BlueFourNotesAuto", self.blueFourNotesAuto)
         
         NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
         #self.newAuto = PathPlannerAuto("New Auto")

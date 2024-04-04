@@ -49,3 +49,6 @@ class stopBothIntakeAndShooter(commands2.Command):
     def end(self, interrupted: bool):
         self.shooterSub.stopShooter()
         self.intakeSub.stopintake()
+        
+
+        
