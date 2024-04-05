@@ -141,7 +141,7 @@ sw_data = {
 	"lf_enc_zeropos":  7.4,
 	"rf_enc_zeropos":  3.5,
 	"lb_enc_zeropos":  90.7,
-	"rb_enc_zeropos":  99.0,
+	"rb_enc_zeropos":  89.0,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
@@ -158,12 +158,12 @@ sw_data = {
     "HangUpSpeed": -1.0,
     "HangDownSpeed": 1.0,
     "ArmSpeed": 0.8,
-    "IntakeSpeed": 0.7,
-    "LimitIntakeSpeed": 0.5,
-    "OutakeSpeed": -0.7,
-    "InwardsShooterSpeed": -0.6,
-    "OutwardsShooterLeftSpeed": 0.5,
-    "OutwardsShooterRightSpeed": 0.3,
+    "IntakeSpeed": -0.8,
+    "LimitIntakeSpeed": -0.5,
+    "OutakeSpeed": 0.7,
+    "InwardsShooterSpeed": 0.6,
+    "OutwardsShooterLeftSpeed": -0.8,
+    "OutwardsShooterRightSpeed": -0.6,
     
     #Autonomous constants
     "StageOneAutoArmDownSpeed": 0.8,
