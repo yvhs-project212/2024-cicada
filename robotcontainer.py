@@ -50,7 +50,7 @@ import commands.hangCommand
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
-from commands.autonomousCommands import blueFourNotesAutoStepOneCommand, blueFourNotesAutoStepTwoCommand, gyroZeroYawCommand, autoNotePositionAdjust
+from commands.autonomousCommands import blueFourNotesAutoStepOneCommand, blueFourNotesAutoStepTwoCommand, gyroZeroYawCommand, autoNotePositionAdjust, BlueTaxiAfterScoreFromRight, RedTaxiAfterScoreFromLeft
 
 
 
@@ -75,6 +75,18 @@ class RobotContainer:
         self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
                                                                 commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
+        self.blueOneNoteAndTaxiFromRight = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                                commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                   BlueTaxiAfterScoreFromRight.getAutoCommand(self.swerve),
+                                                                   gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
+        
+        self.redOneNoteAndTaxiFromLeft = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                                commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                   RedTaxiAfterScoreFromLeft.getAutoCommand(self.swerve),
+                                                                   gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
+        
         self.blueFourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
                                                               self.dropArmAndScore,
                                                               commands2.ParallelDeadlineGroup(blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve), intake(self.intake)),
@@ -87,10 +99,10 @@ class RobotContainer:
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
         self.autoChooser.addOption("BlueFourNotesAuto", self.blueFourNotesAuto)
+        self.autoChooser.addOption("BlueScoreAndTaxiFromRight", self.blueOneNoteAndTaxiFromRight)
+        self.autoChooser.addOption("RedScoreAndTaxiFromLeft", self.redOneNoteAndTaxiFromLeft)
         
         NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
-        #self.newAuto = PathPlannerAuto("New Auto")
-        #self.autoChooser.addOption("pathplanner", self.newAuto)
         
         wpilib.SmartDashboard.putData(self.autoChooser)
         
