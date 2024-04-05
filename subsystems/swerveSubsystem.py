@@ -6,10 +6,17 @@ from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
 from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
 from swervepy.impl import CoaxialSwerveModule
 
+from pathplannerlib.auto import AutoBuilder
+from pathplannerlib.config import HolonomicPathFollowerConfig, ReplanningConfig, PIDConstants
+from wpilib import DriverStation
+
 from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
 import commands2.button
+from wpimath.controller import PIDController
+from subsystems.photonVisionSubsystem import visionSub
+
 logger = logging.getLogger("project212_robot")
 
 
@@ -20,7 +27,6 @@ class swerveSubsystem(commands2.Subsystem):
         self.navx_adapter = swerveComponents.gyro_component_class(**swerveComponents.gyro_param_values)
         self.gyro = self.navx_adapter.navx
         self.gyro.zeroYaw()
-
 
         # The Azimuth component included the absolute encoder because it needs
         # to be able to reset to absolute position.
@@ -118,6 +124,24 @@ class swerveSubsystem(commands2.Subsystem):
             else:
                 self.angular_velocity_limit_ratio = (
                     OP.angular_velocity_limit / OP.max_angular_velocity)
+        """
+        AutoBuilder.configureHolonomic(
+            lambda: self.getSwerve().pose, # Robot pose supplier
+            lambda: self.getSwerve().reset_odometry, # Method to reset odometry (will be called if your auto has a starting pose)
+            lambda: self.getSwerve().robot_relative_speeds, # ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            lambda: self.getSwerve().drive_relative_speeds, # Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            HolonomicPathFollowerConfig( # HolonomicPathFollowerConfig, this should likely live in your Constants class
+                PIDConstants(5.0, 0.0, 0.0), # Translation PID constants
+                PIDConstants(5.0, 0.0, 0.0), # Rotation PID constants
+                4.5, # Max module speed, in m/s
+                0.4, # Drive base radius in meters. Distance from robot center to furthest module.
+                ReplanningConfig() # Default path replanning config. See the API for the options here
+            ),
+            self.shouldFlipPath, # Supplier to control path flipping based on alliance color
+            self.getSwerve() # Reference to this subsystem to set requirements
+        )
+        """
+        
         
     def log_data(self):
         for pos in ("LF", "RF", "LB", "RB"):
@@ -154,7 +178,12 @@ class swerveSubsystem(commands2.Subsystem):
                                            limit_ratio=self.speed_limit_ratio)
 
     def get_rotation_input(self, invert=True):
-        raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
+        pidTurnController = PIDController(0.01, 0, 0)
+        if self.DriverController.rightStick().getAsBoolean() == True:
+            raw_stick_val = pidTurnController.calculate(visionSub.getTargetDistance(4), 0)
+        else:
+            raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
+        #raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
         return self.process_joystick_input(
             raw_stick_val, invert=invert, limit_ratio=self.angular_velocity_limit_ratio)
                 
@@ -169,4 +198,10 @@ class swerveSubsystem(commands2.Subsystem):
                 field_relative=SW.field_relative,
                 drive_open_loop=SW.drive_open_loop,
             )
+        
+    def zeroGyroYaw(self):
+        self.gyro.zeroYaw()
+        
+    def shouldFlipPath():
+        return DriverStation.getAlliance() == DriverStation.Alliance.kRed
 

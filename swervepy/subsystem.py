@@ -195,6 +195,11 @@ class SwerveDrive(commands2.Subsystem):
         """The robot's translational and rotational speeds"""
         module_states = tuple(module.module_state for module in self._modules)
         return self._kinematics.toChassisSpeeds(module_states)
+    
+    def drive_relative_speeds(self, robotRelativeSpeeds: ChassisSpeeds) -> None:
+        targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02)
+        targetStates = self._kinematics.toSwerveModuleStates(targetSpeeds)
+        self.desire_module_states(targetStates)
 
     def reset_modules(self):
         for module in self._modules:

@@ -65,8 +65,7 @@ elec_data = {
     "LB_encoder_DIO": 4,
     "LF_steer_CAN_ID": 6,
     "LF_drive_CAN_ID": 7,
-    "LF_encoder_DIO": 1,  
-      
+    "LF_encoder_DIO": 1,   
     "shooter_Motor1": 12,
     "shooter_Motor2": 13,
     "intake_motor": 14,  
@@ -141,10 +140,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  9.7,
-	"rf_enc_zeropos":  1.5,
-	"lb_enc_zeropos":  93.7,
-	"rb_enc_zeropos":  -35.0,
+	"lf_enc_zeropos":  7.4,
+	"rf_enc_zeropos":  3.5,
+	"lb_enc_zeropos":  90.7,
+	"rb_enc_zeropos":  89.0,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
@@ -161,16 +160,20 @@ sw_data = {
     "HangUpSpeed": -1.0,
     "HangDownSpeed": 1.0,
     "ArmSpeed": 0.8,
-    "IntakeSpeed": 0.7,
-    "LimitIntakeSpeed": 0.5,
-    "OutakeSpeed": -0.7,
+    "IntakeSpeed": -0.8,
+    "LimitIntakeSpeed": -0.5,
+    "OutakeSpeed": 0.7,
     "InwardsShooterSpeed": 0.6,
-    "OutwardsShooterSpeed": -0.8,
+    "OutwardsShooterLeftSpeed": -0.8,
+    "OutwardsShooterRightSpeed": -0.6,
     
     #Autonomous constants
-    "AutoArmDownSpeed": 0.6,
+    "StageOneAutoArmDownSpeed": 0.8,
+    "StageTwoAutoArmDownSpeed": 0.3,
+    "AutoArmDownStageTiming": 1.5,
     "AutoShooterActivateTimeInSec": 1.5,
     "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
+    "AutoNotePositionAdjustStartTiming": 1,
     
     # PID Constants for the arm subsytem
     "Arm_kP": 0.04,

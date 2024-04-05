@@ -31,9 +31,8 @@ class shooterSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("Motor 13 RPM", self.shooter2RPM)
     
     def outwardsShooter(self):
-        # self.shooterMotor1.set(-0.6)
-        # self.shooterMotor2.set(-0.4)
-        self.shooterMotorGroup.set(SW.OutwardsShooterSpeed)
+        self.shooterMotor1.set(SW.OutwardsShooterLeftSpeed)
+        self.shooterMotor2.set(SW.OutwardsShooterRightSpeed)
         
     def inwardsShooter(self):
         self.shooterMotorGroup.set(SW.InwardsShooterSpeed)

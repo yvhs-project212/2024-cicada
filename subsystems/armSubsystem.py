@@ -33,8 +33,8 @@ class ArmSubsystem(commands2.Subsystem):
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
         self.armPID.setTolerance(2)
         
-        self.pidUse1 = False
-        self.pidUse2 = False
+        # self.pidUse1 = False
+        # self.pidUse2 = False
         # self.armPID.setIntegratorRange(-1.0, 1.0)
         # self.armPID.setSetpoint(3)
         # self.armPID.enableContinuousInput(-1, 1)
@@ -67,8 +67,8 @@ class ArmSubsystem(commands2.Subsystem):
         else:
             calculatedInput = joystickInput
             
-        if (self.pidUse1 and self.pidUse2 == False):
-            self.armPID.reset
+        # if (self.pidUse1 and self.pidUse2 == False):
+        #     self.armPID.reset
             
         if self.armLimitSwitch.get():
             speed = (calculatedInput * constants.SW.ArmSpeed)
@@ -103,10 +103,10 @@ class ArmSubsystem(commands2.Subsystem):
         self.pidUse2 = True
         self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
         
-    def resetPID (self):
-        self.pidUse1 = False
-        self.pidUse2 = False
-        # self.armPID.reset()
-        # self.armPID.setPID(0, 0, 0)
-        self.motorgroup.set(0)
-        self.armPID.disableContinuousInput()
+    # def resetPID (self):
+    #     self.pidUse1 = False
+    #     self.pidUse2 = False
+    #     # self.armPID.reset()
+    #     # self.armPID.setPID(0, 0, 0)
+    #     self.motorgroup.set(0)
+    #     self.armPID.disableContinuousInput()

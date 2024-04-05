@@ -5,6 +5,12 @@ logger = logging.getLogger("project212_robot")
 import wpilib
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
 from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
+from pathplannerlib.auto import NamedCommands, AutoBuilder, PathPlannerAuto
+
+from pathplannerlib.auto import AutoBuilder
+from pathplannerlib.config import HolonomicPathFollowerConfig, ReplanningConfig, PIDConstants
+from wpilib import DriverStation
+
 
 from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
 from swervepy.impl import CoaxialSwerveModule
@@ -12,8 +18,9 @@ from swervepy.impl import CoaxialSwerveModule
 from constants import PHYS, MECH, ELEC, OP, SW
 import subsystems.swerveComponents as swerveComponents
 import commands2
-#import commands2.cmd
+
 import commands2.button
+
 
 # Constants
 import constants
@@ -41,19 +48,16 @@ from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
 
+
 #Auto Command Imports
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
+from commands.autonomousCommands import blueFourNotesAutoStepOneCommand, blueFourNotesAutoStepTwoCommand, gyroZeroYawCommand, autoNotePositionAdjust
+
 
 
 class RobotContainer:
-    """
-    This example robot container should serve as a demonstration for how to
-    implement swervepy on your robot.  You should not need to edit much of the
-    code in this module to get a test working.  Instead, edit the values and
-    class choices in constants.py.
-    """
 
     def __init__(self):
 
@@ -75,18 +79,30 @@ class RobotContainer:
         self.dropArmAndScore = commands2.SequentialCommandGroup(commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
                                                                 commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter))
         
+        self.blueFourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                              self.dropArmAndScore,
+                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve), intake(self.intake)),
+                                                              #blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve),
+                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
+                                                              #blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve)
+                                                              )
+        
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
-        self.autoChooser.addOption("autoDropArm", commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm))
+        self.autoChooser.addOption("BlueFourNotesAuto", self.blueFourNotesAuto)
+        
+        NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
+        #self.newAuto = PathPlannerAuto("New Auto")
+        #self.autoChooser.addOption("pathplanner", self.newAuto)
         
         wpilib.SmartDashboard.putData(self.autoChooser)
         
         self.configureButtonBindings()
 
-
     def get_autonomous_command(self):
         return self.autoChooser.getSelected()
+        #return PathPlannerAuto("New Auto")
 
     def configureButtonBindings(self):
         """

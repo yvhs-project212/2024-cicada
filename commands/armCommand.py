@@ -65,7 +65,7 @@ class armToAmp (commands2.Command):
         return False
     
     def end(self, interrupted: bool):
-        self.armSubsystem.resetPID()
+        self.armSubsystem.arm_stop()
 
 class armToFloor (commands2.Command):
 
@@ -79,4 +79,4 @@ class armToFloor (commands2.Command):
         return False
     
     def end(self, interrupted: bool):
-        self.armSubsystem.resetPID()
+        self.armSubsystem.arm_stop()
