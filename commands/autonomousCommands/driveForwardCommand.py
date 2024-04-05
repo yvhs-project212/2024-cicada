@@ -9,7 +9,7 @@ import math
 import swervepy
 def getAutoCommand(swerve: SwerveDrive, forwardDistance: float):
     follower_params = TrajectoryFollowerParameters(
-        max_drive_velocity=0.5 * (u.m / u.s),
+        max_drive_velocity=4.5 * (u.m / u.s),
         theta_kP=1,
         xy_kP=1,
     )
@@ -23,7 +23,7 @@ def getAutoCommand(swerve: SwerveDrive, forwardDistance: float):
     """
     path = PathPlannerPath(
         bezier_points,
-        PathConstraints(3.0, 3.0, 2 * math.pi, 4 * math.pi),
+        PathConstraints(1.0, 1.0, 2 * math.pi, 4 * math.pi),
         GoalEndState(0.0, Rotation2d.fromDegrees(-90)),     # Zero velocity and facing 90 degrees clockwise
     )
     """

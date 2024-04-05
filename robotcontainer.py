@@ -35,13 +35,16 @@ import subsystems.photonVisionSubsystem
 import subsystems.armSubsystem
 import subsystems.hangSubsystem
 import subsystems.swerveSubsystem
+import subsystems.ledsSubsystem
 
 # Command Imports
 from commands.shooterCommand import inwardsShooter, outwardsShooter, stopShooter
 from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitCommand
 from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
-from commands.visionCommand import takeSnapShot, togglePipeline, doNothing
+from commands.visionCommand import takeSnapShot, togglePipeline
+from commands.armCommand import armStop, armToFloor, armToAmp
+from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
 
@@ -65,6 +68,7 @@ class RobotContainer:
         self.hang = subsystems.hangSubsystem.HangSubsystem()
         self.Vision = subsystems.photonVisionSubsystem.visionSub()
         self.drivetrain = subsystems.swerveSubsystem.swerveSubsystem()
+        self.leds = subsystems.ledsSubsystem.ledSub()
         self.swerve = self.drivetrain.getSwerve()
 
         # The driver's controller
@@ -120,7 +124,9 @@ class RobotContainer:
         (commands2.button.CommandJoystick or
         command2.button.CommandXboxController).
         """
-        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake))
+        
+        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
+        self.OperatorController.button(1).whileFalse(ledMode3(self.leds))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
@@ -128,10 +134,22 @@ class RobotContainer:
         self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
         self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.OperatorController.button(2).whileTrue(outtakeCommand(self.intake, self.shooter))
-        self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
+        self.OperatorController.button(2).whileTrue(outake(self.intake))
+        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
         
-        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
+        # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
+        # self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
+        # self.OperatorController.button(4).whileFalse(armStop(self.arm))
+        
+        # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
+        # self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
+        # self.OperatorController.button(3).whileFalse(armStop(self.arm))
+        
+        self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
+        
+        self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
+        
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         

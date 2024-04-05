@@ -16,8 +16,19 @@ class shooterSubsystem(commands2.Subsystem):
         # create a controller instance and group the 2 shooter motors
         self.shooterMotorGroup = wpilib.MotorControllerGroup(self.shooterMotor1, self.shooterMotor2)
         
-        self.liveWindow = wpilib.SmartDashboard
-        self.liveWindow.putNumber("ShooterMotorOPT", 0)
+        # Creates an encoder constant for both shooter motors
+        self.motor1Encoder = self.shooterMotor1.getEncoder()
+        self.motor2Encoder = self.shooterMotor2.getEncoder()
+        
+        
+    def periodic(self) -> None:
+        
+        # RPM for both shooter wheels
+        self.shooter1RPM = self.motor1Encoder.getVelocity()
+        self.shooter2RPM = self.motor2Encoder.getVelocity()
+        
+        wpilib.SmartDashboard.putNumber("Motor 12 RPM", self.shooter1RPM)
+        wpilib.SmartDashboard.putNumber("Motor 13 RPM", self.shooter2RPM)
     
     def outwardsShooter(self):
         self.shooterMotor1.set(SW.OutwardsShooterLeftSpeed)

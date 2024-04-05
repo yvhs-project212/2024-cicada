@@ -75,6 +75,8 @@ elec_data = {
     "arm_limit_switch": 0,  
     "hang_motor_CAN_ID": 10,
     "lower_motor_CAN_ID": 11,
+    
+    "PWM_For_Leds": 1,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
@@ -171,6 +173,11 @@ sw_data = {
     "AutoArmDownStageTiming": 1.5,
     "AutoShooterActivateTimeInSec": 1.5,
     "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
-    "AutoNotePositionAdjustStartTiming": 1
+    "AutoNotePositionAdjustStartTiming": 1,
+    
+    # PID Constants for the arm subsytem
+    "Arm_kP": 0.04,
+    "Arm_kI": 0.0,
+    "Arm_kD": 0.0,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
