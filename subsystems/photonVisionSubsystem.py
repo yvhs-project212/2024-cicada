@@ -2,7 +2,6 @@ import wpilib
 import commands2
 import photonlibpy
 import logging
-import robotpy_apriltag
 
 logger = logging.getLogger("Vision")
 
@@ -15,7 +14,7 @@ from photonlibpy import photonPoseEstimator
 from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
 
 from wpimath.geometry import Pose3d, Transform3d, Translation3d
-from cscore import CameraServer
+from wpimath.units import metersToFeet, metersToInches
 
 from constants import OP
 
@@ -45,6 +44,7 @@ class visionSub(commands2.Subsystem):
       # This boolean is used to determine what pipeline to use by default it is true
       self.pipeLine = True
       self.pipeLineValue = 0
+      
         
         
    def isDetecting(self, id: int) -> bool: # Check if desired april tag is beeing seen
@@ -68,7 +68,7 @@ class visionSub(commands2.Subsystem):
 
       # Capture post-process camera stream image
       self.camera.takeOutputSnapshot()
-        
+   
    def nothingCommand(self):
         return False
    
@@ -136,16 +136,20 @@ class visionSub(commands2.Subsystem):
       self.result = self.camera.getLatestResult()
       self.hasTargets = self.result.hasTargets()
       self.targets = self.result.getTargets()
-      # self.target_ids = []
-      # for target in self.targets:
       
+      if (self.getTargetDistance(4) is None):
+         self.distance = 0
+      else:
+         self.distance = metersToInches(float(self.getTargetDistance(4)))
          
       # Debug values by logging
-      # logger.info(f"{self.getTargetYaw(8)} Yaw Value")
-      # logger.info(f"{self.getTagOdometry(8)} tag odometry")
+      # logger.info(f"{self.getTargetDistance(4)} distance to speaker")
+      # logger.info(f"{self.distance} distance to speaker")
+      # logger.info(f"{self.distance} Yaw Value")
       
       # Display values on smart dashboard
-      wpilib.SmartDashboard.putBoolean("Is April tag 8 detected", self.isDetecting(8))
-      wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(8))
+      wpilib.SmartDashboard.putBoolean("Is April tag 4 detected", self.isDetecting(4))
+      wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(4))
+      wpilib.SmartDashboard.putNumber("Distance to speaker", self.distance)
       
       wpilib.SmartDashboard.putData(wpilib.Field2d())

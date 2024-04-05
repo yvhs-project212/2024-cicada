@@ -173,12 +173,8 @@ sw_data = {
     "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
     
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.8,
+    "Arm_kP": 0.04,
     "Arm_kI": 0.0,
     "Arm_kD": 0.0,
-    "Arm_kIz": 0.0,
-    "Arm_kFF": 0.0,
-    "Arm_kMaxOutput": 1,
-    "Arm_kMinOutput": -1,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)

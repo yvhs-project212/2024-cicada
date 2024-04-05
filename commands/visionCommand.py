@@ -52,21 +52,3 @@ class togglePipeline(commands2.Command):
 
     def end(self, interrupted: bool):
         self.vision_sub.nothingCommand()
-        
-# class doNothing(commands2.Command):
-#     def __init__(self, visionSubsystem: visionSub) -> None:
-#         super().__init__()
-#         self.vision_sub = visionSubsystem
-
-#     def initialize(self):
-#         logger.info("Changing Pipeline")
-
-#     def execute(self):
-#         self.vision_sub.nothingCommand
-
-#     def isFinished(self):
-#         # command does not finish it needs to be cancelled
-#         return False
-
-#     def end(self, interrupted: bool):
-#         self.vision_sub.nothingCommand()

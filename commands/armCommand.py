@@ -52,3 +52,31 @@ class armWithInput (commands2.Command):
     
     def end(self, interrupted: bool):
         self.armSubsystem.arm_stop()
+
+class armToAmp (commands2.Command):
+
+    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+        self.armSubsystem = armSubsystem
+ 
+    def execute(self):
+        self.armSubsystem.armToAmp()
+
+    def isFinished(self):
+        return False
+    
+    def end(self, interrupted: bool):
+        self.armSubsystem.resetPID()
+
+class armToFloor (commands2.Command):
+
+    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+        self.armSubsystem = armSubsystem
+ 
+    def execute(self):
+        self.armSubsystem.armToFloor()
+
+    def isFinished(self):
+        return False
+    
+    def end(self, interrupted: bool):
+        self.armSubsystem.resetPID()
