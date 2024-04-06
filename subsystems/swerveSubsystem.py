@@ -200,7 +200,7 @@ class swerveSubsystem(commands2.Subsystem):
             )
         
     def zeroGyroYaw(self):
-        self.gyro.zeroYaw()
+        self.gyro.reset()
         
     def shouldFlipPath():
         return DriverStation.getAlliance() == DriverStation.Alliance.kRed

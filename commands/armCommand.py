@@ -2,17 +2,23 @@ import wpilib
 import rev
 import commands2
 from subsystems.armSubsystem import ArmSubsystem
+from subsystems.ledsSubsystem import ledSub
 import constants
 
 class ArmWithJoystick (commands2.Command):
 
-    def __init__(self, armSubsystem: ArmSubsystem) -> None:
+    def __init__(self, armSubsystem: ArmSubsystem, ledSub: ledSub) -> None:
         self.armSubsystem = armSubsystem
+        self.ledSub = ledSub
         self.addRequirements(armSubsystem)
         self.joystickInput = wpilib.XboxController(constants.OP.operator_controller).getLeftY
  
     def execute(self):
         self.armSubsystem.armwithjoystick(self.joystickInput())
+        if self.armSubsystem.armLimitSwitch.get():
+            self.ledSub.ledMode3()
+        else:
+            self.ledSub.ledMode1()
 
     def isFinished(self):
         return False

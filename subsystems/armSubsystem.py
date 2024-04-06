@@ -8,6 +8,7 @@ import commands2
 import wpimath.controller
 import wpimath.trajectory
 import math
+from subsystems.ledsSubsystem import ledSub
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
@@ -46,7 +47,7 @@ class ArmSubsystem(commands2.Subsystem):
         
     def periodic(self) -> None:
         self.avgArmPos = (self.encoder1.getPosition() + self.encoder2.getPosition())/2
-        wpilib.SmartDashboard.putBoolean("BeamBreak", self.armLimitSwitch.get())
+        wpilib.SmartDashboard.putBoolean("Arm LimitSwitch", self.armLimitSwitch.get())
         wpilib.SmartDashboard.putBoolean("Arm PID at setpoint", self.armPID.atSetpoint())
         wpilib.SmartDashboard.putNumberArray("ArmPositions", [self.encoder1.getPosition(), self.encoder2.getPosition(), self.avgArmPos])
         
