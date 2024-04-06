@@ -72,7 +72,7 @@ elec_data = {
     "intake_limit_switch": 5,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,  
-    "arm_limit_switch": 0,  
+    "arm_limit_switch": 9,  
     "hang_motor_CAN_ID": 10,
     "lower_motor_CAN_ID": 11,
     
@@ -176,8 +176,8 @@ sw_data = {
     "AutoNotePositionAdjustStartTiming": 1,
     
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.04,
-    "Arm_kI": 0.0,
+    "Arm_kP": 0.02,
+    "Arm_kI": 0.00,
     "Arm_kD": 0.0,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)

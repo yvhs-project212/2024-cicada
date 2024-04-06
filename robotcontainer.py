@@ -126,18 +126,18 @@ class RobotContainer:
         self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
         
         # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
-        # self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
-        # self.OperatorController.button(4).whileFalse(armStop(self.arm))
+        self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
+        self.OperatorController.button(4).whileFalse(armStop(self.arm))
         
         # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
-        # self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
-        # self.OperatorController.button(3).whileFalse(armStop(self.arm))
+        self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
+        self.OperatorController.button(3).whileFalse(armStop(self.arm))
         
         self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
         
         self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
         
-        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
+        # self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         

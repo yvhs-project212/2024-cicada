@@ -27,11 +27,11 @@ class ArmSubsystem(commands2.Subsystem):
         
         
         # Set the position of encoders to 0
-        self.encoder1.setPosition(0)
-        self.encoder2.setPosition(0)
+        # self.encoder1.setPosition(0)
+        # self.encoder2.setPosition(0)
         
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
-        self.armPID.setTolerance(2)
+        self.armPID.setTolerance(1)
         
         # self.pidUse1 = False
         # self.pidUse2 = False
@@ -60,6 +60,10 @@ class ArmSubsystem(commands2.Subsystem):
         # wpilib.SmartDashboard.putNumber("ArmSpeeds", self.speed)
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
+        # if self.armLimitSwitch.get() == False:
+        #     self.encoder1.setPosition(0)
+        #     self.encoder2.setPosition(0)
+        
         
     def armwithjoystick(self, joystickInput):
         if joystickInput <= 0.15 and joystickInput >= -0.15:
@@ -67,14 +71,11 @@ class ArmSubsystem(commands2.Subsystem):
         else:
             calculatedInput = joystickInput
             
-        # if (self.pidUse1 and self.pidUse2 == False):
-        #     self.armPID.reset
-            
         if self.armLimitSwitch.get():
             speed = (calculatedInput * constants.SW.ArmSpeed)
         else: 
-            self.encoder1.setPosition(0)
-            self.encoder2.setPosition(0)
+            # self.encoder1.setPosition(0)
+            # self.encoder2.setPosition(0)
             if calculatedInput > 0:
                 speed = 0
             else:
@@ -96,7 +97,7 @@ class ArmSubsystem(commands2.Subsystem):
     def armToAmp(self):
         # self.speed = (self.armPID.calculate(self.avgArmPos, -60.0))
         self.pidUse1 = True
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -60.0))
+        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -80.0))
 
     def armToFloor(self):
         # self.speed = (self.armPID.calculate(self.avgArmPos, 0.0))
