@@ -72,7 +72,7 @@ elec_data = {
     "intake_limit_switch": 5,  
     "arm_motor1_CAN_ID": 8,
     "arm_motor2_CAN_ID": 9,  
-    "arm_limit_switch": 0,  
+    "arm_limit_switch": 9,  
     "hang_motor_CAN_ID": 10,
     "lower_motor_CAN_ID": 11,
     
@@ -171,9 +171,10 @@ sw_data = {
     "StageOneAutoArmDownSpeed": 0.8,
     "StageTwoAutoArmDownSpeed": 0.3,
     "AutoArmDownStageTiming": 1.5,
+    "AutoArmDownStopTiming": 3,
     "AutoShooterActivateTimeInSec": 1.5,
     "AutoIntakeActivateAfterShooterTimeInSec": 0.5,
-    "AutoNotePositionAdjustStartTiming": 1,
+    "AutoNotePositionAdjustStartTiming": 0.5,
     
     # PID Constants for the arm subsytem
     "Arm_kP": 0.04,

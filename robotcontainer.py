@@ -53,8 +53,9 @@ import commands.hangCommand
 import commands.autonomousCommands.driveForwardCommand
 import commands.autonomousCommands.autoShootingCommand
 import commands.autonomousCommands.autoDropArmCommand
-from commands.autonomousCommands import blueFourNotesAutoStepOneCommand, blueFourNotesAutoStepTwoCommand, gyroZeroYawCommand, autoNotePositionAdjust, BlueTaxiAfterScoreFromRight, RedTaxiAfterScoreFromLeft
-
+from commands.autonomousCommands import gyroZeroYawCommand, autoNotePositionAdjust, BlueTaxiAfterScoreFromRight, RedTaxiAfterScoreFromLeft, redBackToCommunityFromLeft
+from commands.autonomousCommands import blueBackToCommunityFromRight
+from commands.autonomousCommands import FourNotesAutoStepOneCommand, FourNotesAutoStepTwoCommand, FourNotesAutoStepThreeCommand, FourNotesAutoStepFourCommand, FourNotesAutoStepFiveCommand, FourNotesAutoStepSixCommand
 
 
 class RobotContainer:
@@ -85,26 +86,50 @@ class RobotContainer:
                                                                    BlueTaxiAfterScoreFromRight.getAutoCommand(self.swerve),
                                                                    gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
         
+        self.blueTwoNoteAndTaxiFromRight = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                                commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                commands2.ParallelDeadlineGroup(BlueTaxiAfterScoreFromRight.getAutoCommand(self.swerve), intake(self.intake)),
+                                                                commands2.ParallelDeadlineGroup(blueBackToCommunityFromRight.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter)),
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                )
+
+        
         self.redOneNoteAndTaxiFromLeft = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
                                                                 commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
                                                                 commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
                                                                    RedTaxiAfterScoreFromLeft.getAutoCommand(self.swerve),
                                                                    gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
         
-        self.blueFourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+        self.redTwoNoteAndTaxiFromRight = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
+                                                                commands.autonomousCommands.autoDropArmCommand.autoDropArmCommand(self.arm), 
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                commands2.ParallelDeadlineGroup(RedTaxiAfterScoreFromLeft.getAutoCommand(self.swerve), intake(self.intake)),
+                                                                commands2.ParallelDeadlineGroup(redBackToCommunityFromLeft.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter)),
+                                                                commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                                )
+        
+        self.FourNotesAuto = commands2.SequentialCommandGroup(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain),
                                                               self.dropArmAndScore,
-                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve), intake(self.intake)),
-                                                              #blueFourNotesAutoStepOneCommand.getAutoCommand(self.swerve),
-                                                              commands2.ParallelDeadlineGroup(blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
-                                                              #blueFourNotesAutoStepTwoCommand.getAutoCommand(self.swerve)
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepOneCommand.getAutoCommand(self.swerve), intake(self.intake)),
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepTwoCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter)),
+                                                              commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepThreeCommand.getAutoCommand(self.swerve), intake(self.intake)),
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepFourCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter)),
+                                                              commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepFiveCommand.getAutoCommand(self.swerve), intake(self.intake)),
+                                                              commands2.ParallelDeadlineGroup(FourNotesAutoStepSixCommand.getAutoCommand(self.swerve), autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter)),
+                                                              commands.autonomousCommands.autoShootingCommand.shootingCommand(self.intake, self.shooter),
                                                               )
         
         self.autoChooser = wpilib.SendableChooser()
         self.autoChooser.setDefaultOption("DriveForward", commands.autonomousCommands.driveForwardCommand.getAutoCommand(self.swerve, 5.0))
         self.autoChooser.addOption("ScoreOneNote", self.dropArmAndScore)
-        self.autoChooser.addOption("BlueFourNotesAuto", self.blueFourNotesAuto)
+        self.autoChooser.addOption("FourNotesAuto", self.FourNotesAuto)
         self.autoChooser.addOption("BlueScoreAndTaxiFromRight", self.blueOneNoteAndTaxiFromRight)
+        self.autoChooser.addOption("BlueScoreOneAndPickUpFromMidFromRight", self.blueTwoNoteAndTaxiFromRight)
         self.autoChooser.addOption("RedScoreAndTaxiFromLeft", self.redOneNoteAndTaxiFromLeft)
+        self.autoChooser.addOption("RedScoreOneAndPickUpFromMidFromLeft", self.redTwoNoteAndTaxiFromRight)
         
         NamedCommands.registerCommand("driveForward", commands.autonomousCommands.driveForwardCommand)
         
@@ -134,8 +159,12 @@ class RobotContainer:
         self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
         self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.OperatorController.button(2).whileTrue(outake(self.intake))
-        self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
+        # self.OperatorController.button(2).whileTrue(outake(self.intake))
+        # self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
+        self.OperatorController.button(2).whileTrue(outtakeCommand(self.intake, self.shooter))
+        self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
+            
+        self.DriverController.leftBumper().onTrue(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
         
         # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
         # self.OperatorController.button(4).whileTrue(armToFloor(self.arm))

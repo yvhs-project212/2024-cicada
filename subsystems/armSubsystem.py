@@ -111,3 +111,6 @@ class ArmSubsystem(commands2.Subsystem):
         # self.armPID.setPID(0, 0, 0)
         self.motorgroup.set(0)
         self.armPID.disableContinuousInput()
+        
+    def periodic(self) -> None:
+        wpilib.SmartDashboard.putBoolean("ArmLimitSwitch", self.armLimitSwitch.get())

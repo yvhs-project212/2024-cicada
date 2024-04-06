@@ -85,7 +85,7 @@ class IntakeLimitCommand(commands2.Command):
         
     def execute(self):
         self.intakeSub.intake()
-        self.ledSub.ledMode1()
+        self.ledSub.ledMode2()
 
     def isFinished(self):
         if self.intakeSub.limit_switch_get_none() == False:
@@ -95,4 +95,4 @@ class IntakeLimitCommand(commands2.Command):
     
     def end(self, interrupted: bool):
         self.intakeSub.stopintake()
-        self.ledSub.ledMode2()
+        #self.ledSub.ledMode2()

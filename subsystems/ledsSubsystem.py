@@ -18,7 +18,7 @@ class ledSub(commands2.Subsystem):
         
         # Sets LEDs red
     def ledMode1(self):
-        self.ledValue.setSpeed(0.2)
+        self.ledValue.setSpeed(0.1)
         
         # Sets LED's green
     def ledMode2(self):
@@ -27,3 +27,11 @@ class ledSub(commands2.Subsystem):
         # Default Led Mode (Rainbow)
     def ledMode3(self):
         self.ledValue.setSpeed(0.5)
+        
+        # Sets LEDs red
+    def ledMode4(self):
+        self.ledValue.setSpeed(0.2)
+        
+        # Sets LEDs red
+    def ledMode5(self):
+        self.ledValue.setSpeed(0.3)

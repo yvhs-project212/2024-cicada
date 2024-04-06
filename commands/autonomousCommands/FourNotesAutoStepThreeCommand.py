@@ -14,8 +14,8 @@ def getAutoCommand(swerve: SwerveDrive):
         xy_kP=1,
     )
 
-    path = PathPlannerPath.fromPathFile("Blue4NotesStep1")
+    path = PathPlannerPath.fromPathFile("4NotesStep3")
     
-    first_path = True  # reset robot pose to initial pose in trajectory
+    first_path = False  # reset robot pose to initial pose in trajectory
     open_loop = True
     return swerve.follow_trajectory_command(path, follower_params, first_path, open_loop)

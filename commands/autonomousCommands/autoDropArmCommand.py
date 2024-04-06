@@ -18,7 +18,7 @@ class autoDropArmCommand(commands2.Command):
         
     def execute(self):
         self.armSub.arm_down(SW.StageOneAutoArmDownSpeed)
-        if self.timer.get() > SW.AutoArmDownStageTiming:
+        if self.timer.get() >= SW.AutoArmDownStageTiming:
             self.armSub.arm_down(SW.StageTwoAutoArmDownSpeed)
         
         
