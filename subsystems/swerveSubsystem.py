@@ -179,8 +179,10 @@ class swerveSubsystem(commands2.Subsystem):
 
     def get_rotation_input(self, invert=True):
         pidTurnController = PIDController(0.01, 0, 0)
-        if self.DriverController.rightStick().getAsBoolean() == True:
-            raw_stick_val = pidTurnController.calculate(visionSub.getTargetDistance(4), 0)
+        if self.DriverController.rightStick().getAsBoolean() == True and visionSub.isDetecting(5):
+            raw_stick_val = pidTurnController.calculate(visionSub.getTargetDistance(5), 0)
+        elif self.DriverController.rightStick().getAsBoolean() == True and visionSub.isDetecting(6):
+            raw_stick_val = pidTurnController.calculate(visionSub.getTargetDistance(6), 0)
         else:
             raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
         #raw_stick_val = self.DriverController.getRawAxis(OP.rotation_joystick_axis)
