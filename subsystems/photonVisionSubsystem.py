@@ -102,6 +102,14 @@ class visionSub(commands2.Subsystem):
          listId += i.getFiducialId()
       return listId
     
+   def getTargetDistance1(self, id: int): # Returns the X distance of the Desired ID Tag if seeen
+      for i in self.targets:
+         if i.getFiducialId() == id:
+            distnace = i.getBestCameraToTarget().X()
+         if (distnace is None):
+            distnace = 0
+         return distnace
+    
    def getTargetDistance(self, id: int): # Returns the X distance of the Desired ID Tag if seeen
       for i in self.targets:
          if i.getFiducialId() == id:

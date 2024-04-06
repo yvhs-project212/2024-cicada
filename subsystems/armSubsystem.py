@@ -8,7 +8,7 @@ import commands2
 import wpimath.controller
 import wpimath.trajectory
 import math
-from subsystems.ledsSubsystem import ledSub
+from wpimath.units import metersToFeet, metersToInches
 
 class ArmSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
@@ -26,7 +26,6 @@ class ArmSubsystem(commands2.Subsystem):
         self.encoder1 = self.armmotor1.getEncoder()
         self.encoder2 = self.armmotor2.getEncoder()
         
-        
         # Set the position of encoders to 0
         # self.encoder1.setPosition(0)
         # self.encoder2.setPosition(0)
@@ -34,16 +33,11 @@ class ArmSubsystem(commands2.Subsystem):
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
         self.armPID.setTolerance(1)
         
-        # self.pidUse1 = False
-        # self.pidUse2 = False
         # self.armPID.setIntegratorRange(-1.0, 1.0)
-        # self.armPID.setSetpoint(3)
         # self.armPID.enableContinuousInput(-1, 1)
         # self.armPID.setIZone(1)
         
         # self.speed = 0
-        
-        self.controller = wpilib.XboxController(1)
         
     def periodic(self) -> None:
         self.avgArmPos = (self.encoder1.getPosition() + self.encoder2.getPosition())/2
@@ -58,12 +52,11 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumber("motor 1 speeds", self.armmotor1.get())
         wpilib.SmartDashboard.putNumber("motor 2 speeds", self.armmotor2.get())
         
-        # wpilib.SmartDashboard.putNumber("ArmSpeeds", self.speed)
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
-        # if self.armLimitSwitch.get() == False:
-        #     self.encoder1.setPosition(0)
-        #     self.encoder2.setPosition(0)
+        if self.armLimitSwitch.get():
+            self.encoder1.setPosition(0)
+            self.encoder2.setPosition(0)
         
         
     def armwithjoystick(self, joystickInput):
@@ -85,25 +78,28 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup.set(speed)
 
     def arm_down(self, speed):
-        # self.armPID = wpimath.controller.PIDController(0.02, 0, 0)
         self.motorgroup.set(speed)
 
     def arm_up(self, speed):
-        # self.armPID = wpimath.controller.PIDController(0.02, 0, 0)
         self.motorgroup.set(-speed)
         
     def arm_stop(self):
         self.motorgroup.set(0)
         
     def armToAmp(self):
-        # self.speed = (self.armPID.calculate(self.avgArmPos, -60.0))
-        self.pidUse1 = True
         self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -80.0))
 
     def armToFloor(self):
-        # self.speed = (self.armPID.calculate(self.avgArmPos, 0.0))
-        self.pidUse2 = True
         self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
+        
+    def armWithAprilTag(self, aprilTagDistance):
+        if (aprilTagDistance is None):
+            distance = 0
+        else:
+            distance = metersToInches(float(aprilTagDistance))
+            setpoint = distance / 2
+            self.motorgroup.set(self.armPID.calculate(self.avgArmPos, setpoint))
+        
         
     # def resetPID (self):
     #     self.pidUse1 = False

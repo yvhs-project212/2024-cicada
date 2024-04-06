@@ -43,7 +43,7 @@ from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitComman
 from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline
-from commands.armCommand import armStop, armToFloor, armToAmp
+from commands.armCommand import armStop, armToFloor, armToAmp, armWithAprilTag
 from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
@@ -171,7 +171,8 @@ class RobotContainer:
         self.OperatorController.button(4).whileFalse(armStop(self.arm))
         
         # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
-        self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
+        # self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
+        self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
         self.OperatorController.button(3).whileFalse(armStop(self.arm))
         
         self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
