@@ -179,7 +179,7 @@ sw_data = {
     
     # PID Constants for the arm subsytem
     "Arm_kP": 0.025,
-    "Arm_kI": 0.00,
+    "Arm_kI": 0.005,
     "Arm_kD": 0.0,
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)
