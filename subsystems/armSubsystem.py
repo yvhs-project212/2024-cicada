@@ -74,6 +74,8 @@ class ArmSubsystem(commands2.Subsystem):
                 speed = 0
             else:
                 speed = (calculatedInput * constants.SW.ArmSpeed)
+                
+        self.motorgroup.set(speed)
 
     def arm_down(self, speed):
         self.motorgroup.set(speed)

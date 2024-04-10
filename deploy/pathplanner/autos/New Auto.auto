@@ -14,7 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "DriveForward"
+            "pathName": "4NotesStep1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4NotesStep2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4NotesStep3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4NotesStep4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4NotesStep5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4NotesStep6"
           }
         }
       ]
