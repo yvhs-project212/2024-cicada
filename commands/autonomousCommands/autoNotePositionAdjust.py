@@ -1,5 +1,6 @@
 import wpilib
 import commands2
+import rev
 
 from subsystems.intakeSubsystem import intakeSubsystem
 from subsystems.shooterSubsystem import shooterSubsystem
@@ -15,6 +16,8 @@ class autoNotePositionAdjust(commands2.Command):
     def initialize(self):
         self.timer.reset()
         self.timer.start()
+        brakeMode = rev.CANSparkMax.IdleMode.kBrake
+        self.intakeSub.intakeMotor.setIdleMode(brakeMode)
 
     def execute(self):
         if self.timer.get() > SW.AutoNotePositionAdjustStartTiming:
@@ -22,7 +25,7 @@ class autoNotePositionAdjust(commands2.Command):
             self.intakeSub.outake()
 
     def isFinished(self):
-        if self.timer.get() > SW.AutoNotePositionAdjustStartTiming + 1:
+        if self.timer.get() > SW.AutoNotePositionAdjustStartTiming + SW.AutoNotePositionAdjustRunningTime:
             return True
         else: 
             return False
@@ -30,3 +33,5 @@ class autoNotePositionAdjust(commands2.Command):
     def end(self, interrupted: bool):
         self.shooterSub.stopShooter()
         self.intakeSub.stopintake()
+        coastMode = rev.CANSparkMax.IdleMode.kCoast
+        self.intakeSub.intakeMotor.setIdleMode(coastMode)

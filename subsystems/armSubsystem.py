@@ -54,7 +54,7 @@ class ArmSubsystem(commands2.Subsystem):
         
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
-        if self.armLimitSwitch.get():
+        if self.armLimitSwitch.get() == False:
             self.encoder1.setPosition(0)
             self.encoder2.setPosition(0)
         
@@ -98,7 +98,7 @@ class ArmSubsystem(commands2.Subsystem):
         else:
             distance = metersToInches(float(aprilTagDistance))
             setpoint = distance / 2
-            self.motorgroup.set(self.armPID.calculate(self.avgArmPos, setpoint))
+            self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -setpoint))
         
         
     # def resetPID (self):
