@@ -179,7 +179,7 @@ class RobotContainer:
         
         self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
         
-        # self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
+        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         

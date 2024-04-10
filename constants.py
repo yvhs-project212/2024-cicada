@@ -153,7 +153,7 @@ sw_data = {
     "kI": 0,
     "kD": 0,
 
-    # Constants for feed-forward of propulsion motors
+    # Constants for feed-forward of propulsion motors2
     "kS": 0,
     "kV": 0,
     "kA": 0,
@@ -165,8 +165,8 @@ sw_data = {
     "LimitIntakeSpeed": -0.5,
     "OutakeSpeed": 0.7,
     "InwardsShooterSpeed": 0.6,
-    "OutwardsShooterLeftSpeed": -0.8,
-    "OutwardsShooterRightSpeed": -0.6,
+    "OutwardsShooterLeftSpeed": -0.9,
+    "OutwardsShooterRightSpeed": -0.75,
     
     #Autonomous constants
     "StageOneAutoArmDownSpeed": 0.8,
@@ -178,7 +178,7 @@ sw_data = {
     "AutoNotePositionAdjustStartTiming": 0.5,
     
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.02,
+    "Arm_kP": 0.025,
     "Arm_kI": 0.00,
     "Arm_kD": 0.0,
 }
