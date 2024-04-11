@@ -32,12 +32,11 @@ class ArmSubsystem(commands2.Subsystem):
         
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
         self.armPID.setTolerance(1)
+        self.setpoint = 0
         
         # self.armPID.setIntegratorRange(-1.0, 1.0)
         # self.armPID.enableContinuousInput(-1, 1)
         # self.armPID.setIZone(1)
-        
-        # self.speed = 0
         
     def periodic(self) -> None:
         self.avgArmPos = (self.encoder1.getPosition() + self.encoder2.getPosition())/2
@@ -45,12 +44,10 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putBoolean("Arm PID at setpoint", self.armPID.atSetpoint())
         wpilib.SmartDashboard.putNumberArray("ArmPositions", [self.encoder1.getPosition(), self.encoder2.getPosition(), self.avgArmPos])
         
-        wpilib.SmartDashboard.putNumber("PID Position error", self.armPID.getPositionError())
-        wpilib.SmartDashboard.putNumber("PID Position error", self.armPID.getVelocityError())
-        
         wpilib.SmartDashboard.putNumber("Arm speeds", self.motorgroup.get())
         wpilib.SmartDashboard.putNumber("motor 1 speeds", self.armmotor1.get())
         wpilib.SmartDashboard.putNumber("motor 2 speeds", self.armmotor2.get())
+        wpilib.SmartDashboard.putNumber("Arm SetPoint", self.setpoint)
         
         # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
         
@@ -87,26 +84,22 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup.set(0)
         
     def armToAmp(self):
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -80.0))
+        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -110.0))
 
     def armToFloor(self):
         self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
         
     def armWithAprilTag(self, aprilTagDistance):
         if (aprilTagDistance is None):
-            return False
+            change = False
         else:
-            distance = metersToInches(float(aprilTagDistance))
-            if distance > 70:
-                setpoint = distance / 2.5
-            else:
-                setpoint = distance / 3.5
-            self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -setpoint))
-        
-    # def resetPID (self):
-    #     self.pidUse1 = False
-    #     self.pidUse2 = False
-    #     # self.armPID.reset()
-    #     # self.armPID.setPID(0, 0, 0)
-    #     self.motorgroup.set(0)
-    #     self.armPID.disableContinuousInput()
+            change = True
+            if change is True:
+                distance = metersToInches(float(aprilTagDistance))
+                if distance > 110:
+                    self.setpoint = distance / 2.8
+                elif distance > 90:
+                    self.setpoint = distance / 3
+                else:
+                    self.setpoint = distance / 3.9
+        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -self.setpoint))

@@ -178,8 +178,8 @@ sw_data = {
     "AutoNotePositionAdjustRunningTime": 0.02,
     
     # PID Constants for the arm subsytem
-    "Arm_kP": 0.025,
-    "Arm_kI": 0.005,
-    "Arm_kD": 0.0,
+    "Arm_kP": 0.025, # 0.025 is safe
+    "Arm_kI": 0.00, # 0.00 is safe
+    "Arm_kD": 0.0, # 0.00 is safe
 }
 SW = namedtuple("Data", sw_data.keys())(**sw_data)

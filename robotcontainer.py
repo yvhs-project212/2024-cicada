@@ -156,8 +156,10 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
         
-        self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
-        self.OperatorController.button(1).whileFalse(ledMode3(self.leds))
+        # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
+        # self.OperatorController.button(1).whileFalse(ledMode3(self.leds))
+        self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
+        self.OperatorController.button(1).whileFalse(armStop(self.arm))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
@@ -165,7 +167,7 @@ class RobotContainer:
         self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
         self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        self.OperatorController.button(4).onTrue(autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
+        # self.OperatorController.button(4).onTrue(autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
         
         # self.OperatorController.button(2).whileTrue(outake(self.intake))
         # self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
