@@ -158,7 +158,7 @@ class RobotContainer:
         
         # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
         self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
-        self.OperatorController.button(1).whileFalse(armStop(self.arm))
+        self.OperatorController.button(1).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
@@ -177,11 +177,11 @@ class RobotContainer:
         
         # # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
         self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
-        self.OperatorController.button(4).whileFalse(armStop(self.arm))
+        self.OperatorController.button(4).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         # # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
         self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
-        self.OperatorController.button(3).whileFalse(armStop(self.arm))
+        self.OperatorController.button(3).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
         
