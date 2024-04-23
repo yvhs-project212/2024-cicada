@@ -19,42 +19,27 @@ class ArmSubsystem(commands2.Subsystem):
         self.armLimitSwitch = wpilib.DigitalInput(constants.ELEC.arm_limit_switch)
         self.motorgroup = wpilib.MotorControllerGroup(self.armmotor1, self.armmotor2)
         
-        # self.tofSensor = playingwithfusion.TimeOfFlight(0) # Create a tofSensor Instance
-        # self.tofSensor.RangingMode(1) # Set the range to medium
-        
         # Get both encoder values for the arm
         self.encoder1 = self.armmotor1.getEncoder()
         self.encoder2 = self.armmotor2.getEncoder()
         
-        # Set the position of encoders to 0
-        # self.encoder1.setPosition(0)
-        # self.encoder2.setPosition(0)
-        
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
         self.armPID.setTolerance(1)
-        self.setpoint = 0
-        
-        # self.armPID.setIntegratorRange(-1.0, 1.0)
-        # self.armPID.enableContinuousInput(-1, 1)
-        # self.armPID.setIZone(1)
         
     def periodic(self) -> None:
         self.avgArmPos = (self.encoder1.getPosition() + self.encoder2.getPosition())/2
         wpilib.SmartDashboard.putBoolean("Arm LimitSwitch", self.armLimitSwitch.get())
-        wpilib.SmartDashboard.putBoolean("Arm PID at setpoint", self.armPID.atSetpoint())
         wpilib.SmartDashboard.putNumberArray("ArmPositions", [self.encoder1.getPosition(), self.encoder2.getPosition(), self.avgArmPos])
-        
         wpilib.SmartDashboard.putNumber("Arm speeds", self.motorgroup.get())
-        wpilib.SmartDashboard.putNumber("motor 1 speeds", self.armmotor1.get())
-        wpilib.SmartDashboard.putNumber("motor 2 speeds", self.armmotor2.get())
-        wpilib.SmartDashboard.putNumber("Arm SetPoint", self.setpoint)
         
-        # wpilib.SmartDashboard.putNumber("tof Sensor Range in millimeters", self.tofSensor.getRange())
+        #  PID values to appear on SmartDashboard
+        wpilib.SmartDashboard.putBoolean("Arm PID at setpoint", self.armPID.atSetpoint())
+        wpilib.SmartDashboard.putNumber("Current PID setpoint", self.armPID.getSetpoint())
+        wpilib.SmartDashboard.putNumberArray("PID position Error and Tolerance", [self.armPID.getPositionError(), self.armPID.getPositionTolerance()])
         
         if self.armLimitSwitch.get() == False:
             self.encoder1.setPosition(0)
             self.encoder2.setPosition(0)
-        
         
     def armwithjoystick(self, joystickInput):
         if joystickInput <= 0.15 and joystickInput >= -0.15:
@@ -84,7 +69,7 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup.set(0)
         
     def armToAmp(self):
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -110.0))
+        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -115.0))
 
     def armToFloor(self):
         self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
@@ -97,7 +82,7 @@ class ArmSubsystem(commands2.Subsystem):
             if change is True:
                 distance = metersToInches(float(aprilTagDistance))
                 if distance > 110:
-                    self.setpoint = distance / 2.8
+                    self.setpoint = distance / 2.6
                 elif distance > 90:
                     self.setpoint = distance / 3
                 else:

@@ -157,7 +157,6 @@ class RobotContainer:
         """
         
         # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
-        # self.OperatorController.button(1).whileFalse(ledMode3(self.leds))
         self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
         self.OperatorController.button(1).whileFalse(armStop(self.arm))
         
@@ -181,7 +180,6 @@ class RobotContainer:
         self.OperatorController.button(4).whileFalse(armStop(self.arm))
         
         # # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
-        # # self.OperatorController.button(3).whileTrue(armToAmp(self.arm))
         self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
         self.OperatorController.button(3).whileFalse(armStop(self.arm))
         

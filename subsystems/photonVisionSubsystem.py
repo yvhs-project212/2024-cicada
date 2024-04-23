@@ -16,6 +16,8 @@ from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
 from wpimath.geometry import Pose3d, Transform3d, Translation3d
 from wpimath.units import metersToFeet, metersToInches
 
+from wpilib import SmartDashboard, Field2d
+
 from constants import OP
 
 
@@ -36,7 +38,7 @@ class visionSub(commands2.Subsystem):
       self.targets = self.result.getTargets()
       
       # April Tag Layout   (Currently empty/ not being used)
-      self.aprilTagLayout = photonPoseEstimator.AprilTagFieldLayout()
+      self.pose = photonPoseEstimator
       
       # # Position estimation strategy that is used by the PhotonPoseEstimator class
       self.PoseStrat = photonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE
@@ -44,6 +46,10 @@ class visionSub(commands2.Subsystem):
       # This boolean is used to determine what pipeline to use by default it is true
       self.pipeLine = True
       self.pipeLineValue = 0
+      
+      # Set field informtaion onto SmartDashboard
+      self.field = Field2d()
+      SmartDashboard.putData("Field", self.field)
       
         
         
@@ -73,8 +79,7 @@ class visionSub(commands2.Subsystem):
         return False
    
     
-   # Next 10 methods will return info about the target beeing seen
-         
+   # Next 10 methods will return info about the target beeing seen     
    def getTargetYaw(self, id: int) -> float: # Return the yaw of the desired target if seen
       for i in self.targets:
          if i.getFiducialId() == id:
@@ -102,14 +107,15 @@ class visionSub(commands2.Subsystem):
          listId += i.getFiducialId()
       return listId
     
-   def getTargetDistance1(self, id: int): # Returns the X distance of the Desired ID Tag if seeen
+   def getTargetDistance1(self, id: int) -> float: # Returns the X distance of the Desired ID Tag if seeen (Haven't Tested this)
       for i in self.targets:
          if i.getFiducialId() == id:
-            distnace = i.getBestCameraToTarget().X()
-         if (distnace is None):
-            distnace = 0
-         return distnace
-    
+            if i.getBestCameraToTarget().X() is None:
+               return 0
+            else:
+               return i.getBestCameraToTarget().X()
+      return 0
+      
    def getTargetDistance(self, id: int): # Returns the X distance of the Desired ID Tag if seeen
       for i in self.targets:
          if i.getFiducialId() == id:
@@ -151,13 +157,15 @@ class visionSub(commands2.Subsystem):
          self.distance = metersToInches(float(self.getTargetDistance(4)))
          
       # Debug values by logging
-      # logger.info(f"{self.getTargetDistance(4)} distance to speaker")
       # logger.info(f"{self.distance} distance to speaker")
+      # logger.info(f"{self.getTargetDistance1(4)} distance to speaker")
       # logger.info(f"{self.distance} Yaw Value")
       
       # Display values on smart dashboard
       wpilib.SmartDashboard.putBoolean("Is April tag 4 detected", self.isDetecting(4))
       wpilib.SmartDashboard.putNumber("Tag size", self.GetTargetArea(4))
       wpilib.SmartDashboard.putNumber("Distance to speaker", self.distance)
+      wpilib.SmartDashboard.putNumber("Distance to speaker using new method", self.getTargetDistance1(4))
       
-      wpilib.SmartDashboard.putData(wpilib.Field2d())
+      
+      self.field.setRobotPose(self.pose.Pose2d())
