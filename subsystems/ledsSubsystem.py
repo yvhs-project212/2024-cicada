@@ -23,6 +23,10 @@ class ledSub(commands2.Subsystem):
         # ctreLEDS.
         
         # Sets LEDs red
+        
+    def disabledPeriodic(self):
+        self.ledValue.setSpeed(0.01)
+    
     def ledMode1(self):
         self.ledValue.setSpeed(0.1)
         
