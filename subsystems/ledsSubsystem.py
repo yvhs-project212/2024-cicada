@@ -1,6 +1,9 @@
+import phoenix5.led
 import wpilib
 import commands2
 import logging
+import phoenix6
+import phoenix5
 
 from constants import SW, ELEC
 
@@ -15,6 +18,9 @@ class ledSub(commands2.Subsystem):
         
         # Starts sending a pwm value to the arduino
         self.ledValue.setSpeed(0.01)
+        
+        # ctreLEDS = phoenix5.led
+        # ctreLEDS.
         
         # Sets LEDs red
     def ledMode1(self):
