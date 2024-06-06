@@ -32,7 +32,7 @@ class ArmSubsystem(commands2.Subsystem):
         wpilib.SmartDashboard.putNumberArray("ArmPositions", [self.encoder1.getPosition(), self.encoder2.getPosition(), self.avgArmPos])
         wpilib.SmartDashboard.putNumber("Arm speeds", self.motorgroup.get())
         
-        #  PID values to appear on SmartDashboard
+        #  PID values to appear on SmartDashboard 
         wpilib.SmartDashboard.putBoolean("Arm PID at setpoint", self.armPID.atSetpoint())
         wpilib.SmartDashboard.putNumber("Current PID setpoint", self.armPID.getSetpoint())
         wpilib.SmartDashboard.putNumberArray("PID position Error and Tolerance", [self.armPID.getPositionError(), self.armPID.getPositionTolerance()])

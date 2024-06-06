@@ -111,7 +111,7 @@ class armWithAprilTag (commands2.Command):
         self.vision = visionSubsystem
  
     def execute(self):
-        self.armSubsystem.armWithAprilTag(self.vision.getTargetDistance(4))
+        self.armSubsystem.armWithAprilTag(self.vision.getTargetDistance(14))
 
     def isFinished(self):
         return False

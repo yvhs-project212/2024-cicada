@@ -102,8 +102,11 @@ op_data = {
     # following parameters.  Setting to None is the same as setting to
     # max_speed/max_angular_velocity, and indicates no limit.
     #
-    "speed_limit": 4.0 * (u.m / u.s),
-    "angular_velocity_limit": 8.0 * (u.rad / u.s),
+    # "speed_limit": 4.0 * (u.m / u.s),
+    # "angular_velocity_limit": 8.0 * (u.rad / u.s),
+    
+    "speed_limit": 2.5 * (u.m / u.s),
+    "angular_velocity_limit": 4.0 * (u.rad / u.s),
 
     # For NEO / SparkMAX, use the following and comment out the Falcon500 values
     "propulsion_neutral": rev.CANSparkMax.IdleMode.kBrake,
@@ -140,10 +143,10 @@ sw_data = {
 	# NOTE: when facing wheels "front", make sure that the bevel gears are all
 	# facing right.  Otherwise the wheel will run in reverse!
 	#
-	"lf_enc_zeropos":  7.4,
-	"rf_enc_zeropos":  3.5,
+	"lf_enc_zeropos":  7.0,
+	"rf_enc_zeropos":  3.7,
 	"lb_enc_zeropos":  90.7,
-	"rb_enc_zeropos":  89.0,
+	"rb_enc_zeropos":  139.0,
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)

@@ -156,39 +156,39 @@ class RobotContainer:
         command2.button.CommandXboxController).
         """
         
-        # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
-        self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
-        self.OperatorController.button(1).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
+        # self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
+        # self.OperatorController.button(1).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
-        self.OperatorController.leftBumper().whileTrue(intake(self.intake))
-        self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
+        # self.OperatorController.leftBumper().whileTrue(intake(self.intake))
+        # self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
         
-        self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
-        self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
+        # self.OperatorController.rightBumper().whileTrue(outwardsShooter(self.shooter))
+        # self.OperatorController.rightBumper().whileFalse(stopShooter(self.shooter))
         
-        # self.OperatorController.button(4).onTrue(autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
+        # # self.OperatorController.button(4).onTrue(autoNotePositionAdjust.autoNotePositionAdjust(self.intake, self.shooter))
         
-        # self.OperatorController.button(2).whileTrue(outake(self.intake))
-        # self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
-        self.OperatorController.button(2).whileTrue(outtakeCommand(self.intake, self.shooter))
-        self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
+        # # self.OperatorController.button(2).whileTrue(outake(self.intake))
+        # # self.OperatorController.button(2).whileFalse(stopIntake(self.intake))
+        # self.OperatorController.button(2).whileTrue(outtakeCommand(self.intake, self.shooter))
+        # self.OperatorController.button(2).whileFalse(stopBothIntakeAndShooter(self.intake, self.shooter))
             
-        self.DriverController.leftBumper().onTrue(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
+        # self.DriverController.leftBumper().onTrue(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
         
-        # # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
-        self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
-        self.OperatorController.button(4).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # # # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
+        # self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
+        # self.OperatorController.button(4).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
-        # # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
-        self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
-        self.OperatorController.button(3).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # # # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
+        # self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
+        # self.OperatorController.button(3).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
-        self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
+        # self.OperatorController.button(7).whileTrue(togglePipeline(self.Vision))
         
-        self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
+        # self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
         
-        # self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # # self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
-        self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
+        # self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
         self.swerve.setDefaultCommand(self.drivetrain.getSwerveTeleopCommand(self.swerve))
