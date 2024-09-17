@@ -8,6 +8,7 @@ import commands2
 import wpimath.controller
 import wpimath.trajectory
 import math
+from wpilib import XboxController
 from wpimath.units import metersToFeet, metersToInches
 
 class ArmSubsystem(commands2.Subsystem):
@@ -25,6 +26,9 @@ class ArmSubsystem(commands2.Subsystem):
         
         self.armPID = wpimath.controller.PIDController(constants.SW.Arm_kP, constants.SW.Arm_kI, constants.SW.Arm_kD)
         self.armPID.setTolerance(1)
+        
+        self.joystick_override = False
+        self.controller = XboxController(constants.op_data.operator_controller)
         
     def periodic(self) -> None:
         self.avgArmPos = (self.encoder1.getPosition() + self.encoder2.getPosition())/2
@@ -69,10 +73,16 @@ class ArmSubsystem(commands2.Subsystem):
         self.motorgroup.set(0)
         
     def armToAmp(self):
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -115.0))
+        # Sets the desired enocder tick for the arm to be positioned at
+        self.armPID.setSetpoint(-115.0)
+        
+        # self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -115.0))
 
     def armToFloor(self):
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
+        # Sets the desired enocder tick for the arm to be positioned at
+        self.armPID.setSetpoint(0.0)
+        
+        # self.motorgroup.set(self.armPID.calculate(self.avgArmPos, 0.0))
         
     def armWithAprilTag(self, aprilTagDistance):
         if (aprilTagDistance is None):
@@ -87,4 +97,34 @@ class ArmSubsystem(commands2.Subsystem):
                     self.setpoint = distance / 3
                 else:
                     self.setpoint = distance / 3.9
-        self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -self.setpoint))
+        # Sets the desired enocder tick for the arm to be positioned at
+        self.armPID.setSetpoint(self.setpoint)
+        
+        # self.motorgroup.set(self.armPID.calculate(self.avgArmPos, -self.setpoint))
+        
+    def MainArmCommand(self, joystickInput):
+        if self.controller.getYButton():
+            self.armToAmp()
+        elif self.controller.getAButton():
+            self.armToFloor()
+        elif self.controller.getXButton():
+            self.armWithAprilTag()
+            
+        if abs(joystickInput) > 0.1:  # Threshold to ignore minor movements
+            self.joystick_override = True
+            self.motorgroup.set(joystickInput)
+        else:
+            self.joystick_override = False
+            
+        if not self.joystick_override:
+            self.runPIDControl()
+            
+    def runPIDControl(self):
+        # Get the current position of the arm from the encoder
+        current_position = self.avgArmPos
+
+        # Calculate output from PID controller
+        pid_output = self.armPID.calculate(current_position)
+
+        # Send the output to the motor
+        self.motorgroup.set(pid_output)

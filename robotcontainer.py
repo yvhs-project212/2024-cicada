@@ -43,7 +43,7 @@ from commands.intakeCommand import intake, outake, stopIntake, IntakeLimitComman
 from commands.OuttakeCommand import outtakeCommand, stopBothIntakeAndShooter
 from commands.intakeCommand import intake, outake, stopIntake
 from commands.visionCommand import takeSnapShot, togglePipeline
-from commands.armCommand import armStop, armToFloor, armToAmp, armWithAprilTag
+from commands.armCommand import armStop, armToFloor, armToAmp, armWithAprilTag, MainArmCommand
 from commands.ledCommand import ledMode1, ledMode2, ledMode3
 import commands.armCommand
 import commands.hangCommand
@@ -157,8 +157,8 @@ class RobotContainer:
         """
         
         # self.OperatorController.button(1).whileTrue(IntakeLimitCommand(self.intake, self.leds))
-        self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
-        self.OperatorController.button(1).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # self.OperatorController.button(1).whileTrue(armToAmp(self.arm))
+        # self.OperatorController.button(1).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         self.OperatorController.leftBumper().whileTrue(intake(self.intake))
         self.OperatorController.leftBumper().whileFalse(stopIntake(self.intake))
@@ -176,8 +176,8 @@ class RobotContainer:
         self.DriverController.leftBumper().onTrue(gyroZeroYawCommand.gyroZeroYawCommand(self.drivetrain))
         
         # # self.OperatorController.button(4).whileTrue(ledMode2(self.leds))
-        self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
-        self.OperatorController.button(4).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        # self.OperatorController.button(4).whileTrue(armToFloor(self.arm))
+        # self.OperatorController.button(4).whileFalse(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
         
         # # self.OperatorController.button(3).whileTrue(ledMode1(self.leds))
         #self.OperatorController.button(3).whileTrue(armWithAprilTag(self.arm, self.Vision))
@@ -187,7 +187,7 @@ class RobotContainer:
         
         self.OperatorController.button(8).toggleOnTrue(takeSnapShot(self.Vision))
         
-        self.arm.setDefaultCommand(commands.armCommand.ArmWithJoystick(self.arm, self.leds))
+        self.arm.setDefaultCommand(commands.armCommand.MainArmCommand(self.arm, self.leds))
         
         self.hang.setDefaultCommand(commands.hangCommand.HangCommand(self.hang))
         
