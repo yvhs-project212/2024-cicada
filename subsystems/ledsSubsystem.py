@@ -16,19 +16,26 @@ class ledSub(commands2.Subsystem):
         # Creates a PWM channel for robot communication to arduino
         self.ledValue = wpilib.PWM(ELEC.PWM_For_Leds)
         
-        # Starts sending a pwm value to the arduino
-        self.ledValue.setSpeed(0.01)
+        # 
+        self.robotDisabled = wpilib.DigitalOutput(9)
         
         # ctreLEDS = phoenix5.led
         # ctreLEDS.
         
-        # Sets LEDs red
         
-    def disabledPeriodic(self):
-        self.ledValue.setSpeed(0.01)
+    def disabledInit(self) -> None:
+        self.robotDisabled.set(False)
+        
+    # def disabledPeriodic(self):
+    #     self.ledMode2
+        
+    def periodic(self) -> None:
+        self.robotDisabled.set(True)
     
+        # Sets LEDs red
     def ledMode1(self):
         self.ledValue.setSpeed(0.1)
+        self.robotDisabled.set(True)
         
         # Sets LED's green
     def ledMode2(self):
