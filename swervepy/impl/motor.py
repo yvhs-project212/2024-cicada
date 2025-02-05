@@ -1,9 +1,9 @@
 import copy
 from dataclasses import dataclass
 
-import phoenix6
-#import phoenix6.sensors
-#import rev
+import phoenix5
+import phoenix5.sensors
+import rev
 from pint import Quantity
 from wpimath.controller import SimpleMotorFeedforwardMeters
 from wpimath.geometry import Rotation2d
@@ -14,7 +14,7 @@ from .. import conversions, u
 from ..abstract.sensor import AbsoluteEncoder
 
 
-class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
+class Falcon500CoaxialDriveComponent(CoaxialDriveComponent):
     @dataclass
     class Parameters:
         wheel_circumference: Quantity
@@ -29,7 +29,7 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
         peak_current_limit: int
         peak_current_duration: float
 
-        neutral_mode: phoenix6.NeutralMode
+        neutral_mode: phoenix5.NeutralMode
 
         kP: float
         kI: float
@@ -48,10 +48,10 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
             return data
 
         # noinspection PyPep8Naming
-        def create_TalonFX_config(self) -> phoenix6.TalonFXConfiguration:
-            motor_config = phoenix6.TalonFXConfiguration()
+        def create_TalonFX_config(self) -> phoenix5.TalonFXConfiguration:
+            motor_config = phoenix5.TalonFXConfiguration()
 
-            supply_limit = phoenix6.SupplyCurrentLimitConfiguration(
+            supply_limit = phoenix5.SupplyCurrentLimitConfiguration(
                 True,
                 self.continuous_current_limit,
                 self.peak_current_limit,
@@ -62,7 +62,7 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
             motor_config.slot0.kI = self.kI
             motor_config.slot0.kD = self.kD
             motor_config.supplyCurrLimit = supply_limit
-            motor_config.initializationStrategy = phoenix6.sensors.SensorInitializationStrategy.BootToZero
+            motor_config.initializationStrategy = phoenix5.sensors.SensorInitializationStrategy.BootToZero
             motor_config.openloopRamp = self.open_loop_ramp_rate
             motor_config.closedloopRamp = self.closed_loop_ramp_rate
 
@@ -73,10 +73,10 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
 
         try:
             # Unpack tuple of motor id and CAN bus id into TalonFX constructor
-            self._motor = phoenix6.TalonFX(*id_)
+            self._motor = phoenix5.TalonFX(*id_)
         except TypeError:
             # Only an int was provided for id_
-            self._motor = phoenix6.TalonFX(id_)
+            self._motor = phoenix5.TalonFX(id_)
 
         self._config()
         self.reset()
@@ -92,22 +92,22 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
 
     def follow_velocity_open(self, velocity: float):
         percent_out = velocity / self._params.max_speed
-        self._motor.set(phoenix6.ControlMode.PercentOutput, percent_out)
+        self._motor.set(phoenix5.ControlMode.PercentOutput, percent_out)
 
     def follow_velocity_closed(self, velocity: float):
         converted_velocity = conversions.mps_to_falcon(
             velocity, self._params.wheel_circumference, self._params.gear_ratio
         )
         self._motor.set(
-            phoenix6.ControlMode.Velocity,
+            phoenix5.ControlMode.Velocity,
             converted_velocity,
-            phoenix6.DemandType.ArbitraryFeedForward,
+            phoenix5.DemandType.ArbitraryFeedForward,
             self._feedforward.calculate(velocity),
         )
 
     def set_voltage(self, volts: float):
         percent_output = volts / self._motor.getBusVoltage()
-        self._motor.set(phoenix6.ControlMode.PercentOutput, percent_output)
+        self._motor.set(phoenix5.ControlMode.PercentOutput, percent_output)
 
     def reset(self):
         self._motor.setSelectedSensorPosition(0)
@@ -133,7 +133,7 @@ class TalonFXCoaxialDriveComponent(CoaxialDriveComponent):
         return self._motor.getMotorOutputVoltage()
 
 
-class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
+class Falcon500CoaxialAzimuthComponent(CoaxialAzimuthComponent):
     @dataclass
     class Parameters:
         gear_ratio: float
@@ -146,7 +146,7 @@ class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
         peak_current_limit: int
         peak_current_duration: float
 
-        neutral_mode: phoenix6.NeutralMode
+        neutral_mode: phoenix5.NeutralMode
 
         kP: float
         kI: float
@@ -160,10 +160,10 @@ class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
             return data
 
         # noinspection PyPep8Naming
-        def create_TalonFX_config(self) -> phoenix6.TalonFXConfiguration:
-            motor_config = phoenix6.TalonFXConfiguration()
+        def create_TalonFX_config(self) -> phoenix5.TalonFXConfiguration:
+            motor_config = phoenix5.TalonFXConfiguration()
 
-            supply_limit = phoenix6.SupplyCurrentLimitConfiguration(
+            supply_limit = phoenix5.SupplyCurrentLimitConfiguration(
                 True,
                 self.continuous_current_limit,
                 self.peak_current_limit,
@@ -174,7 +174,7 @@ class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
             motor_config.slot0.kI = self.kI
             motor_config.slot0.kD = self.kD
             motor_config.supplyCurrLimit = supply_limit
-            motor_config.initializationStrategy = phoenix6.sensors.SensorInitializationStrategy.BootToZero
+            motor_config.initializationStrategy = phoenix5.sensors.SensorInitializationStrategy.BootToZero
             motor_config.closedloopRamp = self.ramp_rate
 
             return motor_config
@@ -190,10 +190,10 @@ class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
 
         try:
             # Unpack tuple of motor id and CAN bus id into TalonFX constructor
-            self._motor = phoenix6.TalonFX(*id_)
+            self._motor = phoenix5.TalonFX(*id_)
         except TypeError:
             # Only an int was provided for id_
-            self._motor = phoenix6.TalonFX(id_)
+            self._motor = phoenix5.TalonFX(id_)
 
         self._absolute_encoder = absolute_encoder
         self._offset = azimuth_offset
@@ -210,7 +210,7 @@ class TalonFXCoaxialAzimuthComponent(CoaxialAzimuthComponent):
 
     def follow_angle(self, angle: Rotation2d):
         converted_angle = conversions.degrees_to_falcon(angle, self._params.gear_ratio)
-        self._motor.set(phoenix6.ControlMode.Position, converted_angle)
+        self._motor.set(phoenix5.ControlMode.Position, converted_angle)
 
     def reset(self):
         absolute_position = self._absolute_encoder.absolute_position - self._offset
@@ -240,7 +240,7 @@ class NEOCoaxialDriveComponent(CoaxialDriveComponent):
         continuous_current_limit: int
         peak_current_limit: int
 
-        #neutral_mode: rev.CANSparkMax.IdleMode
+        neutral_mode: rev.CANSparkMax.IdleMode
 
         kP: float
         kI: float
@@ -261,7 +261,7 @@ class NEOCoaxialDriveComponent(CoaxialDriveComponent):
     def __init__(self, id_: int, parameters: Parameters):
         self._params = parameters.in_standard_units()
 
-        #self._motor = rev.CANSparkMax(id_, rev.CANSparkMax.MotorType.kBrushless)
+        self._motor = rev.CANSparkMax(id_, rev.CANSparkMax.MotorType.kBrushless)
         self._controller = self._motor.getPIDController()
         self._encoder = self._motor.getEncoder()
         self._config()
@@ -296,7 +296,7 @@ class NEOCoaxialDriveComponent(CoaxialDriveComponent):
     def follow_velocity_closed(self, velocity: float):
         self._controller.setReference(
             velocity,
-            #rev.CANSparkMax.ControlType.kVelocity,
+            rev.CANSparkMax.ControlType.kVelocity,
             arbFeedforward=self._feedforward.calculate(velocity),
         )
 
@@ -331,7 +331,7 @@ class NEOCoaxialAzimuthComponent(CoaxialAzimuthComponent):
         continuous_current_limit: int
         peak_current_limit: int
 
-        #neutral_mode: rev.CANSparkMax.IdleMode
+        neutral_mode: rev.CANSparkMax.IdleMode
 
         kP: float
         kI: float
@@ -353,7 +353,7 @@ class NEOCoaxialAzimuthComponent(CoaxialAzimuthComponent):
     ):
         self._params = parameters.in_standard_units()
 
-        #self._motor = rev.CANSparkMax(id_, rev.CANSparkMax.MotorType.kBrushless)
+        self._motor = rev.CANSparkMax(id_, rev.CANSparkMax.MotorType.kBrushless)
         self._controller = self._motor.getPIDController()
         self._encoder = self._motor.getEncoder()
 
@@ -388,8 +388,8 @@ class NEOCoaxialAzimuthComponent(CoaxialAzimuthComponent):
         self._encoder.setPositionConversionFactor(position_conversion_factor)
         self._encoder.setVelocityConversionFactor(position_conversion_factor / 60)
 
-    #def follow_angle(self, angle: Rotation2d):
-        #self._controller.setReference(angle.degrees(), rev.CANSparkMax.ControlType.kPosition)
+    def follow_angle(self, angle: Rotation2d):
+        self._controller.setReference(angle.degrees(), rev.CANSparkMax.ControlType.kPosition)
 
     def reset(self):
         absolute_position = self._absolute_encoder.absolute_position
