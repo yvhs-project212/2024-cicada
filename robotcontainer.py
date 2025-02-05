@@ -6,7 +6,8 @@ import wpilib
 from wpimath.geometry import Translation2d, Rotation2d, Pose2d
 from pathplannerlib.path import PathPlannerPath, PathConstraints, GoalEndState
 
-from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
+#from swervepy import u, SwerveDrive, TrajectoryFollowerParameters
+from swervepy import u, SwerveDrive
 from swervepy.impl import CoaxialSwerveModule
 
 from constants import PHYS, MECH, ELEC, OP, SW

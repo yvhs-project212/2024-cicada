@@ -4,8 +4,8 @@ creating their drive base.
 """
 
 __all__ = [
-    "Falcon500CoaxialAzimuthComponent",
-    "Falcon500CoaxialDriveComponent",
+    "TalonFXCoaxialAzimuthComponent",
+    "TalonFXCoaxialDriveComponent",
     "NEOCoaxialAzimuthComponent",
     "NEOCoaxialDriveComponent",
     "NEOCoaxialAzimuthComponent",
@@ -21,8 +21,8 @@ __all__ = [
 ]
 
 from .motor import (
-    Falcon500CoaxialAzimuthComponent,
-    Falcon500CoaxialDriveComponent,
+    TalonFXCoaxialAzimuthComponent,
+    TalonFXCoaxialDriveComponent,
     NEOCoaxialDriveComponent,
     NEOCoaxialAzimuthComponent,
     NEOCoaxialAzimuthComponent,

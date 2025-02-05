@@ -1,6 +1,6 @@
 import enum
 
-import phoenix5.sensors
+import phoenix6.sensors
 import rev
 import wpilib
 from wpimath.geometry import Rotation2d
@@ -15,11 +15,11 @@ class AbsoluteCANCoder(AbsoluteEncoder):
 
         # Construct the CANCoder from either a tuple of motor ID and CAN bus ID or just a motor ID
         try:
-            self._encoder = phoenix5.sensors.CANCoder(*id_)
+            self._encoder = phoenix6.sensors.CANCoder(*id_)
         except TypeError:
-            self._encoder = phoenix5.sensors.CANCoder(id_)
+            self._encoder = phoenix6.sensors.CANCoder(id_)
 
-        self._encoder.configAbsoluteSensorRange(phoenix5.sensors.AbsoluteSensorRange.Unsigned_0_to_360)
+        self._encoder.configAbsoluteSensorRange(phoenix6.sensors.AbsoluteSensorRange.Unsigned_0_to_360)
 
         wpilib.SmartDashboard.putData(f"Absolute CANCoder {id_}", self)
 
@@ -53,7 +53,7 @@ class PigeonGyro(Gyro):
     def __init__(self, id_: int, invert: bool = False):
         super().__init__()
 
-        self._gyro = phoenix5.sensors.PigeonIMU(id_)
+        self._gyro = phoenix6.sensors.PigeonIMU(id_)
         self.invert = invert
 
         wpilib.SmartDashboard.putData("Pigeon IMU", self)
@@ -76,10 +76,10 @@ class Pigeon2Gyro(Gyro):
 
         try:
             # Unpack tuple of sensor id and CAN bus id into Pigeon2 constructor
-            self._gyro = phoenix5.sensors.Pigeon2(*id_)
+            self._gyro = phoenix6.sensors.Pigeon2(*id_)
         except TypeError:
             # Only an int was provided for id_
-            self._gyro = phoenix5.sensors.Pigeon2(id_)
+            self._gyro = phoenix6.sensors.Pigeon2(id_)
 
         wpilib.SmartDashboard.putData("Pigeon 2", self)
 

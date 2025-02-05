@@ -14,9 +14,8 @@ This file defines constants related to your robot.  These constants include:
 
 import math
 from collections import namedtuple
-import rev
-import phoenix5
-from swervepy import u
+import phoenix6
+from swervepy import u  
 
 # Physical constants
 phys_data = {
@@ -46,13 +45,13 @@ elec_data = {
 
     # Talon FX motor controllers can set peak_current_duration.
     # SparkMAX motor controllers can't.
-    #"drive_peak_current_duration": 0.01,
-    #"azimuth_peak_current_duration": 0.01,
+    "drive_peak_current_duration": 0.01,
+    "azimuth_peak_current_duration": 0.01,
 
     # time in seconds for propulsion motors to ramp up to full speed
     # reference: https://codedocs.revrobotics.com/java/com/revrobotics/cansparkmax
-    "open_loop_ramp_rate": 0,
-    "closed_loop_ramp_rate": 0,
+    "open_loop_ramp_rate": 3,
+    "closed_loop_ramp_rate": 3,
 
     "RF_steer_CAN_ID": 15,
     "RF_drive_CAN_ID": 1,
@@ -101,15 +100,15 @@ op_data = {
     # following parameters.  Setting to None is the same as setting to
     # max_speed/max_angular_velocity, and indicates no limit.
     #
-    "speed_limit": 4.0 * (u.m / u.s),
-    "angular_velocity_limit": 8.0 * (u.rad / u.s),
+    "speed_limit": 0.5 * (u.m / u.s),
+    "angular_velocity_limit": 1.0 * (u.rad / u.s),
 
     # For NEO / SparkMAX, use the following and comment out the Falcon500 values
-    "propulsion_neutral": rev.CANSparkMax.IdleMode.kBrake,
-    "steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
+    #"propulsion_neutral": rev.CANSparkMax.IdleMode.kBrake,
+    #"steering_neutral": rev.CANSparkMax.IdleMode.kBrake,
     # For Falcon500 / TalonFX, use the following and comment out the NEO values
-    #"propulsion_neutral": phoenix5.NeutralMode.Coast,
-    #"steering_neutral": phoenix5.NeutralMode.Brake,
+    "propulsion_neutral": phoenix6.NeutralMode.Coast,
+    "steering_neutral": phoenix6.NeutralMode.Brake,
 
     # Values to pass to stick.getRawAxis()
     # Set these according to your operator preferences
@@ -146,7 +145,7 @@ sw_data = {
 
     # Constants for PID control of the propulsion AND steering motors
     # (kP must be non-zero, or azimuth motors won't engage.)
-    #"kP": 0.3,  # representative value for Falcon500 motors
+    #"kP": 0.3,  # representative value for Falcon500 TalonFX motors
     "kP": 0.01,   # representative value for NEO motors
     "kI": 0,
     "kD": 0,
